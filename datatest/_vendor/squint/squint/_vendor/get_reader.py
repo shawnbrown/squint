@@ -236,7 +236,15 @@ class get_reader(object):
         *fieldnames* argument is not provided, this function tries to
         construct names using the values from the underlying object.
         """
-        datatest = sys.modules['datatest']
+        try:
+            import datatest
+        except ImportError:
+            raise ImportError(
+                "No module named 'datatest'\n"
+                "\n"
+                "This is an optional constructor that requires the "
+                "third-party library 'datatest'."
+            )
         if isinstance(obj, datatest.Query):
             query = obj
         elif isinstance(obj, datatest.Select):

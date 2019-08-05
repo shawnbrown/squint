@@ -10,14 +10,13 @@ import textwrap
 from . import _io as io
 
 from . import _unittest as unittest
-from datatest._compatibility.builtins import *
-from datatest._compatibility.collections import namedtuple
-from datatest._compatibility.collections.abc import Mapping
-from datatest._utils import IterItems
-from datatest._utils import nonstringiter
+from squint._compatibility.builtins import *
+from squint._compatibility.collections import namedtuple
+from squint._compatibility.collections.abc import Mapping
+from squint._utils import IterItems
+from squint._utils import nonstringiter
 
-from datatest._working_directory import working_directory
-from datatest._vendor.squint.query import (
+from squint.query import (
     BaseElement,
     _is_collection_of_items,
     DictItems,
