@@ -1014,6 +1014,39 @@ class Query(object):
         return '{0}({1}{2}{3}){4}'.format(
             class_repr, source_repr, args_repr, kwds_repr, query_steps_repr)
 
+    def to_reader(self, fieldnames=None):
+        """Return a reader object which will iterate over the records
+        returned from the Query. If the *fieldnames* argument is not
+        provided, this method tries to construct names using the
+        columns given when calling the Select object.
+        """
+        iterable = self.flatten().execute()
+        if not nonstringiter(iterable):
+            iterable = [(iterable,)]
+
+        first_row, iterable = iterpeek(iterable)
+        if not nonstringiter(first_row):
+            first_row = (first_row,)
+            iterable = ((x,) for x in iterable)
+
+        if fieldnames:
+            if not nonstringiter(fieldnames):
+                fieldnames = (fieldnames,)
+        else:
+            if self.args:
+                fieldnames = self.__class__.from_object(self.args[0])
+                (fieldnames,) = fieldnames.flatten().fetch()
+                if not nonstringiter(fieldnames):
+                    fieldnames = (fieldnames,)
+                if len(first_row) != len(fieldnames):
+                    fieldnames = None
+
+        if fieldnames:
+            yield fieldnames
+
+        for value in iterable:
+            yield value
+
     def to_csv(self, file, fieldnames=None, **fmtparams):
         """Execute the query and write the results as a CSV file
         (dictionaries and other mappings will be seralized).
@@ -1027,7 +1060,7 @@ class Query(object):
         original *columns* argument will be used if the number of
         selected columns matches the number of resulting columns.
         """
-        reader = get_reader.from_datatest(self)
+        reader = self.to_reader(fieldnames)
 
         if not isinstance(file, file_types):
             if PY2:
