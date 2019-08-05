@@ -43,34 +43,6 @@ from squint.query import (
 )
 
 
-class TestWorkingDirectory(unittest.TestCase):
-    def setUp(self):
-        self.original_dir = os.getcwd()
-        self.temporary_dir =  tempfile.mkdtemp()
-
-    def tearDown(self):
-        os.chdir(self.original_dir)
-        os.rmdir(self.temporary_dir)
-
-    def test_context_manager(self):
-        original_dir = os.getcwd()
-
-        with working_directory(self.temporary_dir):
-            self.assertEqual(os.getcwd(), self.temporary_dir)
-
-        self.assertEqual(os.getcwd(), original_dir)
-
-    def test_decorator(self):
-        original_dir = os.getcwd()
-
-        @working_directory(self.temporary_dir)
-        def myfunction():
-            self.assertEqual(os.getcwd(), self.temporary_dir)
-        myfunction()  # <- Actually run the function.
-
-        self.assertEqual(os.getcwd(), original_dir)
-
-
 class TestBaseElement(unittest.TestCase):
     def test_type_checking(self):
         # Base data elements include non-iterables, strings, and mappings.
