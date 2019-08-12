@@ -1516,7 +1516,11 @@ class Select(object):
                   several indexes before testing even begins could
                   lead to longer run times so use indexes with care.
         """
-        self._assert_fields_exist(columns)
+        try:
+            self._assert_fields_exist(columns)
+        except LookupError:
+            __tracebackhide__ = True
+            raise
 
         # Build index name.
         whitelist = lambda col: ''.join(x for x in col if x.isalnum())
