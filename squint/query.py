@@ -1544,26 +1544,3 @@ class Select(object):
     #     select(select.fieldnames).to_csv(...)
     #
 
-
-# Prepare error message for old or non-standard builds of Python
-# that don't have adequate "sqlite3" support (Jython 2.7, Jython
-# 2.5, Python 3.1.4, and Python 2.6.6).
-if not sqlite3:
-    class Select(object):
-        def __init__(self, *args, **kwds):
-            msg = (
-                'The Select class requires SQLite but the standard '
-                'library "sqlite3" package is missing from the current '
-                'Python installation:\n\nPython {0}'
-            ).format(sys.version)
-            raise Exception(msg)
-
-elif sqlite3.sqlite_version_info < (3, 6, 8):
-    class Select(object):
-        def __init__(self, *args, **kwds):
-            msg = (
-                'The Select class requires SQLite 3.6.8 or newer but '
-                'the current Python installation was built with an old '
-                'version:\n\nPython {0}\nBuilt with SQLite {1}'
-            ).format(sys.version, sqlite3.sqlite_version)
-            raise Exception(msg)
