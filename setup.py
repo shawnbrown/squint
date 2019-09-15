@@ -11,7 +11,7 @@ def get_long_description(path):
 setuptools.setup(
     # Required fields:
     name='squint',
-    version='0.0.2.dev0',
+    version='0.0.2',
     description='Simple query interface for tabular data.',
     packages=setuptools.find_packages(exclude=['docs', 'tests']),
 

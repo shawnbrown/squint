@@ -85,8 +85,8 @@ author = 'Shawn Brown'
 # built documents.
 #
 # The short X.Y version.
-#from datatest import __version__
-__version__ = '0.9.7.dev0'
+#from squint import __version__
+__version__ = '0.0.2'
 version = __version__
 
 # The full version, including alpha/beta/rc tags.
