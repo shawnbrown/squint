@@ -1,20 +1,33 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import setuptools
 
 
-#with open('README.rst') as fh:
-#    long_description = fh.read()
+def get_long_description(path):
+    with open(path) as fh:
+        return fh.read()
 
 
 setuptools.setup(
+    # Required fields:
     name='squint',
-    version='0.0.1',
+    version='0.0.2.dev0',
+    description='Simple query interface for tabular data.',
+    packages=setuptools.find_packages(exclude=['docs', 'tests']),
+
+    # Recommended fields:
+    url='https://github.com/shawnbrown/squint',
     author='Shawn Brown',
     author_email='shawnbrown@users.noreply.github.com',
-    description='Simple query interface for tabular data.',
-    #long_description=long_description,
-    #long_description_content_type='text/x-rst',
-    url='https://github.com/shawnbrown/squint',
-    packages=setuptools.find_packages(exclude=['docs', 'tests']),
+
+    # Other fields:
+    install_requires=[
+        'get-reader[excel,dbf]',
+    ],
+    python_requires='>=2.6.7, !=3.0.*, !=3.1.*',
+    long_description=get_long_description('README.rst'),
+    long_description_content_type='text/x-rst',
+    license='Apache 2.0',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -36,7 +49,4 @@ setuptools.setup(
         'Topic :: Scientific/Engineering :: Information Analysis',
         'Topic :: Utilities',
     ],
-    license='Apache 2.0',
-    python_requires='>=2.6.7, !=3.0.*, !=3.1.*',
-    install_requires=[],  # <- TODO: Break-out "get_reader" and add here.
 )
