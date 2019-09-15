@@ -7,8 +7,10 @@ import shutil
 import sqlite3
 import tempfile
 import textwrap
-from . import _io as io
-from .common import unittest
+from .common import (
+    StringIO,
+    unittest,
+)
 from squint._compatibility.builtins import *
 from squint._compatibility.collections import namedtuple
 from squint._compatibility.collections.abc import Mapping
@@ -1258,7 +1260,7 @@ class TestQuery(unittest.TestCase):
         expected = textwrap.dedent(expected).strip()
 
         # Defaults to stdout (redirected to StringIO for testing).
-        string_io = io.StringIO()
+        string_io = StringIO()
         returned_value = query._explain(file=string_io)
         self.assertIsNone(returned_value)
 
@@ -1731,7 +1733,7 @@ class TestQueryToCsv(unittest.TestCase):
     def test_fmtparams(self):
         query = self.select(['A', 'B'])
 
-        csvfile = io.StringIO()
+        csvfile = StringIO()
         query.to_csv(csvfile, delimiter='|', lineterminator='\n')
 
         csvfile.seek(0)

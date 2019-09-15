@@ -19,3 +19,13 @@ try:
 except AttributeError:
     unittest.TestCase.assertRegex = unittest.TestCase.assertRegexpMatches
     unittest.TestCase.assertRaisesRegex = unittest.TestCase.assertRaisesRegexp
+
+
+if version_info > (2, 7):
+    from io import StringIO
+else:
+    import StringIO as _StringIO
+    class StringIO(_StringIO.StringIO):
+        def write(self, str):
+            str = unicode(str)
+            return _StringIO.StringIO.write(self, str)
