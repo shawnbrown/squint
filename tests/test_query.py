@@ -8,8 +8,7 @@ import sqlite3
 import tempfile
 import textwrap
 from . import _io as io
-
-from . import _unittest as unittest
+from .common import unittest
 from squint._compatibility.builtins import *
 from squint._compatibility.collections import namedtuple
 from squint._compatibility.collections.abc import Mapping
