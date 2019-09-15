@@ -62,20 +62,20 @@ Some Examples
 =============
 
 The examples below will query a CSV file containing the following
-data:
+data (**example.csv**):
 
-    ===  ===  ===
-     A    B    C
-    ===  ===  ===
-     x   foo   20
-     x   foo   30
-     y   foo   10
-     y   bar   20
-     z   bar   10
-     z   bar   10
-    ===  ===  ===
+===  ===  ===
+ A    B    C
+===  ===  ===
+ x   foo   20
+ x   foo   30
+ y   foo   10
+ y   bar   20
+ z   bar   10
+ z   bar   10
+===  ===  ===
 
-Load the CSV file using ``squint``:
+To begin, we load the CSV file into a Select object:
 
 .. code-block:: python
 
