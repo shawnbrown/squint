@@ -1,21 +1,27 @@
-Datatest was originally created at NCEC Services, LLC in 2014
-by Shawn Brown as 'dataaudit'. In 2015 the project was largely
-rewritten and renamed to 'datatest'.
+
+Background
+----------
+
+Squint grew out of the datatest project (https://pypi.org/project/datatest/).
+As datatest matured and became more tool-agnostic, there was less of a need
+for a built-in query interface. Additionally, the query interface is useful
+beyond the context of simply testing data.
+
+
+Contributing Authors
+--------------------
 
 Work-for-hire Contributors:
 
-  * Shawn Brown <sbrown@ncec.org> (development lead)
-  *
+* Shawn Brown <sbrown@ncec.org> (development lead)
 
 Personal Contributors:
 
-  * Shawn Brown <shawnbrown@users.noreply.github.com>
-  *
+* Shawn Brown <https://github.com/shawnbrown>
 
-A big thank you goes out to:
 
-    Heather Blum-Pastor for numerous ideas and feedback.
+Acknowledgments
+---------------
 
-    Brian Fraher, Bilen Estephanos, and Eric Hawkins who helped spec-out
-    the initial API on our snowy train ride to New York City in February
-    of 2014.
+* Thanks goes to Andrew Dolan <https://github.com/drewdolan> for numerous
+  suggestions and feedback throughout the development of this project.
