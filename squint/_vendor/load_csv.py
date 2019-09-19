@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import warnings
+from get_reader import get_reader
+
 from .._utils import exhaustible
 from .._utils import seekable
 from .._utils import file_types
-from .get_reader import get_reader
 from .temptable import load_data
 from .temptable import savepoint
 

@@ -9,6 +9,7 @@ except ImportError:
 import sys
 from glob import glob
 from numbers import Number
+from get_reader import get_reader
 
 from ._compatibility.builtins import *
 from ._compatibility.collections import namedtuple
@@ -40,7 +41,6 @@ from ._utils import (
     file_types,
     string_types,
 )
-from ._vendor.get_reader import get_reader
 from ._vendor.load_csv import load_csv
 from ._vendor.temptable import (
     load_data,
