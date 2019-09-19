@@ -1,0 +1,14 @@
+# ========================
+# Development Dependencies
+# ========================
+#
+# These are not installation requirements!
+#
+# The following dependencies are only required for
+# testing, building, and documentation generation.
+
+get_reader[excel,dbf]
+sphinx
+sphinx_rtd_theme>=0.3.1
+twine
+wheel
