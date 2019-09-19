@@ -110,6 +110,18 @@ To begin, we load the CSV file into a Select object:
 |                              |    ('z', 'bar'),                     |
 |                              |    ('z', 'bar')]                     |
 +------------------------------+--------------------------------------+
+| set of columns               | list of sets with values from        |
+|                              | those columns                        |
+| .. code-block:: python       |                                      |
+|                              | .. code-block:: python               |
+|   select({'A', 'B'})         |                                      |
+|                              |   [{'x', 'foo'},                     |
+|                              |    {'x', 'foo'},                     |
+|                              |    {'y', 'foo'},                     |
+|                              |    {'y', 'bar'},                     |
+|                              |    {'z', 'bar'},                     |
+|                              |    {'z', 'bar'}]                     |
++------------------------------+--------------------------------------+
 | dictionary of columns        | dictionary with keys and values      |
 |                              | from those columns                   |
 | .. code-block:: python       |                                      |
@@ -119,8 +131,8 @@ To begin, we load the CSV file into a Select object:
 |                              |    'y': [10, 20],                    |
 |                              |    'z': [10, 10]}                    |
 |                              |                                      |
-|                              | (values are grouped by matching      |
-|                              | key)                                 |
+|                              | (Notice that values are grouped by   |
+|                              | matching key.)                       |
 +------------------------------+--------------------------------------+
 | dictionary with a tuple of   | dictionary with keys and tuples of   |
 | column values                | values from those columns            |
