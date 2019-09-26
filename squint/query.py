@@ -2,13 +2,11 @@
 from __future__ import absolute_import
 import csv
 import inspect
-try:
-    import sqlite3
-except ImportError:
-    sqlite3 = None  # Missing from Jython and Micropython.
+import sqlite3
 import sys
 from glob import glob
 from numbers import Number
+
 from get_reader import get_reader
 
 from ._compatibility.builtins import *
