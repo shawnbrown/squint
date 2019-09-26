@@ -20,9 +20,9 @@ except ImportError as err:
     raise ImportError(message)
 
 
-# Check that `sqlite3` is not too old. Some older builds
+# Check that `sqlite3` is not too old. Some very old builds
 # of Python were compiled with versions of SQLite that are
-# incompatible with Squint (e.g., some builds of Python
+# incompatible with Squint (e.g., certain builds of Python
 # 3.1.4 and Python 2.6.6).
 if _sqlite3.sqlite_version_info < (3, 6, 8):
     import sys
