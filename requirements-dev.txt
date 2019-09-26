@@ -1,11 +1,8 @@
-# ========================
-# Development Dependencies
-# ========================
+# Requirements for Developers
 #
-# These are not installation requirements!
+# Install with:
+#   pip install -r requirements-dev.txt
 #
-# The following dependencies are only required for
-# testing, building, and documentation generation.
 
 get_reader[excel,dbf]
 sphinx
