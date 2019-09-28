@@ -31,7 +31,7 @@ extensions = [
     #'sphinx.ext.imgmath',
     #'sphinx.ext.mathjax',
     'sphinx.ext.intersphinx',
-    #'sphinx_tabs.tabs',
+    'sphinx_tabs.tabs',
 ]
 
 # -- Configure custom extension: autodoc_classinstance --------------------
