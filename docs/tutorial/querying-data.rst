@@ -1,12 +1,12 @@
 
-.. module:: datatest
+.. module:: squint
 
 .. meta::
-    :description: Use datatest's Select, Query, and Result
-                  classes to handle the data under test.
-    :keywords: datatest, Select, Query, Result, working_directory
+    :description: Use squint's Select, Query, and Result classes.
+    :keywords: squint, Select, Query, Result
 
 .. highlight:: python
+
 
 .. _querying-data:
 
@@ -14,12 +14,7 @@
 Querying Data
 #############
 
-Datatest provides built-in classes for selecting, querying, and
-iterating over the data under test. Although users familiar with
-other tools (Pandas, SQLAlchemy, etc.) should feel encouraged
-to use whatever they find to be most productive.
-
-The following examples demonstrate datatest's :class:`Select`,
+The following examples demonstrate squint's :class:`Select`,
 :class:`Query`, and :class:`Result` classes. Users can follow along
 and type the commands themselves at Python's interactive prompt
 (``>>>``). For these examples, we will use the following data:
@@ -42,8 +37,8 @@ Loading Data
 You can load the data from a CSV file (:download:`example.csv
 </_static/example.csv>`) into a :class:`Select` object::
 
-    >>> import datatest
-    >>> select = datatest.Select('example.csv')
+    >>> import squint
+    >>> select = squint.Select('example.csv')
 
 
 Getting Field Names

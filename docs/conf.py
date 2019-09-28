@@ -29,9 +29,9 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.todo',
     #'sphinx.ext.imgmath',
-    'sphinx.ext.mathjax',
+    #'sphinx.ext.mathjax',
     'sphinx.ext.intersphinx',
-    'sphinx_tabs.tabs',
+    #'sphinx_tabs.tabs',
 ]
 
 # -- Configure custom extension: autodoc_classinstance --------------------
@@ -53,8 +53,8 @@ if 'sphinx.ext.autodoc' in extensions:
 # intersphinx settins for external project references
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None),
-    'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
-    'numpy': ('https://docs.scipy.org/doc/numpy/', None),
+    #'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
+    #'numpy': ('https://docs.scipy.org/doc/numpy/', None),
 }
 
 # autodoc settings
@@ -76,7 +76,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'datatest'
+project = 'squint'
 copyright = '2014 - 2019, National Committee for an Effective Congress, et al.'
 author = 'Shawn Brown'
 
@@ -250,7 +250,7 @@ html_sidebars = {
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'datatestdoc'
+htmlhelp_basename = 'squintdoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -272,7 +272,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'datatest.tex', 'datatest Documentation',
+  (master_doc, 'squint.tex', 'Squint Documentation',
    'Shawn Brown', 'manual'),
 ]
 
@@ -302,7 +302,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'datatest', 'datatest Documentation',
+    (master_doc, 'squint', 'Squint Documentation',
      [author], 1)
 ]
 
@@ -318,14 +318,14 @@ man_pages = [
 texinfo_documents = [
     (
         master_doc,
-        'datatest',
-        'datatest Documentation',
+        'squint',
+        'Squint Documentation',
         author,
-        'datatest',
-        'Test driven data-wrangling and data validation.',
+        'squint',
+        'Simple query interface for tabular data.',
         (
-            'Datatest provides tools for test driven data-wrangling '
-            'and data validation.'
+            "Squint is a light-weight query interface for tabular data "
+            "that's easy to learn and quick to use.'"
         ),
     ),
 ]

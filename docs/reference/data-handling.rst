@@ -1,9 +1,9 @@
 
-.. module:: datatest
+.. module:: squint
 
 .. meta::
     :description: Datatest Data Handling API Reference
-    :keywords: datatest, data handling, API
+    :keywords: squint, data handling, API
 
 
 ###########################
@@ -11,33 +11,9 @@ Data Handling API Reference
 ###########################
 
 
-************
-Loading Data
-************
-
-.. autoclass:: working_directory
-
-
-.. autoclass:: get_reader(obj, *args, **kwds)
-
-    .. automethod:: from_csv
-
-    .. automethod:: from_dicts
-
-    .. automethod:: from_namedtuples
-
-    .. automethod:: from_datatest
-
-    .. automethod:: from_pandas
-
-    .. automethod:: from_excel
-
-    .. automethod:: from_dbf
-
-
-*************************
-Selecting & Querying Data
-*************************
+******
+Select
+******
 
 .. autoclass:: Select
 
@@ -57,6 +33,10 @@ Selecting & Querying Data
 
     .. automethod:: create_index
 
+
+*****
+Query
+*****
 
 .. class:: Query(columns, **where)
            Query(select, columns, **where)
@@ -108,6 +88,10 @@ Selecting & Querying Data
     .. automethod:: to_csv
 
 
+******
+Result
+******
+
 .. autoclass:: Result
 
     .. attribute:: evaluation_type
@@ -121,104 +105,3 @@ Selecting & Querying Data
 
         The underlying iterator---useful when introspecting
         or rewrapping.
-
-
-******************
-RepeatingContainer
-******************
-
-.. autoclass:: RepeatingContainer
-
-
-Validating RepeatingContainer Results
-=====================================
-
-When comparing the data-under-test against a set of similarly-shaped
-reference data, it's common to perform the same operations on both
-data sources. When queries and selections become more complex, this
-duplication can grow cumbersome. But the duplication can be mitigated
-by using a :class:`RepeatingContainer`.
-
-A RepeatingContainer can wrap many types of objects (:class:`Select`,
-pandas ``DataFrame``, etc.). In the following example, a RepeatingContainer
-is created with two objects. Then, an operation is forwarded to each
-object in the group. Finally, the results are unpacked and validated:
-
-.. tabs::
-
-    .. group-tab:: Select Example
-
-        Below, the operation ``...({'A': 'C'}).sum()`` is forwarded to
-        each :class:`Select` and the results are returned inside a
-        new RepeatingContainer:
-
-        .. code-block:: python
-            :emphasize-lines: 8
-
-            ...
-
-            compare = RepeatingContainer([
-                Select('data_under_test.csv'),
-                Select('reference_data.csv'),
-            ])
-
-            result = compare({'A': 'C'}).sum()
-
-            data, requirement = result
-            validate(data, requirement)
-
-    .. group-tab:: DataFrame Example
-
-        Below, the operation ``...[['A', 'C']].groupby('A').sum()`` is
-        forwarded to each ``DataFrame`` and the results are returned
-        inside a new RepeatingContainer:
-
-        .. code-block:: python
-            :emphasize-lines: 8
-
-            ...
-
-            compare = RepeatingContainer([
-                pandas.read_csv('data_under_test.csv'),
-                pandas.read_csv('reference_data.csv'),
-            ])
-
-            result = compare[['A', 'C']].groupby('A').sum()
-
-            data, requirement = result
-            validate(data, requirement)
-
-
-The example above can be expressed even more concisely by unpacking
-the result values directly in the :func:`validate` call itself:
-
-.. tabs::
-
-    .. group-tab:: Select Example
-
-        .. code-block:: python
-            :emphasize-lines: 8
-
-            ...
-
-            compare = RepeatingContainer([
-                Select('data_under_test.csv'),
-                Select('reference_data.csv'),
-            ])
-
-            validate(*compare({'A': 'C'}).sum())
-
-    .. group-tab:: DataFrame Example
-
-        .. code-block:: python
-            :emphasize-lines: 8
-
-            ...
-
-            compare = RepeatingContainer([
-                pandas.read_csv('data_under_test.csv'),
-                pandas.read_csv('reference_data.csv'),
-            ])
-
-            validate(*compare[['A', 'C']].groupby('A').sum())
-
