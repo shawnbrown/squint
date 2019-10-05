@@ -41,3 +41,4 @@ from .query import BaseElement
 from .query import Select
 from .query import Query
 from .query import Result
+from ._vendor.predicate import Predicate

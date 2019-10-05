@@ -105,3 +105,15 @@ Result
 
         The underlying iterator---useful when introspecting
         or rewrapping.
+
+
+.. _predicate-docs:
+
+*********
+Predicate
+*********
+
+Squint can use :class:`Predicate` objects for narrowing and filtering
+selections.
+
+.. autoclass:: Predicate
