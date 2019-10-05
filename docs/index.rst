@@ -21,7 +21,6 @@ Version |release|
     :maxdepth: 2
 
     tutorial/introduction
-    how-to/datatest
     reference/squint
 
 ..
