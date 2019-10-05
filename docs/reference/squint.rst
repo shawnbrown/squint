@@ -1,5 +1,5 @@
 
-.. module:: squint
+.. currentmodule:: squint
 
 .. meta::
     :description: Datatest Data Handling API Reference

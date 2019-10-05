@@ -1,5 +1,5 @@
 
-.. module:: squint
+.. currentmodule:: squint
 
 .. meta::
     :description: Use squint's Select, Query, and Result classes.
