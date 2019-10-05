@@ -2,13 +2,13 @@
 .. currentmodule:: squint
 
 .. meta::
-    :description: Datatest Data Handling API Reference
+    :description: Squint API Reference
     :keywords: squint, data handling, API
 
 
-###########################
-Data Handling API Reference
-###########################
+#############
+API Reference
+#############
 
 
 ******
