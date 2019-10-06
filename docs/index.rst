@@ -17,6 +17,12 @@ Squint: Simple query interface for tabular data.
 
 Version |release|
 
+
+.. include:: ../README.rst
+    :start-after: start-inclusion-marker-description
+    :end-before: end-inclusion-marker-description
+
+
 .. toctree::
     :maxdepth: 2
 
