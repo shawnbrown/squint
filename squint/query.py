@@ -97,60 +97,47 @@ class BaseElement(abc.ABC):
         return NotImplemented
 
 
-class DictItems(Iterator):
-    """A wrapper used to normalize and identify iterators that
-    should return a 2-tuple of key-value pairs. The underlying
-    iterable should not contain duplicate keys and they should be
-    appropriate for constructing a dictionary or other mapping.
+def _get_iteritems(iterable):
+    """Verify that the first item of *iterable* is appropriate to
+    use as a key-value pair for a dictionary or other mapping and
+    return an IterItems object. The underlying iterable should not
+    contain duplicate keys and they should be appropriate for
+    constructing a dictionary or other mapping.
     """
-    def __init__(self, iterable):
-        if isinstance(iterable, Mapping):
-            iterable = getattr(iterable, 'iteritems', iterable.items)()
-            iterable = iter(iterable)
-        else:
-            if isinstance(iterable, Query):
-                iterable = iterable.execute()
+    if isinstance(iterable, Mapping):
+        return IterItems(iterable)  # <- EXIT!
 
-            while hasattr(iterable, '__wrapped__'):
-                iterable = iterable.__wrapped__
+    if isinstance(iterable, Query):
+        iterable = iterable.execute()
 
-            first_item, iterable = iterpeek(iterable)
+    while hasattr(iterable, '__wrapped__'):
+        iterable = iterable.__wrapped__
 
-            # Assert that first item contains a suitable key-value pair.
-            if first_item:
-                if not isinstance(first_item, tuple) \
-                        and isinstance(first_item, BaseElement):
-                    raise TypeError((
-                        'dictionary update sequence items can not be '
-                        'registered BaseElement types, got {0}: {1!r}'
-                    ).format(first_item.__class__.__name__, first_item))
-                try:
-                    first_item = tuple(first_item)
-                except TypeError:
-                    raise TypeError('cannot convert dictionary update '
-                                    'sequence element #0 to a sequence')
-                if len(first_item) != 2:
-                    ValueError(('dictionary update sequence element #0 has length '
-                                '{0}; 2 is required').format(len(first_item)))
-                first_key = first_item[0]
-                if not isinstance(first_key, Hashable):
-                    raise ValueError((
-                        'unhashable type {0}: {1!r}'
-                    ).format(first_key.__class__.__name__, first_key))
+    first_item, iterable = iterpeek(iterable)
 
-        self.__wrapped__ = iter(iterable)
+    # Assert that first item contains a suitable key-value pair.
+    if first_item:
+        if not isinstance(first_item, tuple) \
+                and isinstance(first_item, BaseElement):
+            raise TypeError((
+                'dictionary update sequence items can not be '
+                'registered BaseElement types, got {0}: {1!r}'
+            ).format(first_item.__class__.__name__, first_item))
+        try:
+            first_item = tuple(first_item)
+        except TypeError:
+            raise TypeError('cannot convert dictionary update '
+                            'sequence element #0 to a sequence')
+        if len(first_item) != 2:
+            ValueError(('dictionary update sequence element #0 has length '
+                        '{0}; 2 is required').format(len(first_item)))
+        first_key = first_item[0]
+        if not isinstance(first_key, Hashable):
+            raise ValueError((
+                'unhashable type {0}: {1!r}'
+            ).format(first_key.__class__.__name__, first_key))
 
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        return next(self.__wrapped__)
-
-    def next(self):
-        return next(self.__wrapped__)  # For Python 2 compatibility.
-
-
-IterItems.register(DictItems)  # <- Register DictItems as a virtual-subclass.
+    return IterItems(iterable)
 
 
 def _is_collection_of_items(obj):
@@ -189,7 +176,7 @@ class Result(Iterator):
             iterable = iterable.__wrapped__
 
         if isinstance(iterable, Mapping):
-            iterable = DictItems(iterable)
+            iterable = _get_iteritems(iterable)
 
         #: The underlying iterator---useful when introspecting
         #: or rewrapping.
@@ -273,7 +260,7 @@ def _apply_to_data(function, data_iterator):
     iterator *data_iterator*.
     """
     if _is_collection_of_items(data_iterator):
-        result = DictItems((k, function(v)) for k, v in data_iterator)
+        result = _get_iteritems((k, function(v)) for k, v in data_iterator)
         return Result(result, _get_evaluation_type(data_iterator))
     return function(data_iterator)
 
@@ -349,7 +336,7 @@ def _apply_data(function, data):
 
 def _flatten_data(iterable):
     if isinstance(iterable, Mapping):
-        iterable = DictItems(iterable)
+        iterable = _get_iteritems(iterable)
 
     if isinstance(iterable, BaseElement) or not _is_collection_of_items(iterable):
         return iterable
@@ -506,7 +493,7 @@ def _sqlite_distinct(iterable):
         return Result(_unique_everseen(itr), _get_evaluation_type(itr))
 
     if _is_collection_of_items(iterable):
-        result = DictItems((k, dodistinct(v)) for k, v in iterable)
+        result = _get_iteritems((k, dodistinct(v)) for k, v in iterable)
         return Result(result, _get_evaluation_type(iterable))
     return dodistinct(iterable)
 
@@ -1406,8 +1393,8 @@ class Select(object):
             index = 1 if isinstance(inner, str) else len(inner)
             sliced = ((k, (x[-index:] for x in g)) for k, g in grouped)
             formatted = ((k, self._format_result_group(value, g)) for k, g in sliced)
-            dictitems =  DictItems(formatted)
-            return Result(dictitems, evaluation_type=result_type) # <- EXIT!
+            iteritems =  _get_iteritems(formatted)
+            return Result(iteritems, evaluation_type=result_type) # <- EXIT!
 
         raise TypeError('type {0!r} not supported'.format(type(columns)))
 
@@ -1485,7 +1472,7 @@ class Select(object):
         results =  self._format_results(columns, cursor)
 
         if isinstance(columns, Mapping):
-            results = DictItems((k, next(v)) for k, v in results)
+            results = _get_iteritems((k, next(v)) for k, v in results)
             return Result(results, evaluation_type=dict)
         return next(results)
 

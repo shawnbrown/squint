@@ -20,7 +20,7 @@ from squint._utils import nonstringiter
 from squint.query import (
     BaseElement,
     _is_collection_of_items,
-    DictItems,
+    _get_iteritems,
     _map_data,
     _starmap_data,
     _filter_data,
@@ -129,52 +129,47 @@ class TestResult(unittest.TestCase):
             typed = Result([1, 2, 3], [1])
 
 
-class TestDictItems(unittest.TestCase):
+class TestGetIteritems(unittest.TestCase):
     def test_list_of_items(self):
-        items = DictItems([('a', 1), ('b', 2)])
+        items = _get_iteritems([('a', 1), ('b', 2)])
         self.assertEqual(list(items), [('a', 1), ('b', 2)])
 
     def test_iter_of_items(self):
-        items = DictItems(iter([('a', 1), ('b', 2)]))
+        items = _get_iteritems(iter([('a', 1), ('b', 2)]))
         self.assertEqual(list(items), [('a', 1), ('b', 2)])
 
     def test_dict(self):
-        items = DictItems({'a': 1, 'b': 2})
+        items = _get_iteritems({'a': 1, 'b': 2})
         self.assertEqual(set(items), set([('a', 1), ('b', 2)]))
 
     def test_empty_iterable(self):
-        items = DictItems(iter([]))
+        items = _get_iteritems(iter([]))
         self.assertEqual(list(items), [])
 
     def test_Result(self):
-        result = Result(DictItems([('a', 1), ('b', 2)]), evaluation_type=dict)
-        normalized = DictItems(result)
+        result = Result(_get_iteritems([('a', 1), ('b', 2)]), evaluation_type=dict)
+        normalized = _get_iteritems(result)
         self.assertEqual(list(normalized), [('a', 1), ('b', 2)])
 
     def test_Query(self):
         source = Select([('A', 'B'), ('x', 1), ('y', 2)])
         query = source({'A': 'B'}).apply(lambda x: next(x))
-        normalized = DictItems(query)
+        normalized = _get_iteritems(query)
         self.assertEqual(list(normalized), [('x', 1), ('y', 2)])
 
     def test_invalid_input(self):
         source = ['x', 1, 'y', 2]
         with self.assertRaises(TypeError):
-            normalized = DictItems(source)
+            normalized = _get_iteritems(source)
 
         source = [{'x': 1}, {'y': 2}]
         with self.assertRaises(TypeError):
-            normalized = DictItems(source)
-
-    def test_virtual_subset_rel(self):
-        """DictItems should be virtual subclass of IterItems."""
-        items = DictItems([('a', 1), ('b', 2)])
-        self.assertIsInstance(items, IterItems)
+            normalized = _get_iteritems(source)
 
 
 class TestIsCollectionOfItems(unittest.TestCase):
-    def test_dictitems(self):
-        items_iter = DictItems([('a', 1), ('b', 2)])
+    def test_get_iteritems(self):
+        items_iter = _get_iteritems([('a', 1), ('b', 2)])
         self.assertTrue(_is_collection_of_items(items_iter))
 
     def test_dict_items(self):
