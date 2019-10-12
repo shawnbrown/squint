@@ -903,16 +903,16 @@ class Query(object):
                     "already associated with a data source: {0!r}"
                 ).format(self.source))
             self._validate_source(source)
-            result = source
         else:
             if not self.source:
                 raise ValueError("missing 'source' argument, none found")
-            result = self.source
+            source = self.source
 
-        execution_plan = self._get_execution_plan(result, self._query_steps)
+        execution_plan = self._get_execution_plan(source, self._query_steps)
         if optimize:
             execution_plan = self._optimize(execution_plan) or execution_plan
 
+        result = source
         replace_token = lambda x: result if x is RESULT_TOKEN else x
         for step in execution_plan:
             function, args, keywords = step  # Unpack 3-tuple.
