@@ -42,3 +42,9 @@ from .query import Select
 from .query import Query
 from .query import Result
 from ._vendor.predicate import Predicate
+
+BaseElement.__module__ = 'squint'
+Select.__module__ = 'squint'
+Query.__module__ = 'squint'
+Result.__module__ = 'squint'
+Predicate.__module__ = 'squint'
