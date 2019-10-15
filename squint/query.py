@@ -7,6 +7,12 @@ import sys
 from numbers import Number
 
 from ._compatibility.builtins import *
+from ._compatibility import (
+    abc,
+    contextlib,
+    functools,
+    itertools,
+)
 from ._compatibility.collections import namedtuple
 from ._compatibility.collections.abc import (
     Collection,
@@ -17,11 +23,8 @@ from ._compatibility.collections.abc import (
     Set,
     Sized,
 )
-from ._compatibility import (
-    abc,
-    contextlib,
-    functools,
-    itertools,
+from ._vendor.predicate import (
+    get_matcher,
 )
 from ._utils import (
     _flatten,
@@ -34,9 +37,6 @@ from ._utils import (
     _unique_everseen,
     file_types,
     string_types,
-)
-from ._vendor.predicate import (
-    get_matcher,
 )
 from .result import (
     Result,
