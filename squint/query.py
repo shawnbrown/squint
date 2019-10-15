@@ -527,7 +527,7 @@ RESULT_TOKEN = _make_sentinel(
 # Main data handling classes (Query and Select).
 ########################################################
 
-class Query(object):
+class BaseQuery(abc.ABC):
     """Query(columns, **where)
     Query(select, columns, **where)
 
@@ -535,6 +535,12 @@ class Query(object):
 
     See documentation for full details.
     """
+    @property
+    @abc.abstractmethod
+    def _select_cls(self):
+        """"A reference to the Select class."""
+        raise NotImplementedError
+
     def __init__(self, *args, **where):
         """Initialize self.
 
@@ -544,9 +550,11 @@ class Query(object):
         argcount = len(args)
         if argcount == 2:
             select, columns = args
-            if not isinstance(select, Select):
-                msg = 'select must be datatest.Select object, got {0}'
-                raise TypeError(msg.format(select.__class__.__name__))
+            if not isinstance(select, self._select_cls):
+                raise TypeError('select must be {0} object, got {1}'.format(
+                    self._select_cls.__name__,
+                    select.__class__.__name__,
+                ))
             flattened = _flatten([_parse_columns(columns), where.keys()])
             try:
                 select._assert_fields_exist(flattened)
@@ -589,11 +597,10 @@ class Query(object):
         new_query._query_steps = []
         return new_query
 
-    @staticmethod
-    def _validate_source(source):
-        if not isinstance(source, Select):
+    def _validate_source(self, source):
+        if not isinstance(source, self._select_cls):
             raise TypeError('expected {0!r}, got {1!r}'.format(
-                Select.__name__,
+                self._select_cls.__name__,
                 source.__class__.__name__,
             ))
 
@@ -740,7 +747,7 @@ class Query(object):
         return _execution_step(function, args, {})
 
     def _get_execution_plan(self, source, query_steps):
-        if isinstance(source, Select):
+        if isinstance(source, self._select_cls):
             execution_plan = [
                 _execution_step(getattr, (RESULT_TOKEN, '_select'), {}),
                 _execution_step(RESULT_TOKEN, self.args, self.kwds),
@@ -857,7 +864,7 @@ class Query(object):
             if len(source_repr) > 70:
                 source_repr = source_repr[:67] + '...'
         else:
-            source = Select([], fieldnames=['dummy_source'])
+            source = self._select_cls([], fieldnames=['dummy_source'])
             source_repr = '<none given> (assuming Select object)'
 
         execution_plan = self._get_execution_plan(source, self._query_steps)
@@ -884,8 +891,8 @@ class Query(object):
     def __repr__(self):
         class_repr = self.__class__.__name__
 
-        if isinstance(self.source, Select):
-            source_repr = super(Select, self.source).__repr__()
+        if isinstance(self.source, self._select_cls):
+            source_repr = super(self._select_cls, self.source).__repr__()
             is_from_object = False
         elif self.source:
             source_repr = repr(self.source)
@@ -995,7 +1002,7 @@ class Query(object):
 
 
 with contextlib.suppress(AttributeError):  # inspect.Signature() is new in 3.3
-    Query.__init__.__signature__ = inspect.Signature([
+    BaseQuery.__init__.__signature__ = inspect.Signature([
         inspect.Parameter('self', inspect.Parameter.POSITIONAL_ONLY),
         inspect.Parameter('columns', inspect.Parameter.POSITIONAL_ONLY),
         inspect.Parameter('where', inspect.Parameter.VAR_KEYWORD),
@@ -1453,3 +1460,8 @@ class Select(object):
     #     select(select.fieldnames).to_csv(...)
     #
 
+
+class Query(BaseQuery):
+    @property
+    def _select_cls(self):
+        return Select
