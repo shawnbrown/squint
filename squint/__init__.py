@@ -38,8 +38,8 @@ if _sqlite3.sqlite_version_info < (3, 6, 8):
 # Import squint objects into main namespace.
 ############################################
 from .query import BaseElement
-from .query import Select
-from .query import Query
+from .select import Select
+from .select import Query
 from .result import Result
 from ._vendor.predicate import Predicate
 

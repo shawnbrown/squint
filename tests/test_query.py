@@ -17,7 +17,10 @@ from squint._compatibility.collections.abc import Mapping
 from squint._utils import IterItems
 from squint._utils import nonstringiter
 
-from squint.result import Result
+from squint.select import (
+    Select,
+    Query,
+)
 from squint.query import (
     BaseElement,
     _is_collection_of_items,
@@ -39,9 +42,8 @@ from squint.query import (
     _normalize_columns,
     _parse_columns,
     RESULT_TOKEN,
-    Query,
-    Select,
 )
+from squint.result import Result
 
 
 class TestBaseElement(unittest.TestCase):

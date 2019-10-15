@@ -4,10 +4,7 @@ import csv
 import inspect
 import sqlite3
 import sys
-from glob import glob
 from numbers import Number
-
-from get_reader import get_reader
 
 from ._compatibility.builtins import *
 from ._compatibility.collections import namedtuple
@@ -15,7 +12,6 @@ from ._compatibility.collections.abc import (
     Collection,
     Hashable,
     Iterable,
-    Iterator,
     Mapping,
     Sequence,
     Set,
@@ -39,36 +35,12 @@ from ._utils import (
     file_types,
     string_types,
 )
-from ._vendor.load_csv import load_csv
-from ._vendor.temptable import (
-    load_data,
-    new_table_name,
-    savepoint,
-    table_exists,
-)
 from ._vendor.predicate import (
-    MatcherObject,
-    MatcherTuple,
     get_matcher,
 )
-from .result import Result
-
-
-try:
-    FileNotFoundError  # New in Python 3.3.
-except NameError:
-    # If not available, use as an alias for OSError.
-    FileNotFoundError = OSError
-
-# For the following database connection, the synchronous flag is
-# set to "OFF" for faster insertions and commits. Since the database
-# is temporary, long-term integrity should not be a concern--in the
-# unlikely event of data corruption, it should be entirely acceptable
-# to simply rebuild the temporary tables.
-DEFAULT_CONNECTION = sqlite3.connect('')  # <- Using '' makes a temp file.
-DEFAULT_CONNECTION.execute('PRAGMA synchronous=OFF')
-DEFAULT_CONNECTION.isolation_level = None  # <- Run in 'autocommit' mode.
-_user_function_name_gen = ('FUNC{0}'.format(x) for x in itertools.count())
+from .result import (
+    Result,
+)
 
 
 PY2 = sys.version_info[0] == 2
@@ -109,7 +81,7 @@ def _get_iteritems(iterable):
     if isinstance(iterable, Mapping):
         return IterItems(iterable)  # <- EXIT!
 
-    if isinstance(iterable, Query):
+    if isinstance(iterable, BaseQuery):
         iterable = iterable.execute()
 
     while hasattr(iterable, '__wrapped__'):
@@ -584,7 +556,7 @@ class BaseQuery(abc.ABC):
         If *obj* is a Query itself, a copy of the original query
         is created.
         """
-        if isinstance(obj, Query):
+        if isinstance(obj, BaseQuery):
             return obj.__copy__()
 
         if not nonstringiter(obj):

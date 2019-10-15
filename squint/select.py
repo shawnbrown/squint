@@ -1,3 +1,62 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import
+import sqlite3
+from glob import glob
+
+from get_reader import get_reader
+
+from ._compatibility.builtins import *
+from ._compatibility import (
+    functools,
+    itertools,
+)
+from ._compatibility.collections.abc import (
+    Hashable,
+    Mapping,
+    Sequence,
+    Set,
+)
+from ._vendor.predicate import (
+    MatcherObject,
+    MatcherTuple,
+    get_matcher,
+)
+from ._vendor.temptable import (
+    load_data,
+    new_table_name,
+    savepoint,
+    table_exists,
+)
+from ._utils import (
+    file_types,
+    string_types,
+)
+from .query import (
+    BaseQuery,
+    _get_iteritems,
+    _parse_columns,
+)
+from .result import (
+    Result,
+)
+
+
+try:
+    FileNotFoundError  # New in Python 3.3.
+except NameError:
+    # If not available, use as an alias for OSError.
+    FileNotFoundError = OSError
+
+
+# For the following database connection, the synchronous flag is
+# set to "OFF" for faster insertions and commits. Since the database
+# is temporary, long-term integrity should not be a concern--in the
+# unlikely event of data corruption, it should be entirely acceptable
+# to simply rebuild the temporary tables.
+DEFAULT_CONNECTION = sqlite3.connect('')  # <- Using '' makes a temp file.
+DEFAULT_CONNECTION.execute('PRAGMA synchronous=OFF')
+DEFAULT_CONNECTION.isolation_level = None  # <- Run in 'autocommit' mode.
+_user_function_name_gen = ('FUNC{0}'.format(x) for x in itertools.count())
 
 
 class Select(object):
