@@ -496,17 +496,10 @@ RESULT_TOKEN = _make_sentinel(
 
 
 ########################################################
-# Main data handling classes (Query and Select).
+# BaseQuery class
 ########################################################
 
 class BaseQuery(abc.ABC):
-    """Query(columns, **where)
-    Query(select, columns, **where)
-
-    A class to query data from a source object.
-
-    See documentation for full details.
-    """
     @property
     @abc.abstractmethod
     def _select_cls(self):
