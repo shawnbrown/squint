@@ -75,7 +75,7 @@ class Result(Iterator):
             raise
 
     def next(self):
-        return next(self.__wrapped__)  # For Python 2 compatibility.
+        return self.__next__()  # For Python 2 compatibility.
 
     def __del__(self):
         self.close()
