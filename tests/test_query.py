@@ -1277,3 +1277,16 @@ class TestQuery(unittest.TestCase):
         query = Query(['label1']).map(lower)
         regex = r"Query\(\[u?'label1'\]\).map\(<lambda>\)"
         self.assertRegex(repr(query), regex)
+
+
+class TestIterable(unittest.TestCase):
+    def test_iterate_source(self):
+        select = Select([('A', 'B'), (1, 2), (1, 2)])
+        query = Query(select, ['B'])
+        self.assertEqual(list(query), [2, 2])
+
+    def test_iterate_single_result(self):
+        """Single items should be wrapped as iterators when iterated over."""
+        select = Select([('A', 'B'), (1, 2), (1, 2)])
+        query = Query(select, ['B']).sum()
+        self.assertEqual(list(query), [4])

@@ -18,6 +18,7 @@ from ._compatibility.collections.abc import (
     Collection,
     Hashable,
     Iterable,
+    Iterator,
     Mapping,
     Sequence,
     Set,
@@ -805,6 +806,13 @@ class BaseQuery(abc.ABC):
             result = function(*args, **keywords)
 
         return result
+
+    def __iter__(self):
+        """Executes query and returns an eagerly evaluated result."""
+        result = self.execute()
+        if isinstance(result, Iterator):
+            return result
+        return iter([result])
 
     def fetch(self):
         """Executes query and returns an eagerly evaluated result."""
