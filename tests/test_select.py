@@ -450,3 +450,9 @@ class TestQueryToCsv(unittest.TestCase):
 
         finally:
             shutil.rmtree(tmpdir)
+
+
+class TestIterable(unittest.TestCase):
+    def test_iterate(self):
+        select = Select([('A', 'B'), (1, 2), (1, 2)])
+        self.assertEqual(list(select), [[1, 2], [1, 2]])

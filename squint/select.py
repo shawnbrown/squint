@@ -457,6 +457,11 @@ class Select(object):
             return Result(results, evaluation_type=dict)
         return next(results)
 
+    def __iter__(self):
+        columns = self.fieldnames
+        query = self(columns)
+        return query.__iter__()
+
     def create_index(self, *columns):
         """Create an index for specified columns---can speed up
         testing in many cases.
