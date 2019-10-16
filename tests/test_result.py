@@ -5,7 +5,7 @@ from squint._utils import IterItems
 from squint.result import Result
 
 
-class TestResult(unittest.TestCase):
+class TestFetch(unittest.TestCase):
     def test_nonmappings(self):
         """Check collection types (i.e., sized, iterable containers)."""
         result = Result([1, 2, 3], list)
@@ -36,3 +36,22 @@ class TestResult(unittest.TestCase):
         with self.assertRaisesRegex(TypeError, regex):
             typed = Result([1, 2, 3], [1])
 
+
+class TestClosing(unittest.TestCase):
+    def setUp(self):
+        self.log = []
+
+        def closefunc():
+            self.log.append('closed')
+
+        self.closefunc = closefunc
+
+    def test_explicit_close(self):
+        result = Result(iter([1, 2, 3]), set, closefunc=self.closefunc)
+        self.assertEqual(self.log, [], msg='verify log is empty')
+
+        result.close()
+        self.assertEqual(self.log, ['closed'], msg='see if close was called')
+
+        result.close()  # <- Second call.
+        self.assertEqual(self.log, ['closed'], msg='multiple calls pass without error')

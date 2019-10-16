@@ -28,7 +28,7 @@ class Result(Iterator):
         is a :py:class:`dict` or other mapping, the *iterable* must
         contain unique key-value pairs or a mapping.
     """
-    def __init__(self, iterable, evaluation_type):
+    def __init__(self, iterable, evaluation_type, closefunc=None):
         if not isinstance(evaluation_type, type):
             msg = 'evaluation_type must be a type, found instance of {0}'
             raise TypeError(msg.format(evaluation_type.__class__.__name__))
@@ -46,6 +46,16 @@ class Result(Iterator):
         #: The type of instance returned when data is evaluated
         #: with the :meth:`fetch <Result.fetch>` method.
         self.evaluation_type = evaluation_type
+
+        self._closefunc = closefunc
+
+    def close(self):
+        """Closes any associated resources. If the resources have
+        already been closed, this method passes without error.
+        """
+        if self._closefunc:
+            self._closefunc()
+            self._closefunc = None
 
     def __iter__(self):
         return self
