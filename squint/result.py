@@ -77,6 +77,9 @@ class Result(Iterator):
     def next(self):
         return next(self.__wrapped__)  # For Python 2 compatibility.
 
+    def __del__(self):
+        self.close()
+
     def fetch(self):
         """Evaluate the entire iterator and return its result::
 

@@ -63,3 +63,11 @@ class TestClosing(unittest.TestCase):
 
         list(result)  # Exhaust iterable.
         self.assertEqual(self.log, ['closed'])
+
+    def test_delete(self):
+        """"Should call close() when object is garbage collected."""
+        result = Result(iter([1, 2, 3]), set, closefunc=self.closefunc)
+        self.assertEqual(self.log, [], msg='verify log is empty')
+
+        result.__del__()  # Call __del__() directly.
+        self.assertEqual(self.log, ['closed'])
