@@ -68,7 +68,11 @@ class Result(Iterator):
         return template.format(cls_name, eval_name, hex_id)
 
     def __next__(self):
-        return next(self.__wrapped__)
+        try:
+            return next(self.__wrapped__)
+        except StopIteration:
+            self.close()
+            raise
 
     def next(self):
         return next(self.__wrapped__)  # For Python 2 compatibility.

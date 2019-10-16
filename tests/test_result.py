@@ -55,3 +55,11 @@ class TestClosing(unittest.TestCase):
 
         result.close()  # <- Second call.
         self.assertEqual(self.log, ['closed'], msg='multiple calls pass without error')
+
+    def test_stopiteration(self):
+        """"Should call close() method when iterable is exhausted."""
+        result = Result(iter([1, 2, 3]), set, closefunc=self.closefunc)
+        self.assertEqual(self.log, [], msg='verify log is empty')
+
+        list(result)  # Exhaust iterable.
+        self.assertEqual(self.log, ['closed'])
