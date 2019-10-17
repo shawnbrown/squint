@@ -16,6 +16,9 @@ from ._compatibility.collections.abc import (
     Sequence,
     Set,
 )
+from ._vendor.load_csv import (
+    load_csv,
+)
 from ._vendor.predicate import (
     MatcherObject,
     MatcherTuple,
