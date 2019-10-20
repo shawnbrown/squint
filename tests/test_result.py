@@ -37,6 +37,22 @@ class TestFetch(unittest.TestCase):
             typed = Result([1, 2, 3], [1])
 
 
+class TestPreview(unittest.TestCase):
+    def test_peek(self):
+        result = Result((1, 2, 3, 4, 5, 6, 7), tuple)
+
+        self.assertEqual(result._peek(), [1, 2, 3, 4, 5, 6])
+
+        next(result)  # 1
+        self.assertEqual(result._peek(), [2, 3, 4, 5, 6, 7])
+
+        next(result)  # 2
+        self.assertEqual(result._peek(), [3, 4, 5, 6, 7])
+
+        list(result)  # [3, 4, 5, 6, 7]
+        self.assertEqual(result._peek(), [])
+
+
 class TestClosing(unittest.TestCase):
     def setUp(self):
         self.log = []

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
+from ._compatibility.collections import deque
 from ._compatibility.collections.abc import (
     Iterator,
     Mapping,
@@ -49,6 +50,8 @@ class Result(Iterator):
         #: with the :meth:`fetch <Result.fetch>` method.
         self.evaluation_type = evaluation_type
 
+        self._cache = deque()
+
     def close(self):
         """Closes any associated resources. If the resources have
         already been closed, this method passes without error.
@@ -68,6 +71,9 @@ class Result(Iterator):
         return template.format(cls_name, eval_name, hex_id)
 
     def __next__(self):
+        if self._cache:
+            return self._cache.popleft()  # <- EXIT!
+
         try:
             return next(self.__wrapped__)
         except StopIteration:
@@ -79,6 +85,18 @@ class Result(Iterator):
 
     def __del__(self):
         self.close()
+
+    def _peek(self):
+        cache = self._cache
+        wrapped = self.__wrapped__
+
+        while len(cache) < 6:
+            try:
+                cache.append(next(wrapped))
+            except StopIteration:
+                break
+
+        return list(cache)
 
     def fetch(self):
         """Evaluate the entire iterator and return its result::
