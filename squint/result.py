@@ -51,6 +51,7 @@ class Result(Iterator):
         self.evaluation_type = evaluation_type
 
         self._cache = deque()
+        self._preview_length = 5
 
     def close(self):
         """Closes any associated resources. If the resources have
@@ -87,10 +88,11 @@ class Result(Iterator):
         self.close()
 
     def _peek(self):
+        """Peek into the iterator and get a list of upcoming values."""
         cache = self._cache
         wrapped = self.__wrapped__
-
-        while len(cache) < 6:
+        peek_length = self._preview_length + 1
+        while len(cache) < peek_length:
             try:
                 cache.append(next(wrapped))
             except StopIteration:
