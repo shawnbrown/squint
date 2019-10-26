@@ -52,6 +52,25 @@ class TestPreview(unittest.TestCase):
         list(result)  # [3, 4, 5, 6, 7]
         self.assertEqual(result._peek(), [])
 
+    def test_preview(self):
+        result = Result([1, 2, 3, 4, 5, 6, 7], tuple)
+
+        self.assertEqual(result._preview(), '(1, 2, 3, 4, 5, 6)')
+
+        next(result)  # 1
+        self.assertEqual(result._preview(), '(2, 3, 4, 5, 6, 7)')
+
+        next(result)  # 2
+        self.assertEqual(result._preview(), '(3, 4, 5, 6, 7)')
+
+        list(result)  # (3, 4, 5, 6, 7)
+        self.assertEqual(result._preview(), '()')
+
+    def test_preview_mapping(self):
+        result = Result({'a': 1}, dict)
+
+        self.assertEqual(result._preview(), "{'a': 1}")
+
 
 class TestClosing(unittest.TestCase):
     def setUp(self):

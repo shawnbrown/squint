@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
+from pprint import pformat
 from ._compatibility.collections import deque
 from ._compatibility.collections.abc import (
     Iterator,
@@ -99,6 +100,31 @@ class Result(Iterator):
                 break
 
         return list(cache)
+
+    def _preview(self):
+        """Get a pretty-print formatted string to preview the results."""
+        cache = self._peek()
+        preview_length = self._preview_length
+
+        if issubclass(self.evaluation_type, Mapping):
+            preview = []
+            for k, v in cache:
+                if isinstance(v, Result):
+                    v_iter = list(v._peek())
+                    v = Result(v_iter, evaluation_type=v.evaluation_type)
+                preview.append((k,v))
+            compact = True
+
+        else:
+            preview = list(cache)
+            compact = False
+            for value in preview:
+                if len(repr(value)) > 72:
+                    compact = True
+                    break
+
+        result = Result(preview, evaluation_type=self.evaluation_type).fetch()
+        return pformat(result, compact=compact)
 
     def fetch(self):
         """Evaluate the entire iterator and return its result::
