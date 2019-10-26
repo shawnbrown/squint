@@ -6,7 +6,29 @@ from ._compatibility.collections.abc import (
     Iterator,
     Mapping,
 )
+from ._compatibility.functools import total_ordering
 from ._utils import IterItems
+
+
+@total_ordering
+class _TruncationEllipsis(object):
+    def __init__(self, always_lt):
+        self.always_lt = always_lt
+
+    def __hash__(self):
+        return hash((_TruncationEllipsis, self.always_lt))
+
+    def __repr__(self):
+        return '...'
+
+    def __eq__(self, other):
+        return self is other
+
+    def __lt__(self, other):
+        return self is not other and self.always_lt
+
+
+_TRUNCATED_ENDING = _TruncationEllipsis(False)
 
 
 class Result(Iterator):
@@ -111,9 +133,14 @@ class Result(Iterator):
             for k, v in cache:
                 if isinstance(v, Result):
                     v_iter = list(v._peek())
+                    if len(v_iter) > preview_length:
+                        v_iter[preview_length] = _TRUNCATED_ENDING
                     v = Result(v_iter, evaluation_type=v.evaluation_type)
                 preview.append((k,v))
             compact = True
+
+            if len(preview) > preview_length:
+                preview[preview_length] = (_TRUNCATED_ENDING, _TRUNCATED_ENDING)
 
         else:
             preview = list(cache)
@@ -122,6 +149,9 @@ class Result(Iterator):
                 if len(repr(value)) > 72:
                     compact = True
                     break
+
+            if len(preview) > preview_length:
+                preview[preview_length] = _TRUNCATED_ENDING
 
         result = Result(preview, evaluation_type=self.evaluation_type).fetch()
         return pformat(result, compact=compact)
