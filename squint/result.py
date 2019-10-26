@@ -28,6 +28,7 @@ class _TruncationEllipsis(object):
         return self is not other and self.always_lt
 
 
+_TRUNCATED_BEGINNING = _TruncationEllipsis(True)
 _TRUNCATED_ENDING = _TruncationEllipsis(False)
 
 
@@ -59,9 +60,6 @@ class Result(Iterator):
             msg = 'evaluation_type must be a type, found instance of {0}'
             raise TypeError(msg.format(evaluation_type.__class__.__name__))
 
-        while isinstance(iterable, Result):
-            iterable = iterable.__wrapped__
-
         if isinstance(iterable, Mapping):
             iterable = IterItems(iterable)
 
@@ -75,6 +73,9 @@ class Result(Iterator):
 
         self._cache = deque()
         self._preview_length = 5
+        self._peek()
+        self._initial_cache_length = len(self._cache)
+        self._started_iteration = False
 
     def close(self):
         """Closes any associated resources. If the resources have
@@ -125,6 +126,8 @@ class Result(Iterator):
 
     def _preview(self):
         """Get a pretty-print formatted string to preview the results."""
+        if self._initial_cache_length != len(self._cache):
+            self._started_iteration = True
         cache = self._peek()
         preview_length = self._preview_length
 
@@ -142,6 +145,9 @@ class Result(Iterator):
             if len(preview) > preview_length:
                 preview[preview_length] = (_TRUNCATED_ENDING, _TRUNCATED_ENDING)
 
+            if preview and self._started_iteration:
+                preview = [(_TRUNCATED_BEGINNING, _TRUNCATED_BEGINNING)] + preview
+
         else:
             preview = list(cache)
             compact = False
@@ -152,6 +158,9 @@ class Result(Iterator):
 
             if len(preview) > preview_length:
                 preview[preview_length] = _TRUNCATED_ENDING
+
+            if preview and self._started_iteration:
+                preview = [_TRUNCATED_BEGINNING] + preview
 
         result = Result(preview, evaluation_type=self.evaluation_type).fetch()
         return pformat(result, compact=compact)

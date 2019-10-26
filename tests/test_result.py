@@ -3,6 +3,7 @@ from __future__ import absolute_import
 from .common import unittest
 from squint._utils import IterItems
 from squint.result import Result
+from squint.result import _TRUNCATED_BEGINNING
 from squint.result import _TRUNCATED_ENDING
 
 
@@ -59,10 +60,10 @@ class TestPreview(unittest.TestCase):
         self.assertEqual(result._preview(), '(1, 2, 3, 4, 5, ...)')
 
         next(result)  # 1
-        self.assertEqual(result._preview(), '(2, 3, 4, 5, 6, ...)')
+        self.assertEqual(result._preview(), '(..., 2, 3, 4, 5, 6, ...)')
 
         next(result)  # 2
-        self.assertEqual(result._preview(), '(3, 4, 5, 6, 7)')
+        self.assertEqual(result._preview(), '(..., 3, 4, 5, 6, 7)')
 
         list(result)  # (3, 4, 5, 6, 7)
         self.assertEqual(result._preview(), '()')
@@ -73,6 +74,13 @@ class TestPreview(unittest.TestCase):
 
         result = Result({'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7}, dict)
         preview = result._preview()
+        self.assertTrue(not preview.startswith('{...: ...'))
+        self.assertTrue(preview.endswith('...: ...}'))
+
+        result = Result({'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7}, dict)
+        next(result)
+        preview = result._preview()
+        self.assertTrue(preview.startswith('{...: ...'))
         self.assertTrue(preview.endswith('...: ...}'))
 
 
