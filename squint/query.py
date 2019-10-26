@@ -85,9 +85,6 @@ def _get_iteritems(iterable):
     if isinstance(iterable, BaseQuery):
         iterable = iterable.execute()
 
-    while hasattr(iterable, '__wrapped__'):
-        iterable = iterable.__wrapped__
-
     first_item, iterable = iterpeek(iterable)
 
     # Assert that first item contains a suitable key-value pair.
