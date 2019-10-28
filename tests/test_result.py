@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 from .common import unittest
+from squint._compatibility.collections import deque
 from squint._utils import IterItems
 from squint.result import Result
 from squint.result import _TRUNCATED_BEGINNING
@@ -40,19 +41,22 @@ class TestFetch(unittest.TestCase):
 
 
 class TestPreview(unittest.TestCase):
-    def test_peek(self):
+    def test_refresh_cache(self):
         result = Result((1, 2, 3, 4, 5, 6, 7), tuple)
 
-        self.assertEqual(result._peek(), [1, 2, 3, 4, 5, 6])
+        self.assertEqual(result._cache, deque([1, 2, 3, 4, 5, 6]))
 
         next(result)  # 1
-        self.assertEqual(result._peek(), [2, 3, 4, 5, 6, 7])
+        result._refresh_cache()
+        self.assertEqual(result._cache, deque([2, 3, 4, 5, 6, 7]))
 
         next(result)  # 2
-        self.assertEqual(result._peek(), [3, 4, 5, 6, 7])
+        result._refresh_cache()
+        self.assertEqual(result._cache, deque([3, 4, 5, 6, 7]))
 
         list(result)  # [3, 4, 5, 6, 7]
-        self.assertEqual(result._peek(), [])
+        result._refresh_cache()
+        self.assertEqual(result._cache, deque([]))
 
     def test_preview(self):
         result = Result([1, 2, 3, 4, 5, 6, 7], tuple)

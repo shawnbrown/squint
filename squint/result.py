@@ -73,7 +73,7 @@ class Result(Iterator):
 
         self._cache = deque()
         self._preview_length = 5
-        self._peek()
+        self._refresh_cache()
         self._initial_cache_length = len(self._cache)
         self._started_iteration = False
 
@@ -111,8 +111,8 @@ class Result(Iterator):
     def __del__(self):
         self.close()
 
-    def _peek(self):
-        """Peek into the iterator and get a list of upcoming values."""
+    def _refresh_cache(self):
+        """Refresh self._cache up to preview_length + 1."""
         cache = self._cache
         wrapped = self.__wrapped__
         peek_length = self._preview_length + 1
@@ -122,24 +122,24 @@ class Result(Iterator):
             except StopIteration:
                 break
 
-        return list(cache)
-
     def _preview(self):
         """Get a pretty-print formatted string to preview the results."""
         if self._initial_cache_length != len(self._cache):
             self._started_iteration = True
-        cache = self._peek()
+
+        self._refresh_cache()
+        cache = list(self._cache)
         preview_length = self._preview_length
 
         if issubclass(self.evaluation_type, Mapping):
             preview = []
             for k, v in cache:
                 if isinstance(v, Result):
-                    v_iter = list(v._peek())
+                    v_iter = v._cache
                     if len(v_iter) > preview_length:
                         v_iter[preview_length] = _TRUNCATED_ENDING
                     v = Result(v_iter, evaluation_type=v.evaluation_type)
-                preview.append((k,v))
+                preview.append((k, v))
             compact = True
 
             if len(preview) > preview_length:
