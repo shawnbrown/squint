@@ -149,21 +149,18 @@ class Result(Iterator):
         """Get a pretty-print formatted string to preview the results."""
         if self._initial_cache_length != len(self._cache):
             self._started_iteration = True
-
         self._refresh_cache()
-        cache = list(self._cache)
-        preview_length = self._preview_length
 
+        preview_length = self._preview_length
         if issubclass(self.evaluation_type, Mapping):
             preview = []
-            for k, v in cache:
+            for k, v in self._cache:
                 if isinstance(v, Result):
                     v_iter = v._cache
                     if len(v_iter) > preview_length:
                         v_iter[preview_length] = _TRUNCATED_ENDING
                     v = Result(v_iter, evaluation_type=v.evaluation_type)
                 preview.append((k, v))
-            compact = True
 
             if len(preview) > preview_length:
                 preview[preview_length] = (_TRUNCATED_ENDING, _TRUNCATED_ENDING)
@@ -172,12 +169,7 @@ class Result(Iterator):
                 preview = [(_TRUNCATED_BEGINNING, _TRUNCATED_BEGINNING)] + preview
 
         else:
-            preview = list(cache)
-            compact = False
-            for value in preview:
-                if len(repr(value)) > 72:
-                    compact = True
-                    break
+            preview = list(self._cache)
 
             if len(preview) > preview_length:
                 preview[preview_length] = _TRUNCATED_ENDING
@@ -186,7 +178,7 @@ class Result(Iterator):
                 preview = [_TRUNCATED_BEGINNING] + preview
 
         result = Result(preview, evaluation_type=self.evaluation_type).fetch()
-        return pformat(result, compact=compact)
+        return pformat(result, width=40)
 
     def fetch(self):
         """Evaluate the entire iterator and return its result::
