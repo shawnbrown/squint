@@ -2,6 +2,7 @@
 from __future__ import absolute_import
 from .common import unittest
 from squint._compatibility.collections import deque
+from squint._compatibility.itertools import islice
 from squint._utils import IterItems
 from squint.result import Result
 from squint.result import _TRUNCATED_BEGINNING
@@ -62,7 +63,7 @@ class TestPreview(unittest.TestCase):
              'y': Result([1, 2, 3, 4, 5, 6, 7, 8], evaluation_type=list)},
             evaluation_type=dict,
         )
-        self.assertEqual(result._get_cache_length(), peek_length * 2)
+        self.assertEqual(result._get_cache_length(), peek_length)
         self.assertEqual(result.fetch(),                   # Make sure data
                          {'x': [1, 2, 3, 4, 5, 6, 7, 8],   # still fetches
                           'y': [1, 2, 3, 4, 5, 6, 7, 8]})  # properly.
@@ -83,6 +84,37 @@ class TestPreview(unittest.TestCase):
         list(result)  # [3, 4, 5, 6, 7]
         result._refresh_cache()
         self.assertEqual(result._cache, deque([]))
+
+    def test_refresh_cache_mapping(self):
+        result = Result({'a': 1, 'b': 2}, dict)
+        self.assertEqual(result._cache, deque([('a', 1), ('b', 2)]))
+
+        result = Result(IterItems([('a', 1), ('b', 2)]), dict)
+        self.assertEqual(result._cache, deque([('a', 1), ('b', 2)]))
+
+        result = Result(iter([iter(['a', 1]), iter(['b', 2])]), dict)
+        self.assertEqual(result._cache, deque([('a', 1), ('b', 2)]))
+
+        with self.assertRaises(ValueError):
+            result = Result([('a', 1), 'b'], dict)
+
+    def test_shared_iterator(self):
+        """Dict result should not assume independent source iterators."""
+        def generate_items():  # <- Generator that reads from single iterator.
+            shared = iter([
+                'x', 1, 1, 1, 2, 2, 2, 3, 3, 3,
+                'y', 4, 4, 4, 5, 5, 5, 6, 6, 6,
+            ])
+            yield next(shared), Result(islice(shared, 9), evaluation_type=list)
+            yield next(shared), Result(islice(shared, 9), evaluation_type=list)
+
+        result = Result(generate_items(), evaluation_type=dict)
+
+        expected = {
+            'x': [1, 1, 1, 2, 2, 2, 3, 3, 3],
+            'y': [4, 4, 4, 5, 5, 5, 6, 6, 6],
+        }
+        self.assertEqual(result.fetch(), expected)
 
     def test_preview(self):
         result = Result([1, 2, 3, 4, 5, 6, 7], tuple)

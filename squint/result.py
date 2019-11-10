@@ -116,10 +116,18 @@ class Result(Iterator):
         """Refresh self._cache up to preview_length + 1."""
         cache = self._cache
         wrapped = self.__wrapped__
-        peek_length = self._preview_length + 1
-        while len(cache) < peek_length:
+        refresh_length = self._preview_length + 1
+
+        if issubclass(self.evaluation_type, Mapping):
+            def getnext(iterator):           # Make sure key-value
+                key, value = next(iterator)  # pair is not exhaustible.
+                return (key, value)
+        else:
+            getnext = next  # Get next item as-is.
+
+        while self._get_cache_length() < refresh_length:
             try:
-                cache.append(next(wrapped))
+                cache.append(getnext(wrapped))
             except StopIteration:
                 break
 

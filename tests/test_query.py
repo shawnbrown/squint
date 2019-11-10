@@ -1290,3 +1290,22 @@ class TestIterable(unittest.TestCase):
         select = Select([('A', 'B'), (1, 2), (1, 2)])
         query = Query(select, ['B']).sum()
         self.assertEqual(list(query), [4])
+
+
+class TestQueryRegression(unittest.TestCase):
+    def test_bad_truncation(self):
+        """Should not get truncated by preview_length."""
+        select = Select([
+            ('A', 'B'),
+            ('x', 1),
+            ('x', 2),
+            ('x', 3),
+            ('x', 4),
+            ('x', 5),
+            ('x', 6),
+            ('x', 7),
+            ('x', 8),
+            ('x', 9),
+        ])
+        query = Query(select, {'A': 'B'})
+        self.assertEqual(query.fetch(), {'x': [1, 2, 3, 4, 5, 6, 7, 8, 9]})
