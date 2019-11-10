@@ -53,6 +53,8 @@ class Result(Iterator):
         is a :py:class:`dict` or other mapping, the *iterable* must
         contain unique key-value pairs or a mapping.
     """
+    _preview_length = 5
+
     def __init__(self, iterable, evaluation_type, closefunc=None):
         self._closefunc = closefunc
 
@@ -72,7 +74,6 @@ class Result(Iterator):
         self.evaluation_type = evaluation_type
 
         self._cache = deque()
-        self._preview_length = 5
         self._refresh_cache()
         self._initial_cache_length = len(self._cache)
         self._started_iteration = False
@@ -121,6 +122,20 @@ class Result(Iterator):
                 cache.append(next(wrapped))
             except StopIteration:
                 break
+
+    def _get_cache_length(self):
+        """Return cache length."""
+        if not issubclass(self.evaluation_type, Mapping):
+            return len(self._cache)  # <- EXIT!
+
+        length = 0
+        for item in self._cache:
+            key, value = item
+            if isinstance(value, Result):
+                length += value._get_cache_length()
+                continue
+            length += 1
+        return length
 
     def _preview(self):
         """Get a pretty-print formatted string to preview the results."""

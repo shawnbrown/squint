@@ -41,6 +41,32 @@ class TestFetch(unittest.TestCase):
 
 
 class TestPreview(unittest.TestCase):
+    def test_get_cache_length(self):
+        peek_length = Result._preview_length + 1
+
+        result = Result([1, 2, 3, 4], evaluation_type=list)
+        self.assertEqual(result._get_cache_length(), 4)
+
+        result = Result([1, 2, 3, 4, 5, 6, 7, 8], evaluation_type=list)
+        self.assertEqual(result._get_cache_length(), peek_length)
+
+        result = Result(
+            {'x': Result([1, 2], evaluation_type=list),
+             'y': Result([3, 4], evaluation_type=list)},
+            evaluation_type=dict,
+        )
+        self.assertEqual(result._get_cache_length(), 4)
+
+        result = Result(
+            {'x': Result([1, 2, 3, 4, 5, 6, 7, 8], evaluation_type=list),
+             'y': Result([1, 2, 3, 4, 5, 6, 7, 8], evaluation_type=list)},
+            evaluation_type=dict,
+        )
+        self.assertEqual(result._get_cache_length(), peek_length * 2)
+        self.assertEqual(result.fetch(),                   # Make sure data
+                         {'x': [1, 2, 3, 4, 5, 6, 7, 8],   # still fetches
+                          'y': [1, 2, 3, 4, 5, 6, 7, 8]})  # properly.
+
     def test_refresh_cache(self):
         result = Result((1, 2, 3, 4, 5, 6, 7), tuple)
 
