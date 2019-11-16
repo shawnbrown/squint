@@ -161,6 +161,35 @@ class TestPreview(unittest.TestCase):
         preview = result._preview()
         self.assertEqual(preview, "{'a': [1, 2, 3, 4, 5, ...]}")
 
+        ###############################################################
+        # TODO: Look into implementing more precise preview truncation.
+        ###############################################################
+
+        #iterable = IterItems([
+        #    ('a', Result([1, 2, 3, 4, 5, 6, 7, 8, 9], list)),
+        #    ('b', Result([1, 2, 3, 4, 5, 6, 7, 8, 9], list)),
+        #])
+        #result = Result(iterable, dict)
+        #preview = result._preview()
+        #self.assertEqual(preview, "{'a': [1, 2, 3, 4, 5, ...], ...: ...}")
+        #
+        #iterable = IterItems([
+        #    ('a', Result([1, 2, 3], list)),
+        #    ('b', Result([4, 5, 6], list)),
+        #])
+        #result = Result(iterable, dict)
+        #preview = result._preview()
+        #self.assertEqual(preview, "{'a': [1, 2, 3], 'b': [4, 5, ...]}")
+        #
+        #iterable = IterItems([
+        #    ('a', Result([1, 2, 3], list)),
+        #    ('b', Result([4, 5, 6], list)),
+        #    ('c', Result([7, 8, 9], list)),
+        #])
+        #result = Result(iterable, dict)
+        #preview = result._preview()
+        #self.assertEqual(preview, "{'a': [1, 2, 3], 'b': [4, 5, ...], ...: ...}")
+
 
 class TestClosing(unittest.TestCase):
     def setUp(self):
