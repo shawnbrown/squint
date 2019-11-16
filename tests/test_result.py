@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
+import sys
 from .common import unittest
 from squint._compatibility.collections import deque
+from squint._compatibility.collections import OrderedDict
 from squint._compatibility.itertools import islice
 from squint._utils import IterItems
 from squint.result import Result
@@ -86,7 +88,7 @@ class TestPreview(unittest.TestCase):
         self.assertEqual(result._cache, deque([]))
 
     def test_refresh_cache_mapping(self):
-        result = Result({'a': 1, 'b': 2}, dict)
+        result = Result(OrderedDict([('a', 1), ('b', 2)]), dict)
         self.assertEqual(result._cache, deque([('a', 1), ('b', 2)]))
 
         result = Result(IterItems([('a', 1), ('b', 2)]), dict)
@@ -131,19 +133,33 @@ class TestPreview(unittest.TestCase):
         self.assertEqual(result._preview(), '()')
 
     def test_preview_mapping(self):
-        result = Result({'a': 1}, dict)
+        short_dict = {'a': 1}
+        long_dict = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7}
+
+        result = Result(short_dict, dict)
         self.assertEqual(result._preview(), "{'a': 1}")
 
-        result = Result({'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7}, dict)
+        result = Result(long_dict, dict)
         preview = result._preview()
-        self.assertTrue(not preview.startswith('{...: ...'))
-        self.assertTrue(preview.endswith('...: ...}'))
 
-        result = Result({'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7}, dict)
+        if sys.version_info[:2] >= (3, 7):
+            self.assertTrue(not preview.startswith('{...: ...'))
+            self.assertTrue(preview.endswith('...: ...}'))
+        else:
+            self.assertEqual(preview.count('...: ...'), 1)  # Truncated ending.
+
+        result = Result(long_dict, dict)
         next(result)
         preview = result._preview()
-        self.assertTrue(preview.startswith('{...: ...'))
-        self.assertTrue(preview.endswith('...: ...}'))
+        if sys.version_info[:2] >= (3, 7):
+            self.assertTrue(preview.startswith('{...: ...'))
+            self.assertTrue(preview.endswith('...: ...}'))
+        else:
+            self.assertEqual(preview.count('...: ...'), 2)  # Truncated beginning and end.
+
+        result = Result(IterItems([('a', Result([1, 2, 3, 4, 5, 6, 7, 8, 9], list))]), dict)
+        preview = result._preview()
+        self.assertEqual(preview, "{'a': [1, 2, 3, 4, 5, ...]}")
 
 
 class TestClosing(unittest.TestCase):
