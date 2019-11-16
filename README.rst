@@ -6,7 +6,7 @@ squint: Simple query interface for tabular data
 .. start-inclusion-marker-description
 
 Squint is a light-weight query interface for tabular data that's
-easy to learn and quick to use. A core feature of ``squint`` is that
+easy to learn and quick to use. A core feature of Squint is that
 the structure of a query's *selection* matches the structure of its
 *result*. With it you can:
 
@@ -25,9 +25,8 @@ Installation
 
 .. start-inclusion-marker-install
 
-The ``squint`` package is tested on Python 2.6, 2.7, 3.2 through 3.8,
-PyPy, and PyPy3; and is freely available under the Apache License,
-version 2.
+The ``squint`` package is tested on Python 2.7, 3.4 through 3.8, PyPy,
+and PyPy3; and is freely available under the Apache License, version 2.
 
 The easiest way to install squint is to use `pip <https://pip.pypa.io>`_:
 
