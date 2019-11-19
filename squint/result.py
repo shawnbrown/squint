@@ -205,6 +205,16 @@ class Result(Iterator):
         ending = container_repr[index + len(item_repr):]
         return beginning, ending
 
+    @staticmethod
+    def _get_repr_length(beginning, repr_list, ending, sep=', '):
+        """Return length of repr for collection of items."""
+        if not repr_list:
+            return len(beginning) + len(ending)  # <- EXIT!
+
+        sum_items = sum(len(x) for x in repr_list)
+        sum_separators = len(sep) * (len(repr_list) - 1)
+        return len(beginning) + sum_items + sum_separators + len(ending)
+
     def fetch(self):
         """Evaluate the entire iterator and return its result::
 

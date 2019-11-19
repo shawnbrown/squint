@@ -215,6 +215,24 @@ class TestPreview(unittest.TestCase):
         parts = Result._get_formatting_parts(cache, deque)
         self.assertEqual(parts, ('deque([', '])'))
 
+    def test_get_repr_length(self):
+        # List containing multiple reprs.
+        beginning = '('
+        repr_list = ["'aaaaa'", "'bbbbb'", "'ccccc'"]
+        ending = ')'
+        actual = Result._get_repr_length(beginning, repr_list, ending)
+        expected_repr = "('aaaaa', 'bbbbb', 'ccccc')"
+        msg = 'should match len({0!r})'.format(expected_repr)
+        self.assertEqual(actual, len(expected_repr), msg=msg)
+
+        # List containing only 1 repr (no separator).
+        beginning = '['
+        repr_list = ["'aaaaabbbbbccccc'"]
+        ending = ']'
+        actual = Result._get_repr_length(beginning, repr_list, ending)
+        expected = len("['aaaaabbbbbccccc']")
+        self.assertEqual(actual, expected, msg='should match repr length')
+
 
 class TestClosing(unittest.TestCase):
     def setUp(self):
