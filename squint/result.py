@@ -54,6 +54,7 @@ class Result(Iterator):
         contain unique key-value pairs or a mapping.
     """
     _preview_length = 5
+    _preview_width = 72
 
     def __init__(self, iterable, evaluation_type, closefunc=None):
         self._closefunc = closefunc
@@ -214,6 +215,48 @@ class Result(Iterator):
         sum_items = sum(len(x) for x in repr_list)
         sum_separators = len(sep) * (len(repr_list) - 1)
         return len(beginning) + sum_items + sum_separators + len(ending)
+
+    def _preview2(self):
+        """Get a formatted string to preview the result data."""
+        if self._initial_cache_length != len(self._cache):
+            self._started_iteration = True
+        self._refresh_cache()
+
+        cache = list(self._cache)
+
+        preview_length = self._preview_length
+        if len(cache) > preview_length:
+            truncate_ending = True
+            cache = cache[:preview_length]
+        else:
+            truncate_ending = False
+
+        beginning, ending = self._get_formatting_parts(cache, self.evaluation_type)
+
+        items = []
+        if cache and self._started_iteration:
+            items.append('...')
+
+        for item in cache:
+            item_repr = repr(item)
+            if len(item_repr) > self._preview_width:
+                slice_end = self._preview_width - 3
+                item_repr = '{0}...'.format(item_repr[:slice_end])
+            items.append(item_repr)
+
+        if truncate_ending:
+            items.append('...')
+
+        char_count = self._get_repr_length(beginning, items, ending)
+        if char_count > self._preview_width:
+            padding = ' ' * len(beginning)
+            join_str = ',\n{0}'.format(padding)  # Line-break for each item.
+        else:
+            join_str = ', '  # No line-break, all items on a single line.
+
+        items = join_str.join(items)
+
+        return '{0}{1}{2}'.format(beginning, items, ending)
 
     def fetch(self):
         """Evaluate the entire iterator and return its result::

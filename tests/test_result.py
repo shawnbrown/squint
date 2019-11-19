@@ -233,6 +233,47 @@ class TestPreview(unittest.TestCase):
         expected = len("['aaaaabbbbbccccc']")
         self.assertEqual(actual, expected, msg='should match repr length')
 
+    def test_preview2_length_handling(self):
+        """Test handling of item length and truncation."""
+        result = Result([1, 2, 3, 4, 5, 6, 7], tuple)
+
+        self.assertEqual(result._preview2(), '(1, 2, 3, 4, 5, ...)')
+
+        next(result)  # Get next item: 1
+        self.assertEqual(result._preview2(), '(..., 2, 3, 4, 5, 6, ...)')
+
+        next(result)  # Get next item: 2
+        self.assertEqual(result._preview2(), '(..., 3, 4, 5, 6, 7)')
+
+        list(result)  # Exhaust iterator: (3, 4, 5, 6, 7)
+        self.assertEqual(result._preview2(), '()')
+
+    def test_preview2_width_handling(self):
+        """Test handling of line breaks and long-line truncation."""
+        data = ['a' * 10] * 5  # 71 chararcter repr
+        actual = Result(data, tuple)._preview2()
+        expected = "('aaaaaaaaaa', 'aaaaaaaaaa', 'aaaaaaaaaa', 'aaaaaaaaaa', 'aaaaaaaaaa')"
+        self.assertEqual(actual, expected)
+
+        data = ['a' * 11] * 5  # greater than 72 chararcter repr
+        actual = Result(data, tuple)._preview2()
+        expected = (
+            "('aaaaaaaaaaa',\n"
+            " 'aaaaaaaaaaa',\n"
+            " 'aaaaaaaaaaa',\n"
+            " 'aaaaaaaaaaa',\n"
+            " 'aaaaaaaaaaa')"
+        )
+        self.assertEqual(actual, expected)
+
+        data = ['a' * (Result._preview_width + 1)] * 2  # two long lines
+        actual = Result(data, tuple)._preview2()
+        expected = (
+            "('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...,\n"
+            " 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...)"
+        )
+        self.assertEqual(actual, expected)
+
 
 class TestClosing(unittest.TestCase):
     def setUp(self):
