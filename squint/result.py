@@ -180,6 +180,31 @@ class Result(Iterator):
         result = Result(preview, evaluation_type=self.evaluation_type).fetch()
         return pformat(result, width=40)
 
+    @staticmethod
+    def _get_formatting_parts(cache, evaltype):
+        """Get beginning and ending strings for formatting repr."""
+        # Return parts for common types.
+        if evaltype is list:
+            return '[', ']'
+        if evaltype is tuple:
+            if len(cache) == 1:
+                return '(', ',)'
+            return '(', ')'
+        if evaltype is set:
+            return '{', '}'
+        if evaltype is dict:
+            return '{', '}'
+
+        # For other types, build and examine a sample repr-string.
+        sample_item = cache[0]
+        result = Result([sample_item], evaltype)
+        container_repr = repr(result.fetch())
+        item_repr = repr(sample_item)
+        index = container_repr.index(item_repr, 1)  # Skip first char.
+        beginning = container_repr[:index]
+        ending = container_repr[index + len(item_repr):]
+        return beginning, ending
+
     def fetch(self):
         """Evaluate the entire iterator and return its result::
 

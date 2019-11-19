@@ -190,6 +190,31 @@ class TestPreview(unittest.TestCase):
         #preview = result._preview()
         #self.assertEqual(preview, "{'a': [1, 2, 3], 'b': [4, 5, ...], ...: ...}")
 
+    def test_get_formatting_parts(self):
+        cache = [1, 2, 3, 4, 5, 6, 7]
+        parts = Result._get_formatting_parts(cache, list)
+        self.assertEqual(parts, ('[', ']'))
+
+        cache = [1, 2, 3, 4, 5, 6, 7]
+        parts = Result._get_formatting_parts(cache, tuple)
+        self.assertEqual(parts, ('(', ')'))
+
+        cache = [1]
+        parts = Result._get_formatting_parts(cache, tuple)
+        self.assertEqual(parts, ('(', ',)'), msg='single item tuple syntax')
+
+        cache = []
+        parts = Result._get_formatting_parts(cache, tuple)
+        self.assertEqual(parts, ('(', ')'))
+
+        cache = [(1, 1), (2, 2)]
+        parts = Result._get_formatting_parts(cache, OrderedDict)
+        self.assertEqual(parts, ('OrderedDict([', '])'))
+
+        cache = [1, 2, 3, 4, 5, 6, 7]
+        parts = Result._get_formatting_parts(cache, deque)
+        self.assertEqual(parts, ('deque([', '])'))
+
 
 class TestClosing(unittest.TestCase):
     def setUp(self):
