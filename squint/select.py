@@ -347,7 +347,7 @@ class Select(object):
             result = (inner_type(*x) for x in cursor)  # If namedtuple.
         else:
             result = (inner_type(x) for x in cursor)
-        return Result(result, evaluation_type=outer_type) # <- EXIT!
+        return Result(result, evaltype=outer_type) # <- EXIT!
 
     def _format_results(self, columns, cursor):
         """Return an iterator of results formatted by *columns*
@@ -378,7 +378,7 @@ class Select(object):
             sliced = ((k, (x[-index:] for x in g)) for k, g in grouped)
             formatted = ((k, self._format_result_group(value, g)) for k, g in sliced)
             iteritems =  _get_iteritems(formatted)
-            return Result(iteritems, evaluation_type=result_type) # <- EXIT!
+            return Result(iteritems, evaltype=result_type) # <- EXIT!
 
         raise TypeError('type {0!r} not supported'.format(type(columns)))
 
@@ -457,7 +457,7 @@ class Select(object):
 
         if isinstance(columns, Mapping):
             results = _get_iteritems((k, next(v)) for k, v in results)
-            return Result(results, evaluation_type=dict)
+            return Result(results, evaltype=dict)
         return next(results)
 
     def __iter__(self):

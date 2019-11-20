@@ -37,8 +37,8 @@ class TestFetch(unittest.TestCase):
             result = Result([('a', 1), 'b'], dict)
             result.fetch()  # <- Fails late (on fetch, only)
 
-    def test_bad_evaluation_type(self):
-        regex = 'evaluation_type must be a type, found instance of list'
+    def test_bad_evaltype(self):
+        regex = 'evaltype must be a type, found instance of list'
         with self.assertRaisesRegex(TypeError, regex):
             typed = Result([1, 2, 3], [1])
 
@@ -47,23 +47,23 @@ class TestPreview(unittest.TestCase):
     def test_get_cache_length(self):
         peek_length = Result._preview_length + 1
 
-        result = Result([1, 2, 3, 4], evaluation_type=list)
+        result = Result([1, 2, 3, 4], evaltype=list)
         self.assertEqual(result._get_cache_length(), 4)
 
-        result = Result([1, 2, 3, 4, 5, 6, 7, 8], evaluation_type=list)
+        result = Result([1, 2, 3, 4, 5, 6, 7, 8], evaltype=list)
         self.assertEqual(result._get_cache_length(), peek_length)
 
         result = Result(
-            {'x': Result([1, 2], evaluation_type=list),
-             'y': Result([3, 4], evaluation_type=list)},
-            evaluation_type=dict,
+            iterable={'x': Result([1, 2], evaltype=list),
+                      'y': Result([3, 4], evaltype=list)},
+            evaltype=dict,
         )
         self.assertEqual(result._get_cache_length(), 4)
 
         result = Result(
-            {'x': Result([1, 2, 3, 4, 5, 6, 7, 8], evaluation_type=list),
-             'y': Result([1, 2, 3, 4, 5, 6, 7, 8], evaluation_type=list)},
-            evaluation_type=dict,
+            iterable={'x': Result([1, 2, 3, 4, 5, 6, 7, 8], evaltype=list),
+                      'y': Result([1, 2, 3, 4, 5, 6, 7, 8], evaltype=list)},
+            evaltype=dict,
         )
         self.assertEqual(result._get_cache_length(), peek_length)
         self.assertEqual(result.fetch(),                   # Make sure data
@@ -107,10 +107,10 @@ class TestPreview(unittest.TestCase):
                 'x', 1, 1, 1, 2, 2, 2, 3, 3, 3,
                 'y', 4, 4, 4, 5, 5, 5, 6, 6, 6,
             ])
-            yield next(shared), Result(islice(shared, 9), evaluation_type=list)
-            yield next(shared), Result(islice(shared, 9), evaluation_type=list)
+            yield next(shared), Result(islice(shared, 9), evaltype=list)
+            yield next(shared), Result(islice(shared, 9), evaltype=list)
 
-        result = Result(generate_items(), evaluation_type=dict)
+        result = Result(generate_items(), evaltype=dict)
 
         expected = {
             'x': [1, 1, 1, 2, 2, 2, 3, 3, 3],

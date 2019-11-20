@@ -94,7 +94,7 @@ Result
 
 .. autoclass:: Result
 
-    .. attribute:: evaluation_type
+    .. attribute:: evaltype
 
         The type of instance returned by the
         :meth:`fetch <Result.fetch>` method.

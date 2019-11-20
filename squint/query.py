@@ -118,15 +118,14 @@ def _is_collection_of_items(obj):
     return isinstance(obj, IterItems)
 
 
-def _get_evaluation_type(obj, default=list):
-    """Return object's evaluation_type property. If the object does
-    not have an evaluation_type property and is a mapping, sequence,
-    or set, then return the type of the object itself. If the object
-    is an iterable, return None. Raises a Type error for any other
-    object.
+def _get_evaltype(obj, default=list):
+    """Return object's evaltype property. If the object does not have
+    an evaltype property and is a mapping, sequence, or set, then
+    return the type of the object itself. If the object is an iterable,
+    return None. Raises a Type error for any other object.
     """
-    if hasattr(obj, 'evaluation_type'):
-        return obj.evaluation_type
+    if hasattr(obj, 'evaltype'):
+        return obj.evaltype
 
     if isinstance(obj, IterItems):
         return dict
@@ -145,8 +144,8 @@ def _make_dataresult(iterable):
     if isinstance(iterable, Result):
         return iterable
 
-    eval_type = _get_evaluation_type(iterable)
-    return Result(iterable, eval_type)
+    evaltype = _get_evaltype(iterable)
+    return Result(iterable, evaltype)
 
 
 def _apply_to_data(function, data_iterator):
@@ -155,7 +154,7 @@ def _apply_to_data(function, data_iterator):
     """
     if _is_collection_of_items(data_iterator):
         result = _get_iteritems((k, function(v)) for k, v in data_iterator)
-        return Result(result, _get_evaluation_type(data_iterator))
+        return Result(result, _get_evaltype(data_iterator))
     return function(data_iterator)
 
 
@@ -164,10 +163,10 @@ def _map_data(function, iterable):
         if isinstance(iterable, BaseElement):
             return function(iterable)  # <- EXIT!
 
-        evaluation_type = _get_evaluation_type(iterable)
-        if issubclass(evaluation_type, Set):
-            evaluation_type = list
-        return Result(map(function, iterable), evaluation_type)
+        evaltype = _get_evaltype(iterable)
+        if issubclass(evaltype, Set):
+            evaltype = list
+        return Result(map(function, iterable), evaltype)
 
     return _apply_to_data(wrapper, iterable)
 
@@ -179,11 +178,11 @@ def _starmap_data(function, iterable):
                 iterable = (iterable,)
             return function(*iterable)  # <- EXIT!
 
-        evaluation_type = _get_evaluation_type(iterable)
-        if issubclass(evaluation_type, Set):
-            evaluation_type = list
+        evaltype = _get_evaltype(iterable)
+        if issubclass(evaltype, Set):
+            evaltype = list
         iterable = (x if isinstance(x, Iterable) else (x,) for x in iterable)
-        return Result(itertools.starmap(function, iterable), evaluation_type)
+        return Result(itertools.starmap(function, iterable), evaltype)
 
     return _apply_to_data(wrapper, iterable)
 
@@ -218,7 +217,7 @@ def _filter_data(predicate, iterable):
             raise TypeError(('filter expects a collection of data elements, '
                              'got 1 data element: {0}').format(iterable))
         filtered_data = filter(function, iterable)
-        return Result(filtered_data, _get_evaluation_type(iterable))
+        return Result(filtered_data, _get_evaltype(iterable))
 
     return _apply_to_data(wrapper, iterable)
 
@@ -266,9 +265,9 @@ def _unwrap_data(iterable):
             return unwrapped  # <- EXIT!
 
         if exhaustible(iterable):
-            evaluation_type = _get_evaluation_type(iterable)
+            evaltype = _get_evaltype(iterable)
             iterable = itertools.chain(first_values, iterable)
-            return Result(iterable, evaluation_type)  # <- EXIT!
+            return Result(iterable, evaltype)  # <- EXIT!
 
         return iterable
 
@@ -379,16 +378,16 @@ def _sqlite_max(iterable):
 
 def _sqlite_distinct(iterable):
     """Filter iterable to unique values, while maintaining
-    evaluation_type.
+    evaltype.
     """
     def dodistinct(itr):
         if isinstance(itr, BaseElement):
             return itr
-        return Result(_unique_everseen(itr), _get_evaluation_type(itr))
+        return Result(_unique_everseen(itr), _get_evaltype(itr))
 
     if _is_collection_of_items(iterable):
         result = _get_iteritems((k, dodistinct(v)) for k, v in iterable)
-        return Result(result, _get_evaluation_type(iterable))
+        return Result(result, _get_evaltype(iterable))
     return dodistinct(iterable)
 
 

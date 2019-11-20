@@ -41,27 +41,27 @@ class Result(Iterator):
     it's possible to create them directly::
 
         iterable = iter([...])
-        result = Result(iterable, evaluation_type=list)
+        result = Result(iterable, evaltype=list)
 
     .. warning::
 
         When iterated over, the *iterable* **must** yield only those
         values necessary for constructing an object of the given
-        *evaluation_type* and no more. For example, when the
-        *evaluation_type* is a set, the *iterable* must not contain
-        duplicate or unhashable values. When the *evaluation_type*
-        is a :py:class:`dict` or other mapping, the *iterable* must
-        contain unique key-value pairs or a mapping.
+        *evaltype* and no more. For example, when the *evaltype* is a
+        set, the *iterable* must not contain duplicate or unhashable
+        values. When the *evaltype* is a :py:class:`dict` or other
+        mapping, the *iterable* must contain unique key-value pairs
+        or a mapping.
     """
     _preview_length = 5
     _preview_width = 72
 
-    def __init__(self, iterable, evaluation_type, closefunc=None):
+    def __init__(self, iterable, evaltype, closefunc=None):
         self._closefunc = closefunc
 
-        if not isinstance(evaluation_type, type):
-            msg = 'evaluation_type must be a type, found instance of {0}'
-            raise TypeError(msg.format(evaluation_type.__class__.__name__))
+        if not isinstance(evaltype, type):
+            msg = 'evaltype must be a type, found instance of {0}'
+            raise TypeError(msg.format(evaltype.__class__.__name__))
 
         if isinstance(iterable, Mapping):
             iterable = IterItems(iterable)
@@ -72,7 +72,7 @@ class Result(Iterator):
 
         #: The type of instance returned when data is evaluated
         #: with the :meth:`fetch <Result.fetch>` method.
-        self.evaluation_type = evaluation_type
+        self.evaltype = evaltype
 
         self._cache = deque()
         self._refresh_cache()
@@ -92,9 +92,9 @@ class Result(Iterator):
 
     def __repr__(self):
         cls_name = self.__class__.__name__
-        eval_name = self.evaluation_type.__name__
+        eval_name = self.evaltype.__name__
         hex_id = hex(id(self))
-        template = '<{0} object (evaluation_type={1}) at {2}>'
+        template = '<{0} object (evaltype={1}) at {2}>'
         return template.format(cls_name, eval_name, hex_id)
 
     def __next__(self):
@@ -119,7 +119,7 @@ class Result(Iterator):
         wrapped = self.__wrapped__
         refresh_length = self._preview_length + 1
 
-        if issubclass(self.evaluation_type, Mapping):
+        if issubclass(self.evaltype, Mapping):
             def getnext(iterator):           # Make sure key-value
                 key, value = next(iterator)  # pair is not exhaustible.
                 return (key, value)
@@ -134,7 +134,7 @@ class Result(Iterator):
 
     def _get_cache_length(self):
         """Return cache length."""
-        if not issubclass(self.evaluation_type, Mapping):
+        if not issubclass(self.evaltype, Mapping):
             return len(self._cache)  # <- EXIT!
 
         length = 0
@@ -153,14 +153,14 @@ class Result(Iterator):
         self._refresh_cache()
 
         preview_length = self._preview_length
-        if issubclass(self.evaluation_type, Mapping):
+        if issubclass(self.evaltype, Mapping):
             preview = []
             for k, v in self._cache:
                 if isinstance(v, Result):
                     v_iter = v._cache
                     if len(v_iter) > preview_length:
                         v_iter[preview_length] = _TRUNCATED_ENDING
-                    v = Result(v_iter, evaluation_type=v.evaluation_type)
+                    v = Result(v_iter, evaltype=v.evaltype)
                 preview.append((k, v))
 
             if len(preview) > preview_length:
@@ -178,7 +178,7 @@ class Result(Iterator):
             if preview and self._started_iteration:
                 preview = [_TRUNCATED_BEGINNING] + preview
 
-        result = Result(preview, evaluation_type=self.evaluation_type).fetch()
+        result = Result(preview, evaltype=self.evaltype).fetch()
         return pformat(result, width=40)
 
     @staticmethod
@@ -231,7 +231,7 @@ class Result(Iterator):
         else:
             truncate_ending = False
 
-        beginning, ending = self._get_formatting_parts(cache, self.evaluation_type)
+        beginning, ending = self._get_formatting_parts(cache, self.evaltype)
 
         items = []
         if cache and self._started_iteration:
@@ -261,20 +261,20 @@ class Result(Iterator):
     def fetch(self):
         """Evaluate the entire iterator and return its result::
 
-            result = Result(iter([...]), evaluation_type=set)
+            result = Result(iter([...]), evaltype=set)
             result_set = result.fetch()  # <- Returns a set of values.
 
         When evaluating a :py:class:`dict` or other mapping type, any
         values that are, themselves, :class:`Result` objects will
         also be evaluated.
         """
-        evaluation_type = self.evaluation_type
-        if issubclass(evaluation_type, Mapping):
+        evaltype = self.evaltype
+        if issubclass(evaltype, Mapping):
             def func(obj):
-                if hasattr(obj, 'evaluation_type'):
-                    return obj.evaluation_type(obj)
+                if hasattr(obj, 'evaltype'):
+                    return obj.evaltype(obj)
                 return obj
 
-            return evaluation_type((k, func(v)) for k, v in self)
+            return evaltype((k, func(v)) for k, v in self)
 
-        return evaluation_type(self)
+        return evaltype(self)

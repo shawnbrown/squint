@@ -112,7 +112,7 @@ class TestGetIteritems(unittest.TestCase):
         self.assertEqual(list(items), [])
 
     def test_Result(self):
-        result = Result(_get_iteritems([('a', 1), ('b', 2)]), evaluation_type=dict)
+        result = Result(_get_iteritems([('a', 1), ('b', 2)]), evaltype=dict)
         normalized = _get_iteritems(result)
         self.assertEqual(list(normalized), [('a', 1), ('b', 2)])
 
@@ -151,7 +151,7 @@ class TestMapData(unittest.TestCase):
         result = _map_data(function, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, list)
+        self.assertEqual(result.evaltype, list)
         self.assertEqual(result.fetch(), [2, 4, 6])
 
     def test_settype_to_list(self):
@@ -161,7 +161,7 @@ class TestMapData(unittest.TestCase):
         result = _map_data(function, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, list) # <- Now a 'list'.
+        self.assertEqual(result.evaltype, list) # <- Now a 'list'.
         self.assertEqual(result.fetch(), [1, 0, 1])
 
     def test_single_int(self):
@@ -176,7 +176,7 @@ class TestMapData(unittest.TestCase):
         result = _map_data(function, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': [2, 4], 'b': (3, 4, 3, 4)})
 
     def test_dataiter_dict_of_ints(self):
@@ -186,7 +186,7 @@ class TestMapData(unittest.TestCase):
         result = _map_data(function, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': 4, 'b': 6})
 
     def test_bad_function(self):
@@ -215,7 +215,7 @@ class TestStarmapData(unittest.TestCase):
         result = _starmap_data(function, data)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, list)
+        self.assertEqual(result.evaltype, list)
         self.assertEqual(result.fetch(), [2, 4])
 
     def test_iter_of_noniters(self):
@@ -225,7 +225,7 @@ class TestStarmapData(unittest.TestCase):
         result = _starmap_data(function, data)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, list)
+        self.assertEqual(result.evaltype, list)
         self.assertEqual(result.fetch(), [2, 3])
 
     def test_settype_to_list(self):
@@ -235,7 +235,7 @@ class TestStarmapData(unittest.TestCase):
         result = _starmap_data(function, data)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, list) # <- Now a 'list'.
+        self.assertEqual(result.evaltype, list) # <- Now a 'list'.
         self.assertEqual(result.fetch(), [0, 0])
 
     def test_unwrapped_tuple(self):
@@ -257,7 +257,7 @@ class TestStarmapData(unittest.TestCase):
         result = _starmap_data(function, data)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': [3, 3], 'b': [7, 7]})
 
     def test_dataiter_dict_of_tuples(self):
@@ -267,7 +267,7 @@ class TestStarmapData(unittest.TestCase):
         result = _starmap_data(function, data)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': 3, 'b': 7})
 
     def test_dataiter_dict_of_lists(self):
@@ -277,7 +277,7 @@ class TestStarmapData(unittest.TestCase):
         result = _starmap_data(function, data)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': [2, 3], 'b': [4, 5]})
 
     def test_dataiter_dict_of_noniters(self):
@@ -287,7 +287,7 @@ class TestStarmapData(unittest.TestCase):
         result = _starmap_data(function, data)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': 4, 'b': 6})
 
     def test_bad_function(self):
@@ -303,7 +303,7 @@ class TestFilterData(unittest.TestCase):
         func = lambda x: True
         result = _filter_data(func, [1, 2, 3])
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, list)
+        self.assertEqual(result.evaltype, list)
         self.assertEqual(result.fetch(), [1, 2, 3])
 
     def test_list_iter(self):
@@ -327,7 +327,7 @@ class TestFilterData(unittest.TestCase):
         result = _filter_data(iseven, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': [], 'b': [4, 6]})
 
     def test_dict_iter_of_integers(self):
@@ -380,7 +380,7 @@ class TestFlattenData(unittest.TestCase):
         result = _flatten_data(iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, list)
+        self.assertEqual(result.evaltype, list)
         self.assertEqual(
             set(result.fetch()),
             set([('a', 1), ('a', 3), ('b', 4), ('b', 5), ('b', 6)]),
@@ -392,7 +392,7 @@ class TestFlattenData(unittest.TestCase):
         result = _flatten_data(iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, list)
+        self.assertEqual(result.evaltype, list)
         self.assertEqual(
             set(result.fetch()),
             set([('a', 1, 2), ('b', 3, 4)]),
@@ -404,7 +404,7 @@ class TestFlattenData(unittest.TestCase):
         result = _flatten_data(iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, list)
+        self.assertEqual(result.evaltype, list)
         self.assertEqual(
             set(result.fetch()),
             set([('a', 2), ('b', 4)]),
@@ -419,7 +419,7 @@ class TestFlattenData(unittest.TestCase):
         result = _flatten_data(iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, list)
+        self.assertEqual(result.evaltype, list)
         self.assertEqual(
             result.fetch(),
             [('a', {'x': 2})],
@@ -431,7 +431,7 @@ class TestFlattenData(unittest.TestCase):
         result = _flatten_data(iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, list)
+        self.assertEqual(result.evaltype, list)
         self.assertEqual(
             set(result.fetch()),
             set([('a', 1), ('a', 3), ('b', 4), ('b', 5), ('b', 6)]),
@@ -545,7 +545,7 @@ class TestReduceData(unittest.TestCase):
         result = _reduce_data(function, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': 3, 'b': 7})
 
     def test_dict_iter_of_integers(self):
@@ -555,7 +555,7 @@ class TestReduceData(unittest.TestCase):
         result = _reduce_data(function, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': 2, 'b': 3})
 
     def test_initializer(self):
@@ -588,7 +588,7 @@ class TestGroupwiseApply(unittest.TestCase):
         result = _apply_data(function, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': [2, 4], 'b': [6, 8]})
 
     def test_dataiter_dict_of_ints(self):
@@ -598,7 +598,7 @@ class TestGroupwiseApply(unittest.TestCase):
         result = _apply_data(function, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': 4, 'b': 6})
 
 
@@ -621,7 +621,7 @@ class TestSumData(unittest.TestCase):
         result = _apply_to_data(_sqlite_sum, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': 3, 'b': 7})
 
     def test_dict_iter_of_integers(self):
@@ -629,7 +629,7 @@ class TestSumData(unittest.TestCase):
         result = _apply_to_data(_sqlite_sum, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': 2, 'b': 3})
 
 
@@ -654,7 +654,7 @@ class TestCountData(unittest.TestCase):
         result = _apply_to_data(_sqlite_count, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': 1, 'b': 2})
 
     def test_dict_iter_of_integers(self):
@@ -662,7 +662,7 @@ class TestCountData(unittest.TestCase):
         result = _apply_to_data(_sqlite_count, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': 1, 'b': 0, 'c': 1})
 
 
@@ -688,7 +688,7 @@ class TestAvgData(unittest.TestCase):
         result = _apply_to_data(_sqlite_avg, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': 1.5, 'b': 1.5, 'c': None})
 
     def test_dict_iter_of_integers(self):
@@ -696,7 +696,7 @@ class TestAvgData(unittest.TestCase):
         result = _apply_to_data(_sqlite_avg, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': 2, 'b': 3, 'c': None})
 
 
@@ -722,7 +722,7 @@ class TestMinData(unittest.TestCase):
         result = _apply_to_data(_sqlite_min, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': 1, 'b': 1, 'c': None})
 
     def test_dict_iter_of_integers(self):
@@ -730,7 +730,7 @@ class TestMinData(unittest.TestCase):
         result = _apply_to_data(_sqlite_min, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': 2, 'b': 3, 'c': None})
 
 
@@ -756,7 +756,7 @@ class TestMaxData(unittest.TestCase):
         result = _apply_to_data(_sqlite_max, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': 3, 'b': 'xx', 'c': None})
 
     def test_dict_iter_of_integers(self):
@@ -764,7 +764,7 @@ class TestMaxData(unittest.TestCase):
         result = _apply_to_data(_sqlite_max, iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': 2, 'b': 3, 'c': None})
 
 
@@ -782,14 +782,14 @@ class TestDistinctData(unittest.TestCase):
         iterable = Result({'a': [1, 2, 1, 2], 'b': [3, 4, 3]}, dict)
         result = _sqlite_distinct(iterable)
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': [1, 2], 'b': [3, 4]})
 
         # Check tuple handling.
         iterable = Result({'a': [(1, 2), (1, 2)], 'b': (3, 4, 3)}, dict)
         result = _sqlite_distinct(iterable)
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': [(1, 2)], 'b': (3, 4, 3)})
 
     def test_dataiter_dict_of_ints(self):
@@ -797,7 +797,7 @@ class TestDistinctData(unittest.TestCase):
         result = _sqlite_distinct(iterable)
 
         self.assertIsInstance(result, Result)
-        self.assertEqual(result.evaluation_type, dict)
+        self.assertEqual(result.evaltype, dict)
         self.assertEqual(result.fetch(), {'a': 2, 'b': 3})
 
 
@@ -1067,12 +1067,12 @@ class TestQuery(unittest.TestCase):
         self.assertIsInstance(result, Result)
         self.assertEqual(result.fetch(), [1, 3, 4, 2])
 
-        query = Query.from_object(Result([1, 3, 4, 2], evaluation_type=list))
+        query = Query.from_object(Result([1, 3, 4, 2], evaltype=list))
         result = query.execute()
         self.assertIsInstance(result, Result)
         self.assertEqual(result.fetch(), [1, 3, 4, 2])
 
-        query = Query.from_object(Result({'a': 1, 'b': 2}, evaluation_type=dict))
+        query = Query.from_object(Result({'a': 1, 'b': 2}, evaltype=dict))
         result = query.execute()
         self.assertIsInstance(result, Result)
         self.assertEqual(result.fetch(), {'a': 1, 'b': 2})
