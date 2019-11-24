@@ -43,6 +43,26 @@ class TestFetch(unittest.TestCase):
             typed = Result([1, 2, 3], [1])
 
 
+class TestGetReprLength(unittest.TestCase):
+    """Tests for Result._get_repr_length() method."""
+    def test_multiple_reprs(self):  # Adds separator length.
+        beginning = '('
+        repr_list = ["'aaaaa'", "'bbbbb'", "'ccccc'"]
+        ending = ')'
+        actual = Result._get_repr_length(beginning, repr_list, ending)
+        expected_repr = "('aaaaa', 'bbbbb', 'ccccc')"
+        msg = 'should match len({0!r})'.format(expected_repr)
+        self.assertEqual(actual, len(expected_repr), msg=msg)
+
+    def test_single_repr(self):  # Only 1 repr (no separators).
+        beginning = '['
+        repr_list = ["'aaaaabbbbbccccc'"]
+        ending = ']'
+        actual = Result._get_repr_length(beginning, repr_list, ending)
+        expected = len("['aaaaabbbbbccccc']")
+        self.assertEqual(actual, expected, msg='should match repr length')
+
+
 class TestPreview(unittest.TestCase):
     def test_get_cache_length(self):
         peek_length = Result._preview_length + 1
@@ -214,24 +234,6 @@ class TestPreview(unittest.TestCase):
         cache = [1, 2, 3, 4, 5, 6, 7]
         parts = Result._get_formatting_parts(cache, deque)
         self.assertEqual(parts, ('deque([', '])'))
-
-    def test_get_repr_length(self):
-        # List containing multiple reprs.
-        beginning = '('
-        repr_list = ["'aaaaa'", "'bbbbb'", "'ccccc'"]
-        ending = ')'
-        actual = Result._get_repr_length(beginning, repr_list, ending)
-        expected_repr = "('aaaaa', 'bbbbb', 'ccccc')"
-        msg = 'should match len({0!r})'.format(expected_repr)
-        self.assertEqual(actual, len(expected_repr), msg=msg)
-
-        # List containing only 1 repr (no separator).
-        beginning = '['
-        repr_list = ["'aaaaabbbbbccccc'"]
-        ending = ']'
-        actual = Result._get_repr_length(beginning, repr_list, ending)
-        expected = len("['aaaaabbbbbccccc']")
-        self.assertEqual(actual, expected, msg='should match repr length')
 
     def test_preview2_length_handling(self):
         """Test handling of item length and truncation."""
