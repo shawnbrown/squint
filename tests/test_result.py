@@ -274,6 +274,100 @@ class TestPreview(unittest.TestCase):
         )
         self.assertEqual(actual, expected)
 
+    @unittest.skip('refactoring')
+    def test_preview2_mapping_handling(self):
+        result = Result({'a': 1}, dict)
+        self.assertEqual(result._preview2(), "{'a': 1}")
+
+        dict_items = [
+            ('a', 1),
+            ('b', 2),
+            ('c', 3),
+            ('d', 4),
+            ('e', 5),
+            ('f', 6),
+            ('g', 7),
+        ]
+
+        result = Result(IterItems(dict_items), dict)
+        preview = result._preview2()
+
+        self.assertTrue(preview.startswith("{'a': 1,"))
+        self.assertTrue(preview.endswith('...}'))
+
+        result = Result(IterItems(dict_items), dict)
+        next(result)
+        preview = result._preview2()
+        self.assertTrue(preview.startswith('{...,'))
+        self.assertTrue(preview.endswith('...}'))
+
+        result = Result(IterItems([('a', Result([1, 2, 3, 4, 5, 6, 7, 8, 9], list))]), dict)
+        preview = result._preview2()
+        self.assertEqual(preview, "{'a': [1, 2, 3, 4, 5, ...]}")
+
+        iterable = IterItems([
+            ('a', Result([1, 2, 3, 4, 5, 6, 7, 8, 9], list)),
+            ('b', Result([1, 2, 3, 4, 5, 6, 7, 8, 9], list)),
+        ])
+        result = Result(iterable, dict)
+        preview = result._preview2()
+        expected = "{'a': [1, 2, 3, 4, 5, ...], 'b': [1, 2, 3, 4, 5, ...]}"
+        self.assertEqual(preview, expected)
+
+        iterable = IterItems([
+            ('a', Result([1, 2, 3], list)),
+            ('b', Result([1, 2, 3], list)),
+            ('c', Result([1, 2, 3], list)),
+            ('d', Result([1, 2, 3], list)),
+            ('e', Result([1, 2, 3], list)),
+            ('f', Result([1, 2, 3], list)),
+        ])
+        result = Result(iterable, dict)
+        preview = result._preview2()
+        expected = (
+            "{'a': [1, 2, 3],\n"
+            " 'b': [1, 2, 3],\n"
+            " 'c': [1, 2, 3],\n"
+            " 'd': [1, 2, 3],\n"
+            " 'e': [1, 2, 3],\n"
+            " ...}"
+        )
+        self.assertEqual(preview, expected)
+
+        iterable = IterItems([
+            ('a', Result([1, 2, 3, 4, 5, 6, 7, 8, 9], list)),
+            ('b', Result([1, 2, 3, 4, 5, 6, 7, 8, 9], list)),
+            ('c', Result([1, 2, 3, 4, 5, 6, 7, 8, 9], list)),
+            ('d', Result([1, 2, 3, 4, 5, 6, 7, 8, 9], list)),
+            ('e', Result([1, 2, 3, 4, 5, 6, 7, 8, 9], list)),
+            ('f', Result([1, 2, 3, 4, 5, 6, 7, 8, 9], list)),
+        ])
+        result = Result(iterable, dict)
+        preview = result._preview2()
+        expected = (
+            "{'a': [1, 2, 3, 4, 5, ...],\n"
+            " 'b': [1, 2, 3, 4, 5, ...],\n"
+            " 'c': [1, 2, 3, 4, 5, ...],\n"
+            " 'd': [1, 2, 3, 4, 5, ...],\n"
+            " 'e': [1, 2, 3, 4, 5, ...],\n"
+            " ...}"
+        )
+        self.assertEqual(preview, expected)
+
+        iterable = IterItems([
+            ('a', 'a' * 100),
+            ('b', 'b' * 100),
+            ('c', 'c' * 100),
+        ])
+        result = Result(iterable, dict)
+        preview = result._preview2()
+        expected = (
+            "{'a': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...,\n"
+            " 'b': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb...,\n"
+            " 'c': 'ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc...}"
+        )
+        self.assertEqual(preview, expected)
+
 
 class TestClosing(unittest.TestCase):
     def setUp(self):

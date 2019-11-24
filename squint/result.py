@@ -216,6 +216,43 @@ class Result(Iterator):
         sum_separators = len(sep) * (len(repr_list) - 1)
         return len(beginning) + sum_items + sum_separators + len(ending)
 
+    def _get_value_repr(self, value):
+        if not isinstance(value, Result):
+            return repr(value)  # <- EXIT!
+
+        if value._initial_cache_length != len(value._cache):
+            value._started_iteration = True
+        value._refresh_cache()
+
+        cache = list(value._cache)
+
+        preview_length = value._preview_length
+        if len(cache) > preview_length:
+            truncate_ending = True
+            cache = cache[:preview_length]
+        else:
+            truncate_ending = False
+
+        beginning, ending = value._get_formatting_parts(cache, value.evaltype)
+
+        items = []
+        if cache and value._started_iteration:
+            items.append('...')
+
+        for item in cache:
+            if isinstance(item, Result):
+                item_repr = object.__repr__(item)
+            else:
+                item_repr = repr(item)
+            items.append(item_repr)
+
+        if truncate_ending:
+            items.append('...')
+
+        join_str = ', '  # No line-break, all items on a single line.
+        items = join_str.join(items)
+        return '{0}{1}{2}'.format(beginning, items, ending)
+
     def _preview2(self):
         """Get a formatted string to preview the result data."""
         if self._initial_cache_length != len(self._cache):
@@ -237,12 +274,21 @@ class Result(Iterator):
         if cache and self._started_iteration:
             items.append('...')
 
-        for item in cache:
-            item_repr = repr(item)
-            if len(item_repr) > self._preview_width:
-                slice_end = self._preview_width - 3
-                item_repr = '{0}...'.format(item_repr[:slice_end])
-            items.append(item_repr)
+        if issubclass(self.evaltype, Mapping):
+            for k, v in cache:
+                v = self._get_value_repr(v)
+                item_repr = '{0!r}: {1}'.format(k, v)
+                if len(item_repr) > self._preview_width:
+                    slice_end = self._preview_width - 3
+                    item_repr = '{0}...'.format(item_repr[:slice_end])
+                items.append(item_repr)
+        else:
+            for item in cache:
+                item_repr = repr(item)
+                if len(item_repr) > self._preview_width:
+                    slice_end = self._preview_width - 3
+                    item_repr = '{0}...'.format(item_repr[:slice_end])
+                items.append(item_repr)
 
         if truncate_ending:
             items.append('...')
