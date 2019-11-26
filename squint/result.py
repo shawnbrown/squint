@@ -197,7 +197,7 @@ class Result(Iterator):
             return '{', '}'
 
         # For other types, build and examine a sample repr-string.
-        sample_item = cache[0]
+        sample_item = cache[0] if cache else None
         result = Result([sample_item], evaltype)
         container_repr = repr(result.fetch())
         item_repr = repr(sample_item)

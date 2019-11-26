@@ -235,6 +235,10 @@ class TestPreview(unittest.TestCase):
         parts = Result._get_formatting_parts(cache, deque)
         self.assertEqual(parts, ('deque([', '])'))
 
+        cache = []
+        parts = Result._get_formatting_parts(cache, deque)
+        self.assertEqual(parts, ('deque([', '])'))
+
     def test_preview2_length_handling(self):
         """Test handling of item length and truncation."""
         result = Result([1, 2, 3, 4, 5, 6, 7], tuple)
