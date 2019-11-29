@@ -116,7 +116,7 @@ class Result(Iterator):
             value = __next__(self)
         finally:
             self._started_iteration = True
-            bound_method = __next__.__get__(self.__class__, self)
+            bound_method = __next__.__get__(self, self.__class__)
             self.__next__ = bound_method  # <- Replace __next__ method!
         return value
 
