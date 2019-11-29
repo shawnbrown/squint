@@ -112,13 +112,10 @@ class Result(Iterator):
                 subslf.close()
                 raise
 
-        try:
-            value = __next__(self)
-        finally:
-            self._started_iteration = True
-            bound_method = __next__.__get__(self, self.__class__)
-            self.__next__ = bound_method  # <- Replace __next__ method!
-        return value
+        bound_method = __next__.__get__(self, self.__class__)
+        self.__next__ = bound_method  # <- Replace __next__ method!
+        self._started_iteration = True
+        return bound_method()
 
     def next(self):
         return self.__next__()  # For Python 2 compatibility.
