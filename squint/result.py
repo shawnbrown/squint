@@ -76,7 +76,6 @@ class Result(Iterator):
 
         self._cache = deque()
         self._refresh_cache()
-        self._initial_cache_length = len(self._cache)
         self._started_iteration = False
 
     def close(self):
@@ -98,14 +97,28 @@ class Result(Iterator):
         return template.format(cls_name, eval_name, hex_id)
 
     def __next__(self):
-        if self._cache:
-            return self._cache.popleft()  # <- EXIT!
+        """This method sets the 'started-iteration' flag to True,
+        replaces itself with a standard __next__() method, then
+        returns the first item from the iterator.
+        """
+        def __next__(subslf):
+            """Return the next item or raise StopIteration."""
+            if subslf._cache:
+                return subslf._cache.popleft()  # <- EXIT!
+
+            try:
+                return next(subslf.__wrapped__)
+            except StopIteration:
+                subslf.close()
+                raise
 
         try:
-            return next(self.__wrapped__)
-        except StopIteration:
-            self.close()
-            raise
+            value = __next__(self)
+        finally:
+            self._started_iteration = True
+            bound_method = __next__.__get__(self.__class__, self)
+            self.__next__ = bound_method  # <- Replace __next__ method!
+        return value
 
     def next(self):
         return self.__next__()  # For Python 2 compatibility.
@@ -148,8 +161,6 @@ class Result(Iterator):
 
     def _preview(self):
         """Get a pretty-print formatted string to preview the results."""
-        if self._initial_cache_length != len(self._cache):
-            self._started_iteration = True
         self._refresh_cache()
 
         preview_length = self._preview_length
@@ -220,8 +231,6 @@ class Result(Iterator):
         if not isinstance(value, Result):
             return repr(value)  # <- EXIT!
 
-        if value._initial_cache_length != len(value._cache):
-            value._started_iteration = True
         value._refresh_cache()
 
         cache = list(value._cache)
@@ -255,8 +264,6 @@ class Result(Iterator):
 
     def _preview2(self):
         """Get a formatted string to preview the result data."""
-        if self._initial_cache_length != len(self._cache):
-            self._started_iteration = True
         self._refresh_cache()
 
         cache = list(self._cache)
