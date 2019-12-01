@@ -116,6 +116,14 @@ class Result(Iterator):
     def next(self):
         return self.__next__()  # For Python 2 compatibility.
 
+    def _preview(self):
+        preview = list(self._cache)
+        result = Result(preview, evaltype=self.evaltype).fetch()
+        return pformat(result, compact=True)
+
+    def _next_cache(self):
+        self._cache.append(next(self.__wrapped__))
+
     def __del__(self):
         self.close()
 

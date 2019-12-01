@@ -97,3 +97,23 @@ class TestClosing(unittest.TestCase):
 
         result.__del__()  # Call __del__() directly.
         self.assertEqual(self.log, ['closed'])
+
+
+class TestPreview(unittest.TestCase):
+    def test_tuple(self):
+        result = Result(iter([1, 2, 3, 4]), evaltype=tuple)
+
+        self.assertEqual(result._preview(), '()')
+
+        result._next_cache()
+        self.assertEqual(result._preview(), '(1,)')
+
+        result._next_cache()
+        result._next_cache()
+        result._next_cache()
+        self.assertEqual(result._preview(), '(1, 2, 3, 4)')
+
+        with self.assertRaises(StopIteration):
+            result._next_cache()
+
+        self.assertEqual(result.fetch(), (1, 2, 3, 4))
