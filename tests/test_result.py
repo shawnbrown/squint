@@ -43,7 +43,7 @@ class TestFetch(unittest.TestCase):
             typed = Result([1, 2, 3], [1])
 
 
-class TestPreview(unittest.TestCase):
+class TestSharedIterator(unittest.TestCase):
     def test_shared_iterator(self):
         """Dict result should not assume independent source iterators."""
         def generate_items():  # <- Generator that reads from single iterator.
