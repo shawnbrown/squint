@@ -131,6 +131,15 @@ class Result(Iterator):
         return pformat(result, compact=True)
 
     def _next_cache(self):
+        # Try to cache the next item of a nested Result and exit.
+        if self._cache and issubclass(self.evaltype, Mapping):
+            _, last_value = self._cache[-1]
+            try:
+                return last_value._next_cache()  # <- EXIT!
+            except (AttributeError, StopIteration):
+                pass
+
+        # Cache the next item of the outer Result.
         item = next(self.__wrapped__)
 
         if issubclass(self.evaltype, Mapping):

@@ -121,6 +121,8 @@ class TestPreview(unittest.TestCase):
     def test_mapping(self):
         iterable = IterItems([
             ('a', Result(iter([1, 2]), list)),
+            ('b', Result(iter([3, 4]), list)),
+            ('c', Result(iter([5, 6]), list)),
         ])
         result = Result(iterable, dict)
 
@@ -130,3 +132,19 @@ class TestPreview(unittest.TestCase):
         self.assertEqual(result._cache[0][0], 'a')
         self.assertEqual(result._cache[0][1]._cache[0], 1)
         self.assertEqual(result._preview(), "{'a': [1]}")
+
+        result._next_cache()
+        self.assertEqual(result._preview(), "{'a': [1, 2]}")
+
+        result._next_cache()
+        self.assertEqual(result._preview(), "{'a': [1, 2], 'b': [3]}")
+
+        result._next_cache()
+        result._next_cache()
+        result._next_cache()
+        self.assertEqual(result._preview(), "{'a': [1, 2], 'b': [3, 4], 'c': [5, 6]}")
+
+        with self.assertRaises(StopIteration):
+            result._next_cache()
+
+        self.assertEqual(result.fetch(), {'a': [1, 2], 'b': [3, 4], 'c': [5, 6]})
