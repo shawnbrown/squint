@@ -129,3 +129,4 @@ class TestPreview(unittest.TestCase):
         result._next_cache()
         self.assertEqual(result._cache[0][0], 'a')
         self.assertEqual(result._cache[0][1]._cache[0], 1)
+        self.assertEqual(result._preview(), "{'a': [1]}")

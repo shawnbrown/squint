@@ -118,6 +118,15 @@ class Result(Iterator):
 
     def _preview(self):
         preview = list(self._cache)
+
+        if issubclass(self.evaltype, Mapping):
+            def cache_only(value):
+                if isinstance(value, Result):
+                    return Result(value._cache, evaltype=value.evaltype).fetch()
+                return value
+
+            preview = [(k, cache_only(v)) for k, v in preview]
+
         result = Result(preview, evaltype=self.evaltype).fetch()
         return pformat(result, compact=True)
 
