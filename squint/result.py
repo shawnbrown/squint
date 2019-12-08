@@ -122,7 +122,15 @@ class Result(Iterator):
         return pformat(result, compact=True)
 
     def _next_cache(self):
-        self._cache.append(next(self.__wrapped__))
+        item = next(self.__wrapped__)
+
+        if issubclass(self.evaltype, Mapping):
+            key, value = item
+            if isinstance(value, Result):
+                value._next_cache()
+            item = (key, value)
+
+        self._cache.append(item)
 
     def __del__(self):
         self.close()

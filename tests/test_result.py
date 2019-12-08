@@ -117,3 +117,15 @@ class TestPreview(unittest.TestCase):
             result._next_cache()
 
         self.assertEqual(result.fetch(), (1, 2, 3, 4))
+
+    def test_mapping(self):
+        iterable = IterItems([
+            ('a', Result(iter([1, 2]), list)),
+        ])
+        result = Result(iterable, dict)
+
+        self.assertEqual(result._preview(), '{}')
+
+        result._next_cache()
+        self.assertEqual(result._cache[0][0], 'a')
+        self.assertEqual(result._cache[0][1]._cache[0], 1)
