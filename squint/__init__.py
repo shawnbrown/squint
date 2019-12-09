@@ -42,6 +42,7 @@ from .select import Select
 from .select import Query
 from .result import Result
 from ._vendor.predicate import Predicate
+from . import _displayhook
 
 BaseElement.__module__ = 'squint'
 Select.__module__ = 'squint'
