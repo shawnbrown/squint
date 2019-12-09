@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 from pprint import pformat
+from sys import version_info
 from ._compatibility.collections import deque
 from ._compatibility.collections.abc import (
     Iterator,
@@ -30,6 +31,14 @@ class _TruncationEllipsis(object):
 
 _TRUNCATED_BEGINNING = _TruncationEllipsis(True)
 _TRUNCATED_ENDING = _TruncationEllipsis(False)
+
+
+if version_info[:2] >= (3, 4):
+    def format_preview(preview):
+        return pformat(preview, compact=True)
+else:
+    def format_preview(preview):
+        return pformat(preview)
 
 
 class Result(Iterator):
@@ -128,7 +137,7 @@ class Result(Iterator):
             preview = [(k, cache_only(v)) for k, v in preview]
 
         result = Result(preview, evaltype=self.evaltype).fetch()
-        return pformat(result, compact=True)
+        return format_preview(result)
 
     def _next_cache(self):
         # Try to cache the next item of a nested Result and exit.

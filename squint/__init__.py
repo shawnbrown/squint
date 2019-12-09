@@ -4,6 +4,7 @@
 PYTEST_DONT_REWRITE
 """
 from __future__ import absolute_import
+import sys as _sys
 
 
 # Check that `sqlite3` is available. Some non-standard builds
@@ -12,11 +13,10 @@ from __future__ import absolute_import
 try:
     import sqlite3 as _sqlite3
 except ImportError as err:
-    import sys
     message = (
         'The standard library "sqlite3" package is missing '
         'from the current Python installation:\n\nPython {0}'
-    ).format(sys.version)
+    ).format(_sys.version)
     raise ImportError(message)
 
 
@@ -25,12 +25,11 @@ except ImportError as err:
 # incompatible with Squint (e.g., certain builds of Python
 # 3.1.4 and Python 2.6.6).
 if _sqlite3.sqlite_version_info < (3, 6, 8):
-    import sys
     message = (
         'Squint requires SQLite 3.6.8 or newer but the current '
         'Python installation was built with an old version:\n\n'
         'Python {0}\n\nBuilt with SQLite {1}'
-    ).format(sys.version, _sqlite3.sqlite_version)
+    ).format(_sys.version, _sqlite3.sqlite_version)
     raise ImportError(message)
 
 
@@ -49,3 +48,6 @@ Select.__module__ = 'squint'
 Query.__module__ = 'squint'
 Result.__module__ = 'squint'
 Predicate.__module__ = 'squint'
+
+# Set display hook for interactive sessions.
+_sys.displayhook = _displayhook.preview_query

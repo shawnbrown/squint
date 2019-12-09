@@ -37,6 +37,6 @@ class TestPreviewQuery(unittest.TestCase):
         expected= (
             "^Query\\(<squint.Select object at [^>]+>, \\['A']\\)\n"
             "----- preview -----\n"
-            "\\['x', 'x', 'y', 'y', 'z', 'z'\\]\n"
+            "\\[u?'x', u?'x', u?'y', u?'y', u?'z', u?'z'\\]\n"
         )
         self.assertRegex(actual, expected)
