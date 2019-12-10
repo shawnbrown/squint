@@ -16,7 +16,7 @@ from .select import Query
 existing_displayhook = sys.displayhook
 
 
-def preview_query(value):
+def displayhook(value):
     if not isinstance(value, Query):
         return existing_displayhook(value)
 

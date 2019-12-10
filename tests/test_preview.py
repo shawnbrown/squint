@@ -7,13 +7,13 @@ from .common import unittest
 
 from squint.select import Select
 from squint._preview import (
-    preview_query,
+    displayhook,
     #DEFAULT_MAX_LINES,
     #DEFAULT_MAX_CHARS,
 )
 
 
-class TestPreviewQuery(unittest.TestCase):
+class TestDisplayhook(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.select = Select([
@@ -26,12 +26,12 @@ class TestPreviewQuery(unittest.TestCase):
             ['z', 'bar', 10]
         ])
 
-    def test_preview_query(self):
+    def test_displayhook(self):
         query = self.select('A')
 
         f = io.StringIO()
         with redirect_stdout(f):
-            preview_query(query)
+            displayhook(query)
         actual = f.getvalue()
 
         expected= (

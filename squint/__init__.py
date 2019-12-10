@@ -50,4 +50,4 @@ Result.__module__ = 'squint'
 Predicate.__module__ = 'squint'
 
 # Set display hook for interactive sessions.
-_sys.displayhook = _preview.preview_query
+_sys.displayhook = _preview.displayhook
