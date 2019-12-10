@@ -41,7 +41,7 @@ from .select import Select
 from .select import Query
 from .result import Result
 from ._vendor.predicate import Predicate
-from . import _displayhook
+from . import _preview
 
 BaseElement.__module__ = 'squint'
 Select.__module__ = 'squint'
@@ -50,4 +50,4 @@ Result.__module__ = 'squint'
 Predicate.__module__ = 'squint'
 
 # Set display hook for interactive sessions.
-_sys.displayhook = _displayhook.preview_query
+_sys.displayhook = _preview.preview_query

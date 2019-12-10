@@ -6,7 +6,7 @@ from .common import redirect_stdout
 from .common import unittest
 
 from squint.select import Select
-from squint._displayhook import (
+from squint._preview import (
     preview_query,
     #DEFAULT_MAX_LINES,
     #DEFAULT_MAX_CHARS,
