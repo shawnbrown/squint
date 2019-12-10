@@ -32,7 +32,7 @@ def preview_query(value):
         except StopIteration:
             break
 
-    text = '{0!r}\n----- preview -----\n{1}'
+    text = '{0!r}\n---- preview ----\n{1}'
     text = u(text.format(value, result._preview()))
 
     try:
