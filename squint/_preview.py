@@ -13,6 +13,19 @@ except NameError:
 from .select import Query
 
 
+def build_preview(query):
+    """Take *query* and return a formatted preview string."""
+    result = query.execute()
+
+    while len(result._preview()) < 80 * 5:
+        try:
+            result._next_cache()
+        except StopIteration:
+            break
+
+    return '---- preview ----\n{0}'.format(result._preview())
+
+
 existing_displayhook = sys.displayhook
 
 
@@ -25,15 +38,8 @@ def displayhook(value):
     except AttributeError:
         pass
 
-    result = value.execute()
-    while len(result._preview()) < 80 * 5:
-        try:
-            result._next_cache()
-        except StopIteration:
-            break
-
-    text = '{0!r}\n---- preview ----\n{1}'
-    text = u(text.format(value, result._preview()))
+    text = '{0!r}\n{1}'.format(value, build_preview(value))
+    text = u(text)  # Convert to Unicode (for Python 2.x).
 
     try:
         sys.stdout.write(text)
