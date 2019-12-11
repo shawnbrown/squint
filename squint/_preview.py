@@ -11,19 +11,24 @@ except NameError:
     u = str
 
 from .select import Query
+from .result import Result
 
 
 def build_preview(query):
     """Take *query* and return a formatted preview string."""
     result = query.execute()
 
-    while len(result._preview()) < 80 * 5:
-        try:
-            result._next_cache()
-        except StopIteration:
-            break
+    if isinstance(result, Result):
+        while len(result._preview()) < 80 * 5:
+            try:
+                result._next_cache()
+            except StopIteration:
+                break
+        preview = result._preview()
+    else:
+        preview = repr(result)
 
-    return '---- preview ----\n{0}'.format(result._preview())
+    return '---- preview ----\n{0}'.format(preview)
 
 
 existing_displayhook = sys.displayhook

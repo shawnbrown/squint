@@ -29,7 +29,7 @@ class PreviewTestCase(unittest.TestCase):
 
 
 class TestBuildPreview(PreviewTestCase):
-    def test_basic_format(self):
+    def test_result_object(self):
         query = self.select('A')
 
         actual = build_preview(query)
@@ -37,6 +37,17 @@ class TestBuildPreview(PreviewTestCase):
         expected= (
             "---- preview ----\n"
             "\\[u?'x', u?'x', u?'y', u?'y', u?'z', u?'z'\\]"
+        )
+        self.assertRegex(actual, expected)
+
+    def test_nonresult_object(self):
+        query = self.select('C').sum()
+
+        actual = build_preview(query)
+
+        expected= (
+            "---- preview ----\n"
+            "100"
         )
         self.assertRegex(actual, expected)
 
