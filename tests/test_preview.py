@@ -5,13 +5,15 @@ import sys
 from .common import redirect_stdout
 from .common import unittest
 
-from squint.select import Select
-from squint._preview import (
-    build_preview,
-    displayhook,
+from squint.select import (
+    Select,
+    Query,
     #DEFAULT_MAX_LINES,
     #DEFAULT_MAX_CHARS,
 )
+
+from squint._preview import displayhook
+
 
 
 class PreviewTestCase(unittest.TestCase):
@@ -28,11 +30,13 @@ class PreviewTestCase(unittest.TestCase):
         ])
 
 
-class TestBuildPreview(PreviewTestCase):
+class TestQueryBuildPreview(PreviewTestCase):
+    """Tests for the Query._build_preview() method."""
+
     def test_result_object(self):
         query = self.select('A')
 
-        actual = build_preview(query)
+        actual = query._build_preview()
 
         expected= (
             "---- preview ----\n"
@@ -43,7 +47,7 @@ class TestBuildPreview(PreviewTestCase):
     def test_nonresult_object(self):
         query = self.select('C').sum()
 
-        actual = build_preview(query)
+        actual = query._build_preview()
 
         expected= (
             "---- preview ----\n"
@@ -53,6 +57,8 @@ class TestBuildPreview(PreviewTestCase):
 
 
 class TestDisplayhook(PreviewTestCase):
+    """Test sys.displayhook handling."""
+
     def test_displayhook(self):
         query = self.select('A')
 

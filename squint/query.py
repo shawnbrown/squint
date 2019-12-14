@@ -899,6 +899,22 @@ class BaseQuery(abc.ABC):
         return '{0}({1}{2}{3}){4}'.format(
             class_repr, source_repr, args_repr, kwds_repr, query_steps_repr)
 
+    def _build_preview(self):
+        """Return a formatted preview string of the query result."""
+        result = self.execute()
+
+        if isinstance(result, Result):
+            while len(result._preview()) < 80 * 5:
+                try:
+                    result._next_cache()
+                except StopIteration:
+                    break
+            preview = result._preview()
+        else:
+            preview = repr(result)
+
+        return '---- preview ----\n{0}'.format(preview)
+
     def to_reader(self, fieldnames=None):
         """Return a reader object which will iterate over the records
         returned from the Query. If the *fieldnames* argument is not
