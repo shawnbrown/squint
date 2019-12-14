@@ -33,14 +33,6 @@ _TRUNCATED_BEGINNING = _TruncationEllipsis(True)
 _TRUNCATED_ENDING = _TruncationEllipsis(False)
 
 
-if version_info[:2] >= (3, 4):
-    def format_preview(preview):
-        return pformat(preview, compact=True)
-else:
-    def format_preview(preview):
-        return pformat(preview)
-
-
 class Result(Iterator):
     """A simple iterator that wraps the results of :class:`Query`
     execution. This iterator is used to facilitate the lazy evaluation
@@ -125,7 +117,7 @@ class Result(Iterator):
     def next(self):
         return self.__next__()  # For Python 2 compatibility.
 
-    def _preview(self):
+    def _get_cache(self):
         preview = list(self._cache)
 
         if issubclass(self.evaltype, Mapping):
@@ -136,8 +128,7 @@ class Result(Iterator):
 
             preview = [(k, cache_only(v)) for k, v in preview]
 
-        result = Result(preview, evaltype=self.evaltype).fetch()
-        return format_preview(result)
+        return Result(preview, evaltype=self.evaltype).fetch()
 
     def _next_cache(self):
         # Try to cache the next item of a nested Result and exit.

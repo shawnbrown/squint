@@ -99,19 +99,19 @@ class TestClosing(unittest.TestCase):
         self.assertEqual(self.log, ['closed'])
 
 
-class TestPreview(unittest.TestCase):
+class TestGetCache(unittest.TestCase):
     def test_tuple(self):
         result = Result(iter([1, 2, 3, 4]), evaltype=tuple)
 
-        self.assertEqual(result._preview(), '()')
+        self.assertEqual(result._get_cache(), ())
 
         result._next_cache()
-        self.assertEqual(result._preview(), '(1,)')
+        self.assertEqual(result._get_cache(), (1,))
 
         result._next_cache()
         result._next_cache()
         result._next_cache()
-        self.assertEqual(result._preview(), '(1, 2, 3, 4)')
+        self.assertEqual(result._get_cache(), (1, 2, 3, 4))
 
         with self.assertRaises(StopIteration):
             result._next_cache()
@@ -126,23 +126,23 @@ class TestPreview(unittest.TestCase):
         ])
         result = Result(iterable, dict)
 
-        self.assertEqual(result._preview(), '{}')
+        self.assertEqual(result._get_cache(), {})
 
         result._next_cache()
         self.assertEqual(result._cache[0][0], 'a')
         self.assertEqual(result._cache[0][1]._cache[0], 1)
-        self.assertEqual(result._preview(), "{'a': [1]}")
+        self.assertEqual(result._get_cache(), {'a': [1]})
 
         result._next_cache()
-        self.assertEqual(result._preview(), "{'a': [1, 2]}")
+        self.assertEqual(result._get_cache(), {'a': [1, 2]})
 
         result._next_cache()
-        self.assertEqual(result._preview(), "{'a': [1, 2], 'b': [3]}")
+        self.assertEqual(result._get_cache(), {'a': [1, 2], 'b': [3]})
 
         result._next_cache()
         result._next_cache()
         result._next_cache()
-        self.assertEqual(result._preview(), "{'a': [1, 2], 'b': [3, 4], 'c': [5, 6]}")
+        self.assertEqual(result._get_cache(), {'a': [1, 2], 'b': [3, 4], 'c': [5, 6]})
 
         with self.assertRaises(StopIteration):
             result._next_cache()
