@@ -56,6 +56,42 @@ class TestQueryBuildPreview(PreviewTestCase):
         self.assertRegex(actual, expected)
 
 
+class TestIPythonReprPretty(PreviewTestCase):
+    """Tests for Query._repr_pretty_() (IPython extension hook)."""
+
+    def setUp(self):
+        """A mock IPython printer class to inspect _repr_pretty_()."""
+        class MockPrinter(object):
+            def __init__(self):
+                self.output = []
+
+            def text(self, obj):
+                self.output.append(str(obj))
+
+            def break_(self):
+                self.output.append('\n')
+
+        self.p = MockPrinter()
+
+    def test_no_cycle(self):
+        query = self.select('A')
+        query._repr_pretty_(self.p, cycle=False)  # Sends to MockPrinter output.
+
+        output = self.p.output
+        self.assertEqual(output[0], repr(query))
+        self.assertEqual(output[1], '\n')
+        self.assertRegex(
+            output[2],
+            ("---- preview ----\n"
+             "\\[u?'x', u?'x', u?'y', u?'y', u?'z', u?'z'\\]"),
+        )
+
+    def test_cycle(self):
+        query = self.select('A')
+        query._repr_pretty_(self.p, cycle=True)  # Sends to MockPrinter output.
+        self.assertEqual(self.p.output, [repr(query)])
+
+
 class TestDisplayhook(PreviewTestCase):
     """Test sys.displayhook handling."""
 

@@ -915,6 +915,14 @@ class BaseQuery(abc.ABC):
 
         return '---- preview ----\n{0}'.format(preview)
 
+    def _repr_pretty_(self, p, cycle):
+        """Pretty print extension method for IPython."""
+        p.text(repr(self))
+
+        if not cycle:
+            p.break_()
+            p.text(self._build_preview())
+
     def to_reader(self, fieldnames=None):
         """Return a reader object which will iterate over the records
         returned from the Query. If the *fieldnames* argument is not
