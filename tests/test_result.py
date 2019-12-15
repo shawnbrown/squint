@@ -2,13 +2,9 @@
 from __future__ import absolute_import
 import sys
 from .common import unittest
-from squint._compatibility.collections import deque
-from squint._compatibility.collections import OrderedDict
 from squint._compatibility.itertools import islice
 from squint._utils import IterItems
 from squint.result import Result
-from squint.result import _TRUNCATED_BEGINNING
-from squint.result import _TRUNCATED_ENDING
 
 
 class TestFetch(unittest.TestCase):

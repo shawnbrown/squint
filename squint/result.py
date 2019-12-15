@@ -1,36 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
-from pprint import pformat
-from sys import version_info
 from ._compatibility.collections import deque
 from ._compatibility.collections.abc import (
     Iterator,
     Mapping,
 )
-from ._compatibility.functools import total_ordering
 from ._utils import IterItems
-
-
-@total_ordering
-class _TruncationEllipsis(object):
-    def __init__(self, always_lt):
-        self.always_lt = always_lt
-
-    def __hash__(self):
-        return hash((_TruncationEllipsis, self.always_lt))
-
-    def __repr__(self):
-        return '...'
-
-    def __eq__(self, other):
-        return self is other
-
-    def __lt__(self, other):
-        return self is not other and self.always_lt
-
-
-_TRUNCATED_BEGINNING = _TruncationEllipsis(True)
-_TRUNCATED_ENDING = _TruncationEllipsis(False)
 
 
 class Result(Iterator):
