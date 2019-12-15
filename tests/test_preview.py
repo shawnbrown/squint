@@ -8,8 +8,6 @@ from .common import unittest
 from squint.select import (
     Select,
     Query,
-    #DEFAULT_MAX_LINES,
-    #DEFAULT_MAX_CHARS,
 )
 
 from squint._preview import displayhook
@@ -52,6 +50,36 @@ class TestQueryBuildPreview(PreviewTestCase):
         expected= (
             "---- preview ----\n"
             "100"
+        )
+        self.assertRegex(actual, expected)
+
+    def test_truncation(self):
+        select = Select([
+            ['X', 'Y'],
+            ['aaa', 1],
+            ['bbb', 2],
+            ['ccc', 3],
+            ['ddd', 4],
+            ['eee', 5],
+            ['fff', 6],
+            ['ggg', 7],
+            ['hhh', 8],
+            ['iii', 9],
+        ])
+        query = select({'X': 'Y'}).unwrap()
+
+        actual = query._build_preview()
+
+        expected = (
+            "---- preview ----\n"
+            "\\{u?'aaa': 1,\n"
+            " u?'bbb': 2,\n"
+            " u?'ccc': 3,\n"
+            " u?'ddd': 4,\n"
+            " u?'eee': 5,\n"
+            " u?'fff': 6,\n"
+            " u?'ggg': 7,\n"
+            " \\.\\.\\."
         )
         self.assertRegex(actual, expected)
 

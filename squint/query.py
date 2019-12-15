@@ -32,6 +32,7 @@ from ._utils import (
     IterItems,
     iterpeek,
     nonstringiter,
+    pformat_lines,
     sortable,
     exhaustible,
     _make_sentinel,
@@ -45,6 +46,8 @@ from .result import (
 
 
 PY2 = sys.version_info[0] == 2
+
+PREVIEW_MAX_LINES = 8
 
 
 class BaseElement(abc.ABC):
@@ -904,15 +907,25 @@ class BaseQuery(abc.ABC):
         result = self.execute()
 
         if isinstance(result, Result):
-            while len(result._preview()) < 80 * 5:
+            preview_lines = []
+            while len(preview_lines) <= PREVIEW_MAX_LINES:
                 try:
                     result._next_cache()
                 except StopIteration:
                     break
-            preview = result._preview()
+                preview_lines = pformat_lines(result._get_cache())
         else:
-            preview = repr(result)
+            preview_lines = pformat_lines(result)
 
+        # If too long, truncate list and append an ellipsis.
+        if len(preview_lines) > PREVIEW_MAX_LINES:
+            preview_lines = preview_lines[:PREVIEW_MAX_LINES]
+            last_row = preview_lines.pop()
+            position = len(last_row) - len(last_row.lstrip())
+            padding = last_row[:position]
+            preview_lines.append('{0}...'.format(padding))
+
+        preview = '\n'.join(preview_lines)
         return '---- preview ----\n{0}'.format(preview)
 
     def _repr_pretty_(self, p, cycle):

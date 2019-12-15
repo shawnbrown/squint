@@ -4,6 +4,7 @@ from __future__ import absolute_import
 import re
 from io import IOBase
 from numbers import Number
+from pprint import pformat
 
 from ._compatibility.abc import ABC
 from ._compatibility.collections.abc import ItemsView
@@ -112,6 +113,16 @@ def _unique_everseen(iterable):  # Adapted from itertools recipes.
     for element in iterable:
         seen_add(element)
         yield element
+
+
+try:
+    pformat('', compact=True)  # <- Verify that *compact* arg is implemented.
+    def pformat_lines(obj):
+        return pformat(obj, compact=True).split('\n')
+
+except TypeError:
+    def pformat_lines(obj):
+        return pformat(obj).split('\n')
 
 
 def _make_decimal(d):
