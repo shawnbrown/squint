@@ -50,6 +50,16 @@ class Result(Iterator):
         self._cache = deque()
         self._started_iteration = False
 
+    @property
+    def evaluation_type(self):
+        import warnings
+        warnings.warn(
+            "attribute 'evaluation_type' is deprecated, use 'evaltype' instead",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return self.evaltype
+
     def close(self):
         """Closes any associated resources. If the resources have
         already been closed, this method passes without error.
