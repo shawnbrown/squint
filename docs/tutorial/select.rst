@@ -320,31 +320,36 @@ etc.).
 Narrowing a Selection
 =====================
 
-Selections can be narrowed to rows that satisfy given keyword
-arguments.
+Selections can be narrowed to rows that satisfy given *keyword arguments*.
 
-Narrow a selection to rows where column **B** equals "foo"::
+Narrow a selection to rows where column **B** equals "foo", ``B='foo'``::
 
-    >>> select(('A', 'B'), B='foo').fetch()
+    >>> select(('A', 'B'), B='foo')
+    Query(<squint.Select object at 0x7f978939>, [('A', 'B')], B='foo')
+    ---- preview ----
     [('x', 'foo'), ('x', 'foo'), ('y', 'foo')]
 
 The keyword column does not have to be in the selected result::
 
-    >>> select('A', B='foo').fetch()
+    >>> select('A', B='foo')
+    Query(<squint.Select object at 0x7f978939>, ['A'], B='foo')
+    ---- preview ----
     ['x', 'x', 'y']
 
-Narrow a selection to rows where column **A** equals "x" *or* "y"::
+Narrow a selection to rows where column **A** equals "x" *or* "y",
+``A={'x', 'y'}``::
 
-    >>> select(('A', 'B'), A=['x', 'y']).fetch()
-    [('x', 'foo'),
-     ('x', 'foo'),
-     ('y', 'foo'),
-     ('y', 'bar')]
+    >>> select(('A', 'B'), A={'x', 'y'})
+    Query(<squint.Select object at 0x7f97893>, [('A', 'B')], A={'y', 'x'})
+    ---- preview ----
+    [('x', 'foo'), ('x', 'foo'), ('y', 'foo'), ('y', 'bar')]
 
 Narrow a selection to rows where column **A** equals "y" *and*
-column **B** equals "bar"::
+column **B** equals "bar", ``A='y', B='bar'``::
 
-    >>> select([('A', 'B', 'C')], A='y', B='bar').fetch()
+    >>> select(('A', 'B', 'C'), A='y', B='bar')
+    Query(<squint.Select object at 0x7f97893>, [('A', 'B', 'C')], A='y', B='bar')
+    ---- preview ----
     [('y', 'bar', '20')]
 
 Only one row matches the above keyword conditions.
