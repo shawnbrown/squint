@@ -228,7 +228,7 @@ class Select(object):
             query = select({'A'}, B='foo')  # <- selects only the rows
                                             #    where 'B' equals 'foo'
 
-        See the :ref:`querying-data` tutorial for step-by-step
+        See the :ref:`selecting-data` tutorial for step-by-step
         examples.
         """
         try:

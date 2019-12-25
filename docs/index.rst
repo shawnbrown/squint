@@ -26,7 +26,7 @@ Version |release|
 .. toctree::
     :maxdepth: 2
 
-    tutorial/select
+    tutorial/index.rst
     reference/squint
 
 ..
