@@ -5,10 +5,10 @@ squint: Simple query interface for tabular data
 
 .. start-inclusion-marker-description
 
-Squint is a light-weight query interface for tabular data that's
-easy to learn and quick to use. A core feature of Squint is that
-the structure of a query's *selection* matches the structure of its
-*result*. With it you can:
+Squint is a simple query interface for tabular data that's light-weight
+and easy to learn. *A core feature of Squint is that the structure of a
+query's* **selection** *matches the structure of its* **result**. With
+it you can:
 
 * Select data using Python literals—sets, lists, dictionaries,
   etc.—and get results in the same format.
