@@ -24,6 +24,12 @@ Version |release|
 
 
 .. toctree::
+    :hidden:
+
+    Introduction <self>
+
+
+.. toctree::
     :maxdepth: 2
 
     tutorial/index.rst
