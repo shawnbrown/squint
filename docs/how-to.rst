@@ -2,8 +2,11 @@
 .. currentmodule:: squint
 
 .. meta::
-    :description: How to select more exotic data types.
-    :keywords: squint, select, frozenset, deque, namedtuple, OrderedDict, defaultdict
+    :description: How-to guide for squint Select, Query, and Result classes.
+    :keywords: squint, how-to
+
+.. highlight:: python
+
 
 ############
 How-to Guide
