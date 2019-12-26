@@ -13,6 +13,27 @@ How-to Guide
 ############
 
 
+How To Select Single-Item Inner-Containers
+==========================================
+
+When only one container type is given, it's used as an outer-container
+if it holds a single item and used as an inner-container if it holds
+multiple items (while the outer-container type defaults to a
+:py:class:`list`). To specify a single-item inner-container, you must
+provide both inner- and outer-types explicitly---you cannot use the
+implicit :py:class:`list` shorthand shown previously.
+
+Select single-item :py:class:`sets <set>` of elements from column **B**,
+``[{'B'}]``:
+
+.. code-block:: python
+
+    >>> select([{'B'}])
+    Query(<squint.Select object at 0x7ff9292ffb90>, [{'B'}])
+    ---- preview ----
+    [{'foo'}, {'foo'}, {'foo'}, {'bar'}, {'bar'}, {'bar'}]
+
+
 How To Select Exotic Data Types
 ===============================
 
