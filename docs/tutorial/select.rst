@@ -340,16 +340,3 @@ column **B** equals "bar", ``A='y', B='bar'``::
     [('y', 'bar', '20')]
 
 Only one row matches the above keyword conditions.
-
-
-Using More Exotic Data Types
-============================
-
-In addition to lists, tuples, and sets, you can also use other container
-types. For example, you can use :py:class:`frozensets <frozenset>`,
-:py:class:`deques <collections.deque>`, :py:func:`namedtuples
-<collections.namedtuple>`, etc. However, normal object limitations
-still apply---for example, sets and dictionary keys can only
-contain `immutable <http://docs.python.org/3/glossary.html#term-immutable>`_
-types (like :py:class:`str`, :py:class:`tuple`, :py:class:`frozenset`,
-etc.).

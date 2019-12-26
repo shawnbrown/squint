@@ -27,9 +27,5 @@ Version |release|
     :maxdepth: 2
 
     tutorial/index.rst
+    how-to
     reference/squint
-
-..
-    tutorial/index.rst
-    reference/index.rst
-
