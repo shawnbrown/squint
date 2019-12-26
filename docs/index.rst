@@ -28,4 +28,4 @@ Version |release|
 
     tutorial/index.rst
     how-to
-    reference/squint
+    reference
