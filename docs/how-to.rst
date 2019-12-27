@@ -18,8 +18,8 @@ tutorials. You can download it here:
     :download:`example.csv </_static/example.csv>`
 
 
-How to Install
-==============
+How to Install Squint
+=====================
 
 .. include:: ../README.rst
     :start-after: start-inclusion-marker-install
