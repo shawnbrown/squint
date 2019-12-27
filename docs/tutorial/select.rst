@@ -319,3 +319,18 @@ column **B** equals "bar", ``A='y', B='bar'``::
     [('y', 'bar', '20')]
 
 Only one row matches the above keyword conditions.
+
+
+Getting the Data Out
+====================
+
+The examples so far have called :class:`Select` objects and gotten
+:class:`Query` objects in return. To evaluate any query and get its
+resulting data, we can use the :meth:`fetch() <Query.fetch>` method.
+
+Get the data out by calling the :meth:`fetch() <Query.fetch>` method:
+
+.. code-block:: python
+
+    >>> select('A').fetch()
+    ['x', 'x', 'y', 'y', 'z', 'z']
