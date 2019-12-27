@@ -20,6 +20,17 @@ it you can:
 .. end-inclusion-marker-description
 
 
+:Documentation:
+    | https://squint.readthedocs.io/ (stable)
+    | https://squint.readthedocs.io/en/latest/ (latest)
+
+:Official:
+    | https://pypi.org/project/squint/
+
+:Development:
+    | https://github.com/shawnbrown/squint
+
+
 Installation
 ============
 
