@@ -29,6 +29,7 @@ Table of Contents
 
 .. toctree::
     :hidden:
+    :caption: Documentation
 
     Introduction <self>
 
