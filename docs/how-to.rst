@@ -18,6 +18,14 @@ tutorials. You can download it here:
     :download:`example.csv </_static/example.csv>`
 
 
+How to Install
+==============
+
+.. include:: ../README.rst
+    :start-after: start-inclusion-marker-install
+    :end-before: end-inclusion-marker-install
+
+
 How To Select Single-Item Inner-Containers
 ==========================================
 

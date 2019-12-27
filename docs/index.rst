@@ -23,6 +23,10 @@ Version |release|
     :end-before: end-inclusion-marker-description
 
 
+=================
+Table of Contents
+=================
+
 .. toctree::
     :hidden:
 
