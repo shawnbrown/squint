@@ -23,9 +23,9 @@ Version |release|
     :end-before: end-inclusion-marker-description
 
 
-=================
-Table of Contents
-=================
+=============
+Documentation
+=============
 
 .. toctree::
     :hidden:
@@ -40,3 +40,11 @@ Table of Contents
     tutorial/index
     how-to
     reference
+
+
+===============
+Other Resources
+===============
+
+* `Squint on PyPI <https://pypi.org/project/squint/>`_
+* `Squint on GitHub <https://github.com/shawnbrown/squint>`_
