@@ -32,6 +32,6 @@ Version |release|
 .. toctree::
     :maxdepth: 2
 
-    tutorial/index.rst
+    tutorial/index
     how-to
     reference
