@@ -296,14 +296,6 @@ The keyword column does not have to be in the selected result::
     ---- preview ----
     ['x', 'x', 'y']
 
-Narrow a selection to rows where column **A** equals "x" *or* "y",
-``A={'x', 'y'}``::
-
-    >>> select(('A', 'B'), A={'x', 'y'})
-    Query(<squint.Select object at 0x7f97893>, [('A', 'B')], A={'y', 'x'})
-    ---- preview ----
-    [('x', 'foo'), ('x', 'foo'), ('y', 'foo'), ('y', 'bar')]
-
 Narrow a selection to rows where column **A** equals "y" *and*
 column **B** equals "bar", ``A='y', B='bar'``::
 
@@ -313,6 +305,14 @@ column **B** equals "bar", ``A='y', B='bar'``::
     [('y', 'bar', '20')]
 
 Only one row matches the above keyword conditions.
+
+Narrow a selection to rows where column **A** equals "x" *or* "y",
+``A={'x', 'y'}``::
+
+    >>> select(('A', 'B'), A={'x', 'y'})
+    Query(<squint.Select object at 0x7f97893>, [('A', 'B')], A={'y', 'x'})
+    ---- preview ----
+    [('x', 'foo'), ('x', 'foo'), ('y', 'foo'), ('y', 'bar')]
 
 
 Getting the Data Out
