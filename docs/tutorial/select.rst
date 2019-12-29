@@ -14,16 +14,10 @@
 Selecting Data
 ##############
 
-The following examples demonstrate squint's :class:`Select` class.
-This introduction is written with the intent that you follow along
-and type the examples into Python's interactive prompt yourself.
-This will give you hands-on experience working with Select and Query
-objects.
-
+The following examples demonstrate squint's :class:`Select`
+class. For these examples, we will use the following data set:
 
 .. _intro-data-set:
-
-For these examples, we will use the following data set:
 
     ===  ===  ===
      A    B    C
