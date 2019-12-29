@@ -319,8 +319,10 @@ Getting the Data Out
 ====================
 
 The examples so far have called :class:`Select` objects and gotten
-:class:`Query` objects in return. To evaluate any query and get its
-resulting data, we can use the :meth:`fetch() <Query.fetch>` method.
+:class:`Query` objects in return. While the preview shows what the
+output will look like, it's still a Query object---not the data itself.
+One way to get the actual data is to use the Query's :meth:`fetch()
+<Query.fetch>` method.
 
 Get the data out by calling the :meth:`fetch() <Query.fetch>` method:
 
