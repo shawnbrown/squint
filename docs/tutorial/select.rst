@@ -280,7 +280,7 @@ Select groups arranged by elements from column **A** that contain
 Narrowing a Selection
 =====================
 
-Selections can be narrowed to rows that satisfy given *keyword arguments*.
+Selections can be narrowed to rows that satisfy given keyword arguments.
 
 Narrow a selection to rows where column **B** equals "foo", ``B='foo'``::
 
@@ -296,6 +296,10 @@ The keyword column does not have to be in the selected result::
     ---- preview ----
     ['x', 'x', 'y']
 
+
+Narrow by Multiple Columns
+--------------------------
+
 Narrow a selection to rows where column **A** equals "y" *and*
 column **B** equals "bar", ``A='y', B='bar'``::
 
@@ -306,13 +310,50 @@ column **B** equals "bar", ``A='y', B='bar'``::
 
 Only one row matches the above keyword conditions.
 
-Narrow a selection to rows where column **A** equals "x" *or* "y",
-``A={'x', 'y'}``::
+
+Narrow by Other Predicates
+--------------------------
+
+The argument's *key* specifies the column to check and its *value* is
+used to construct a :class:`Predicate` that checks for matching elements.
+In addition to matching values like ``'y'`` or ``'bar'``, Predicate
+objects can be sets, functions, boolean values, and more.
+
+
+Use a predicate :py:class:`set` to narrow a selection to rows where
+column **A** equals "x" *or* "y", ``A={'x', 'y'}``::
 
     >>> select(('A', 'B'), A={'x', 'y'})
     Query(<squint.Select object at 0x7f97893>, [('A', 'B')], A={'y', 'x'})
     ---- preview ----
     [('x', 'foo'), ('x', 'foo'), ('y', 'foo'), ('y', 'bar')]
+
+
+Use a predicate *function* to narrow a selection to rows where
+column **C** is greater than 15, ``C=greaterthan15``::
+
+    >>> def greaterthan15(x):
+    ...     return float(x) > 15
+    ...
+    >>> select(('A', 'C'), C=greaterthan15)
+    Query(<squint.Select object at 0x7fa6b9ea>, [('A', 'C')], C=greaterthan15)
+    ---- preview ----
+    [('x', '20'), ('x', '30'), ('y', '20')]
+
+
+When functions are simple like the one above, you can use a
+*lambda* statement rather than writing a separate function,
+``C=lambda x: float(x) > 15``::
+
+    >>> select(('A', 'C'), C=lambda x: float(x) > 15)
+    Query(<squint.Select object at 0x7f5f08e4>, [('A', 'C')], C=<lambda>)
+    ---- preview ----
+    [('x', '20'), ('x', '30'), ('y', '20')]
+
+
+In addition to set membership and function testing, Predicates
+can be used for type checking, regex matching, and more. See the
+:ref:`Predicate documentation <predicate-docs>` for details.
 
 
 Getting the Data Out
