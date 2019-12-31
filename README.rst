@@ -169,4 +169,4 @@ To begin, we load the CSV file into a Select object:
 
 Freely licensed under the Apache License, Version 2.0
 
-Copyright 2015 - 2019 National Committee for an Effective Congress, et al.
+Copyright 2015 - 2020 National Committee for an Effective Congress, et al.
