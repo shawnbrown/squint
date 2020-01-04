@@ -57,9 +57,15 @@ Query
 
     .. automethod:: from_object
 
-    .. automethod:: sum
 
-    .. automethod:: count
+    .. _aggregate-methods:
+
+    **AGGREGATE METHODS**
+
+    Aggregate methods operate on a collection of elements and produce
+    a single result.
+
+    .. automethod:: sum
 
     .. automethod:: avg
 
@@ -67,7 +73,15 @@ Query
 
     .. automethod:: max
 
-    .. automethod:: distinct
+    .. automethod:: count
+
+
+    .. _functional-methods:
+
+    **FUNCTIONAL METHODS**
+
+    Functional methods take a user-provided function and use it
+    to perform a specified procedure.
 
     .. automethod:: apply
 
@@ -77,9 +91,28 @@ Query
 
     .. automethod:: reduce
 
+    .. automethod:: starmap
+
+
+    .. _datahandling-methods:
+
+    **DATA HANDLING METHODS**
+
+    Data handling methods operate on a collection of elements by
+    reshaping or otherwise reformatting the data.
+
+    .. automethod:: distinct
+
     .. automethod:: flatten
 
     .. automethod:: unwrap
+
+
+    .. _dataoutput-methods:
+
+    **DATA OUTPUT METHODS**
+
+    Data output methods evaluate the query and return its results.
 
     .. automethod:: execute
 
