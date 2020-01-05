@@ -21,3 +21,4 @@ and Result objects.
 
     select
     query
+    result
