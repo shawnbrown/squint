@@ -291,12 +291,11 @@ query results into a CSV file::
     >>> select('A').to_csv('myresults.csv')
 
 
-Additional Operations
-=====================
+Method Chaining
+===============
 
-Since each method returns a new Query, it's possible to
-chain together multiple method calls to transform the data
-as needed::
+You can build increasingly complex queries by chaining methods
+together as needed::
 
     >>> def not_z(value):
     ...     return value != 'z'
@@ -306,3 +305,16 @@ as needed::
     ...
     >>> select('A').filter(not_z).map(uppercase).fetch()
     ['X', 'X', 'Y', 'Y']
+
+In the example above, the :meth:`filter() <Query.filter>`,
+:meth:`map() <Query.map>`, and :meth:`fetch() <Query.fetch>`
+methods are chained together to perform multiple operations
+within  a single statement and then output the data.
+
+.. admonition:: Method Order
+
+    The order of most Query methods can be mixed and matched
+    as needed. But the data output methods---like
+    :meth:`fetch() <Query.fetch>`, :meth:`execute() <Query.execute>`,
+    and :meth:`to_csv() <Query.to_csv>`---can only appear at the
+    end of a chain, not in the middle of one.
