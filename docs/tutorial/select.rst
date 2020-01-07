@@ -8,11 +8,11 @@
 .. highlight:: python
 
 
-.. _selecting-data:
+.. _making-selections:
 
-##############
-Selecting Data
-##############
+#################
+Making Selections
+#################
 
 The following examples demonstrate squint's :class:`Select`
 class. For these examples, we will use the following data set:

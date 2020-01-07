@@ -15,7 +15,7 @@ Building Queries
 ################
 
 The following examples demonstrate squint's :class:`Query` class.
-This document builds on the :ref:`selecting-data` tutorial.
+This document builds on the :ref:`making-selections` tutorial.
 
 
 Get Started
@@ -33,8 +33,8 @@ the ``>>>`` prompt, import squint and load the data::
 Creating a Query Object
 =======================
 
-In the :ref:`selecting-data` tutorial, we created several Query
-objects. Each call to a :class:`Select` object returns a Query.
+In the :ref:`making-selections` tutorial, we created several Query
+objects---each call to a :class:`Select` object returns a Query.
 
 By selecting a list of elements from column **C**, we get a
 :class:`Query` object in return::

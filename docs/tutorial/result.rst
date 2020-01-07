@@ -15,7 +15,7 @@ Using Results
 #############
 
 The following examples demonstrate squint's :class:`Result` class.
-This document builds on the previous :ref:`selecting-data` and
+This document builds on the previous :ref:`making-selections` and
 :ref:`building-queries` tutorials.
 
 
