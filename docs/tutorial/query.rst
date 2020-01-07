@@ -259,30 +259,12 @@ query by returning a :class:`Result` object:
 
 .. admonition:: Eager vs Lazy Evaluation
 
-    When a query is *eagerly* evaluated, all of its results are
-    loaded into memory at the same time. But when a query is
-    *lazily* evaluated, its individual elements are computed
-    one-at-a-time as they are needed.
-
-    For many result sets, eager evaluation is entirely acceptible.
-    But large result sets might use too much memory or even exceed
-    the available memory on your system. An example of lazy evaluation::
-
-        >>> result = select('A').execute()
-        >>> for element in result:
-        ...     print(element)
-        ...
-        ...
-        x
-        x
-        y
-        y
-        z
-        z
-
-    For each iteration of the loop above, the next element is
-    evaluated and the previous element is discarded. At no point
-    in time do all of the elements occupy memory together.
+    When a query is *eagerly evaluated*, its elements are all loaded
+    into memory at the same time. But when a query is *lazily evaluated*,
+    its individual elements are computed one-at-a-time. See the
+    :ref:`using-results` tutorial for more information about
+    :ref:`eager <eager-evaluation>` and :ref:`lazy <lazy-evaluation>`
+    evaluation.
 
 
 Use the :meth:`to_csv() <Query.to_csv>` method to save the
