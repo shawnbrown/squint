@@ -31,43 +31,6 @@ it you can:
     | https://github.com/shawnbrown/squint
 
 
-Installation
-============
-
-.. start-inclusion-marker-install
-
-The Squint package is tested on Python 2.7, 3.4 through 3.8, PyPy,
-and PyPy3; and is freely available under the Apache License, version 2.
-
-The easiest way to install squint is to use `pip <https://pip.pypa.io>`_:
-
-.. code-block:: console
-
-    pip install squint
-
-To upgrade an existing installation, use the "``--upgrade``" option:
-
-.. code-block:: console
-
-    pip install --upgrade squint
-
-The development repository for ``squint`` is hosted on
-`GitHub <https://github.com/shawnbrown/squint>`_. If you need bug-fixes
-or features that are not available in the current stable release, you can
-"pip install" the development version directly from GitHub:
-
-.. code-block:: console
-
-    pip install --upgrade https://github.com/shawnbrown/squint/archive/master.zip
-
-All of the usual caveats for a development install should
-apply—only use this version if you can risk some instability
-or if you know exactly what you're doing. While care is taken
-to never break the build, it can happen.
-
-.. end-inclusion-marker-install
-
-
 Some Examples
 =============
 
@@ -163,6 +126,43 @@ To begin, we load the CSV file into a Select object:
 |                              |    ('y', 'bar'): [20],               |
 |                              |    ('z', 'bar'): [10, 10]}           |
 +------------------------------+--------------------------------------+
+
+
+Installation
+============
+
+.. start-inclusion-marker-install
+
+The Squint package is tested on Python 2.7, 3.4 through 3.8, PyPy,
+and PyPy3; and is freely available under the Apache License, version 2.
+
+The easiest way to install squint is to use `pip <https://pip.pypa.io>`_:
+
+.. code-block:: console
+
+    pip install squint
+
+To upgrade an existing installation, use the "``--upgrade``" option:
+
+.. code-block:: console
+
+    pip install --upgrade squint
+
+The development repository for ``squint`` is hosted on
+`GitHub <https://github.com/shawnbrown/squint>`_. If you need bug-fixes
+or features that are not available in the current stable release, you can
+"pip install" the development version directly from GitHub:
+
+.. code-block:: console
+
+    pip install --upgrade https://github.com/shawnbrown/squint/archive/master.zip
+
+All of the usual caveats for a development install should
+apply—only use this version if you can risk some instability
+or if you know exactly what you're doing. While care is taken
+to never break the build, it can happen.
+
+.. end-inclusion-marker-install
 
 
 ----------
