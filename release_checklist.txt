@@ -1,50 +1,56 @@
 
-=================
 Release Checklist
-=================
+-----------------
 
 1. Make sure correct version number is set in the following files:
 
    squint/__init__.py
    docs/conf.py
 
-2. Commit and push final changes to upstream repository:
+2. Make sure the description argument in setup.py matches the project
+   description on GitHub.
+
+3. Commit and push final changes to upstream repository:
 
      Prepare version info, CHANGELOG, and README for version X.X.X release.
 
-3. Perform final checks to make sure there are no CI test failures.
+4. Perform final checks to make sure there are no CI/tox test failures.
 
-4. Remove all existing files in the dist/ folder.
+5. Make sure the packaging tools are up-to-date:
 
-5. Build new distributions:
+     pip install -U twine wheel setuptools
 
-   python setup.py sdist bdist_wheel
+6. Remove all existing files in the dist/ folder.
 
-6. Upload source and wheel distributions to PyPI:
+7. Build new distributions:
 
-   twine upload dist/*
+     python setup.py sdist bdist_wheel
 
-7. Double check PyPI project page and test installation from PyPI.
+8. Upload source and wheel distributions to PyPI:
 
-8. Add version tag to upstream repository (also used by readthedocs.org).
+     twine upload dist/*
 
-9. Iterate version number in repository indicating that it is a development
-   version (e.g., X.X.X.dev0) so that "latest" docs aren't confused with the
-   just-published "stable" docs:
+9. Double check PyPI project page and test installation from PyPI.
 
-     squint/__init__.py
-     docs/conf.py
+10. Add version tag to upstream repository (also used by readthedocs.org).
 
-   Commit these changes with a comment like the one below:
+11. Iterate version number in repository indicating that it is a development
+    version (e.g., X.X.X.dev0) so that "latest" docs aren't confused with the
+    just-published "stable" docs:
 
-     Iterate version number to differentiate development version
-     from latest release.
+      squint/__init__.py
+      docs/conf.py
 
-10. Make sure the documentation reflects the new versions:
+    Commit these changes with a comment like the one below:
+
+      Iterate version number to differentiate development version
+      from latest release.
+
+12. Make sure the documentation reflects the new versions:
 
     * https://squint.readthedocs.io/ (stable)
     * https://squint.readthedocs.io/en/latest/ (latest)
 
-11. Publish update announcement to relevant mailing lists:
+13. Publish update announcement to relevant mailing lists:
 
     python-announce-list@python.org
