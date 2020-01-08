@@ -29,7 +29,7 @@ if __name__ == '__main__':
             # Required fields:
             name='squint',
             version=get_version('squint/__init__.py'),
-            description='Simple query interface for tabular data.',
+            description='A simple query interface for tabular data.',
             packages=setuptools.find_packages(exclude=['docs', 'tests']),
 
             # Recommended fields:
