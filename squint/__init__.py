@@ -43,6 +43,9 @@ from .result import Result
 from ._vendor.predicate import Predicate
 from . import _preview
 
+
+__version__ = '0.0.3.dev0'
+
 BaseElement.__module__ = 'squint'
 Select.__module__ = 'squint'
 Query.__module__ = 'squint'

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import ast
 import setuptools
 
 
@@ -8,10 +9,20 @@ def get_long_description(path):
         return fh.read()
 
 
+def get_version(path):
+    """Return value of file's __version__ attribute."""
+    with open(path) as fh:
+        for line in fh:
+            line = line.strip()
+            if line.startswith('__version__'):
+                return ast.parse(line).body[0].value.s
+    raise Exception('Unable to find __version__ attribute.')
+
+
 setuptools.setup(
     # Required fields:
     name='squint',
-    version='0.0.3.dev0',
+    version=get_version('squint/__init__.py'),
     description='Simple query interface for tabular data.',
     packages=setuptools.find_packages(exclude=['docs', 'tests']),
 
