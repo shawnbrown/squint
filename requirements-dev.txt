@@ -8,5 +8,6 @@ get-reader[excel,dbf]
 sphinx
 sphinx-rtd-theme>=0.3.1
 tox
+setuptools
 twine
 wheel
