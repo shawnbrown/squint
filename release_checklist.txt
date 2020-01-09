@@ -41,10 +41,9 @@ Release Checklist
       squint/__init__.py
       docs/conf.py
 
-    Commit these changes with a comment like the one below:
+    Commit these changes with a message like the one below:
 
-      Iterate version number to differentiate development version
-      from latest release.
+      Iterate version number in development repository.
 
 12. Make sure the documentation reflects the new versions:
 
