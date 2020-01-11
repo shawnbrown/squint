@@ -6,6 +6,7 @@ import setuptools
 
 
 def get_long_description(path):
+    """Return contents of file."""
     with open(path) as fh:
         return fh.read()
 
