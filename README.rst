@@ -3,6 +3,12 @@
 squint: Simple query interface for tabular data
 ***********************************************
 
+..
+    Project badges for quick reference:
+
+|buildstatus| |devstatus| |license| |pyversions|
+
+
 .. start-inclusion-marker-description
 
 Squint is a simple query interface for tabular data that's light-weight
@@ -170,3 +176,31 @@ to never break the build, it can happen.
 Freely licensed under the Apache License, Version 2.0
 
 Copyright 2015 - 2020 National Committee for an Effective Congress, et al.
+
+
+..
+  SUBSTITUTION DEFINITONS:
+
+.. |buildstatus| image:: https://travis-ci.org/shawnbrown/squint.svg?branch=master
+    :target: https://travis-ci.org/shawnbrown/squint
+    :alt: Current Build Status
+
+.. |devstatus| image:: https://img.shields.io/pypi/status/squint.svg
+    :target: https://pypi.org/project/squint/
+    :alt: Development Status
+
+.. |license| image:: https://img.shields.io/badge/license-Apache%202-blue.svg
+    :target: https://opensource.org/licenses/Apache-2.0
+    :alt: Apache 2.0 License
+
+.. |pyversions| image:: https://img.shields.io/pypi/pyversions/squint.svg
+    :target: https://pypi.org/project/squint/#supported-versions
+    :alt: Supported Python Versions
+
+.. |githubstars| image:: https://img.shields.io/github/stars/shawnbrown/squint.svg
+    :target: https://github.com/shawnbrown/squint/stargazers
+    :alt: GitHub users who have starred this project
+
+.. |pypiversion| image:: https://img.shields.io/pypi/v/squint.svg
+    :target: https://pypi.org/project/squint/
+    :alt: Current PyPI Version
