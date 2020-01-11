@@ -2,8 +2,8 @@
 Squint Changelog
 ================
 
-COMING SOON (0.1.0)
--------------------
+2020-01-11 (0.1.0)
+------------------
 
 * Added a Query preview feature for interactive use:
 
@@ -23,9 +23,10 @@ COMING SOON (0.1.0)
   bpython, and Jupyter. However, at the time of this release, ptpython does
   not support this type of customization.
 
-* Update documentation.
+* Added rewritten and expanded tutorial documentation.
 * Changed Result attribute from "evaluation_type" to "evaltype" (the old
   name is now deprecated).
+* Added Python 3.9 testing and support.
 * Removed support for very old versions of Python (2.6, 3.2, and 3.3).
 
 
