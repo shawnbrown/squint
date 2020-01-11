@@ -86,7 +86,7 @@ author = 'Shawn Brown'
 #
 # The short X.Y version.
 #from squint import __version__
-__version__ = '0.1.0'
+__version__ = '0.2.0.dev0'
 version = __version__
 
 # The full version, including alpha/beta/rc tags.
