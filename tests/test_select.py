@@ -355,6 +355,28 @@ class TestSelect(unittest.TestCase):
             expected = sortvalues(expected)
         self.assertEqual(result, expected)
 
+    def test_select_distinct_dict_grouping(self):
+        """Dictionary grouping should work even when key elements
+        are not adjacent in the original data source. To do this
+        efficiently, results of the internal query should be sorted.
+        """
+        source = Select([
+            ['A', 'B'],
+            ['x', 1],
+            ['y', 2],
+            ['z', 3],
+            ['x', 4],
+            ['y', 5],
+            ['z', 6],
+        ])
+        result = source._select_distinct({'A': ['B']})
+        expected = {
+            'x': [1, 4],
+            'y': [2, 5],
+            'z': [3, 6],
+        }
+        self.assertEqual(result.fetch(), expected)
+
     def test_select_aggregate(self):
         # Not grouped, single result.
         result = self.source._select_aggregate('COUNT', ['label2'])
@@ -393,6 +415,28 @@ class TestSelect(unittest.TestCase):
             ('b', 'b'): [70, 70],
         }
         self.assertEqual(dict(result), expected)
+
+    def test_select_dict_grouping(self):
+        """Dictionary grouping should work even when key elements
+        are not adjacent in the original data source. To do this
+        efficiently, results of the internal query should be sorted.
+        """
+        source = Select([
+            ['A', 'B'],
+            ['x', 1],
+            ['y', 2],
+            ['z', 3],
+            ['x', 4],
+            ['y', 5],
+            ['z', 6],
+        ])
+        result = source._select({'A': ['B']})
+        expected = {
+            'x': [1, 4],
+            'y': [2, 5],
+            'z': [3, 6],
+        }
+        self.assertEqual(result.fetch(), expected)
 
     def test_call(self):
         query = self.source(['label1'])
