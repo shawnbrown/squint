@@ -116,13 +116,22 @@ def _unique_everseen(iterable):  # Adapted from itertools recipes.
 
 
 try:
-    pformat('', compact=True)  # <- Verify that *compact* arg is implemented.
+    pformat('', sort_dicts=False)  # `sort_dicts` new in Python 3.8
+
     def pformat_lines(obj):
-        return pformat(obj, compact=True).split('\n')
+        return pformat(obj, compact=True, sort_dicts=False).split('\n')
 
 except TypeError:
-    def pformat_lines(obj):
-        return pformat(obj).split('\n')
+    try:
+        pformat('', compact=True)  # `compact` new in Python 3.4
+
+        def pformat_lines(obj):
+            return pformat(obj, compact=True).split('\n')
+
+    except TypeError:
+
+        def pformat_lines(obj):
+            return pformat(obj).split('\n')
 
 
 def _make_decimal(d):
