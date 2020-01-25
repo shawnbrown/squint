@@ -1,0 +1,236 @@
+time,flight,city,airport,country,airline,aircraft,passengers
+2020-01-22 05:30,K4368,Los Angeles,LAX,USA,Kalitta Air,74Y,429
+2020-01-22 06:00,JQ1,Melbourne,MEL,Australia,Jetstar Airways,788,274
+2020-01-22 06:10,HA17,Las Vegas,LAS,USA,Hawaiian Airlines,A332,293
+2020-01-22 06:50,UA902,Tokyo,NRT,Japan,United Airlines,B772,249
+2020-01-22 07:10,9X707,Kahului,OGG,USA,Sun Air Express,CNC,9
+2020-01-22 07:10,MW707,Kahului,OGG,USA,Mokulele Airlines,CN2,8
+2020-01-22 07:11,HA105,Kahului,OGG,USA,Hawaiian Airlines,B712,107
+2020-01-22 07:14,HA107,Kailua-Kona,KOA,USA,Hawaiian Airlines,717,103
+2020-01-22 07:15,HA101,Hilo,ITO,USA,Hawaiian Airlines,B712,104
+2020-01-22 07:15,HA114,Lihue,LIH,USA,Hawaiian Airlines,B712,118
+2020-01-22 07:30,JL786,Tokyo,NRT,Japan,Japan Airlines,B763,216
+2020-01-22 07:33,9X629,Kaunakakai,MKK,USA,Sun Air Express,C28,8
+2020-01-22 07:33,MW229,Kaunakakai,MKK,USA,Mokulele Airlines,CN2,9
+2020-01-22 07:36,HA605,Lanai,LNY,USA,Hawaiian Airlines,AT3,42
+2020-01-22 07:40,HA822,Tokyo,NRT,Japan,Hawaiian Airlines,332,225
+2020-01-22 07:50,HA125,Kahului,OGG,USA,Hawaiian Airlines,B712,106
+2020-01-22 07:50,HA442,Sapporo,CTS,Japan,Hawaiian Airlines,A332,281
+2020-01-22 08:00,JL780,Tokyo,NRT,Japan,Japan Airlines,B789,162
+2020-01-22 08:00,MW501,Lahaina,JHM,USA,Mokulele Airlines,CNA,4
+2020-01-22 08:15,HA134,Lihue,LIH,USA,Hawaiian Airlines,B712,108
+2020-01-22 08:15,QF3,Sydney,SYD,Australia,Qantas,330,235
+2020-01-22 08:17,HA127,Kailua-Kona,KOA,USA,Hawaiian Airlines,717,114
+2020-01-22 08:25,HA131,Hilo,ITO,USA,Hawaiian Airlines,B712,124
+2020-01-22 08:25,NH184,Tokyo,NRT,Japan,All Nippon Airways,388,418
+2020-01-22 08:26,HA603,Kaunakakai,MKK,USA,Hawaiian Airlines,AT3,45
+2020-01-22 08:30,DL180,Tokyo,NRT,Japan,Delta Air Lines,B763,219
+2020-01-22 08:30,HA828,Fukuoka,FUK,Japan,Hawaiian Airlines,A332,271
+2020-01-22 08:30,WN727,Hilo,ITO,USA,Southwest Airlines,B738,146
+2020-01-22 08:34,HA135,Kahului,OGG,USA,Hawaiian Airlines,B712,103
+2020-01-22 08:35,WN2231,Lihue,LIH,USA,Southwest Airlines,B738,152
+2020-01-22 08:35,KE1,Tokyo,NRT,Japan,Korean Air,A333,199
+2020-01-22 08:40,JL784,Tokyo,NRT,Japan,Japan Airlines,B763,222
+2020-01-22 08:40,WN646,Kahului,OGG,USA,Southwest Airlines,B738,141
+2020-01-22 08:40,9X501,Lahaina,JHM,USA,Sun Air Express,CN2,7
+2020-01-22 08:45,WN742,Kailua-Kona,KOA,USA,Southwest Airlines,B738,144
+2020-01-22 08:55,HA147,Kailua-Kona,KOA,USA,Hawaiian Airlines,B712,108
+2020-01-22 08:55,HA450,Osaka,KIX,Japan,Hawaiian Airlines,332,237
+2020-01-22 08:58,9X601,Kaunakakai,MKK,USA,Sun Air Express,C28,4
+2020-01-22 08:58,MW201,Kaunakakai,MKK,USA,Mokulele Airlines,CN2,9
+2020-01-22 09:00,DL278,Osaka,KIX,Japan,Delta Air Lines,B763,214
+2020-01-22 09:10,HA458,Tokyo,HND,Japan,Hawaiian Airlines,A332,261
+2020-01-22 09:10,JL794,Nagoya,NGO,Japan,Japan Airlines,B789,168
+2020-01-22 09:20,NH182,Tokyo,NRT,Japan,All Nippon Airways,77W,219
+2020-01-22 09:27,HA154,Lihue,LIH,USA,Hawaiian Airlines,B712,106
+2020-01-22 09:30,HA155,Kahului,OGG,USA,Hawaiian Airlines,B712,100
+2020-01-22 09:30,OZ232,Seoul,ICN,South Korea,Asiana Airlines,B772,247
+2020-01-22 09:30,KE53,Seoul,ICN,South Korea,Korean Air,B748,313
+2020-01-22 09:38,9X609,Kaunakakai,MKK,USA,Sun Air Express,C28,8
+2020-01-22 09:38,MW209,Kaunakakai,MKK,USA,Mokulele Airlines,CN2,5
+2020-01-22 09:40,JL782,Tokyo,NRT,Japan,Japan Airlines,789,179
+2020-01-22 09:40,9X709,Kahului,OGG,USA,Sun Air Express,CNC,8
+2020-01-22 09:40,MW709,Kahului,OGG,USA,Mokulele Airlines,CN2,5
+2020-01-22 09:43,HA629,Lahaina,JHM,USA,Hawaiian Airlines,AT3,45
+2020-01-22 09:49,HA165,Kahului,OGG,USA,Hawaiian Airlines,B712,100
+2020-01-22 09:50,HA446,Auckland,AKL,New Zealand,Hawaiian Airlines,A332,256
+2020-01-22 09:58,HA167,Kailua-Kona,KOA,USA,Hawaiian Airlines,717,105
+2020-01-22 10:05,NH186,Tokyo,HND,Japan,All Nippon Airways,789,145
+2020-01-22 10:14,HA175,Kahului,OGG,USA,Hawaiian Airlines,B712,107
+2020-01-22 10:15,HA161,Hilo,ITO,USA,Hawaiian Airlines,717,115
+2020-01-22 10:20,JL792,Osaka,KIX,Japan,Japan Airlines,789,165
+2020-01-22 10:30,9X623,Kalaupapa,LUP,USA,Sun Air Express,C28,4
+2020-01-22 10:30,MW223,Kalaupapa,LUP,USA,Mokulele Airlines,CN2,7
+2020-01-22 10:30,MW511,Lahaina,JHM,USA,Mokulele Airlines,CNA,9
+2020-01-22 10:32,HA625,Lanai,LNY,USA,Hawaiian Airlines,AT3,34
+2020-01-22 10:38,HA185,Kahului,OGG,USA,Hawaiian Airlines,B712,128
+2020-01-22 10:45,HA452,Sydney,SYD,Australia,Hawaiian Airlines,A332,266
+2020-01-22 10:50,AS827,Oakland,OAK,USA,Alaska Airlines,B738,144
+2020-01-22 10:50,HA53,San Francisco,SFO,USA,Hawaiian Airlines,321,181
+2020-01-22 10:50,HA43,San Jose,SJC,USA,Hawaiian Airlines,321,163
+2020-01-22 10:55,WN5435,Hilo,ITO,USA,Southwest Airlines,B738,151
+2020-01-22 11:00,HA184,Lihue,LIH,USA,Hawaiian Airlines,B712,105
+2020-01-22 11:00,HA195,Kahului,OGG,USA,Hawaiian Airlines,B712,99
+2020-01-22 11:00,9X511,Lahaina,JHM,USA,Sun Air Express,CN2,4
+2020-01-22 11:05,HA1,Los Angeles,LAX,USA,Hawaiian Airlines,A332,246
+2020-01-22 11:25,HA181,Hilo,ITO,USA,Hawaiian Airlines,717,114
+2020-01-22 11:30,CI2,Taipei,TPE,Taiwan (China),China Airlines,359,239
+2020-01-22 11:30,KE51,Seoul,ICN,South Korea,Korean Air,A332,224
+2020-01-22 11:35,HA197,Kailua-Kona,KOA,USA,Hawaiian Airlines,B712,100
+2020-01-22 11:40,HA27,Seattle,SEA,USA,Hawaiian Airlines,321,153
+2020-01-22 11:40,HA47,Oakland,OAK,USA,Hawaiian Airlines,A21N,134
+2020-01-22 11:41,HA205,Kahului,OGG,USA,Hawaiian Airlines,B712,106
+2020-01-22 11:50,HA69,Long Beach,LGB,USA,Hawaiian Airlines,321,151
+2020-01-22 11:51,HA639,Lahaina,JHM,USA,Hawaiian Airlines,AT3,30
+2020-01-22 11:53,9X631,Kaunakakai,MKK,USA,Sun Air Express,C28,6
+2020-01-22 11:53,MW231,Kaunakakai,MKK,USA,Mokulele Airlines,CN2,8
+2020-01-22 11:55,HA204,Lihue,LIH,USA,Hawaiian Airlines,B712,105
+2020-01-22 11:55,WN743,Kahului,OGG,USA,Southwest Airlines,B738,145
+2020-01-22 12:00,HA215,Kahului,OGG,USA,Hawaiian Airlines,B712,97
+2020-01-22 12:00,WN2232,Kailua-Kona,KOA,USA,Southwest Airlines,B738,142
+2020-01-22 12:05,D71,Osaka,KIX,Japan,AirAsia X,A333,297
+2020-01-22 12:05,WN808,Oakland,OAK,USA,Southwest Airlines,B738,138
+2020-01-22 12:15,HA35,Phoenix,PHX,USA,Hawaiian Airlines,332,257
+2020-01-22 12:15,WN1192,Lihue,LIH,USA,Southwest Airlines,B738,143
+2020-01-22 12:20,AS145,Seattle,SEA,USA,Alaska Airlines,B738,144
+2020-01-22 12:25,HA19,Sacramento,SMF,USA,Hawaiian Airlines,A332,259
+2020-01-22 12:25,HA224,Lihue,LIH,USA,Hawaiian Airlines,B712,96
+2020-01-22 12:26,HA225,Kahului,OGG,USA,Hawaiian Airlines,B712,100
+2020-01-22 12:32,DL187,Los Angeles,LAX,USA,Delta Air Lines,B763,211
+2020-01-22 12:33,AA31,Los Angeles,LAX,USA,American Airlines,A321,144
+2020-01-22 12:33,UA1158,Los Angeles,LAX,USA,United Airlines,B772,265
+2020-01-22 12:35,HA211,Hilo,ITO,USA,Hawaiian Airlines,717,116
+2020-01-22 12:38,9X605,Kaunakakai,MKK,USA,Sun Air Express,C28,5
+2020-01-22 12:38,MW205,Kaunakakai,MKK,USA,Mokulele Airlines,CN2,7
+2020-01-22 12:40,HA645,Lanai,LNY,USA,Hawaiian Airlines,AT3,28
+2020-01-22 12:44,UA1175,San Francisco,SFO,USA,United Airlines,B772,247
+2020-01-22 12:48,HA237,Kailua-Kona,KOA,USA,Hawaiian Airlines,717,105
+2020-01-22 12:51,DL1887,Seattle,SEA,USA,Delta Air Lines,B752,167
+2020-01-22 12:55,HA21,Seattle,SEA,USA,Hawaiian Airlines,332,257
+2020-01-22 13:00,9X905,Kahului,OGG,USA,Sun Air Express,C28,7
+2020-01-22 13:00,MW305,Kahului,OGG,USA,Mokulele Airlines,CN2,9
+2020-01-22 13:05,AS833,Portland,PDX,USA,Alaska Airlines,B738,169
+2020-01-22 13:10,MW527,Lahaina,JHM,USA,Mokulele Airlines,CNA,7
+2020-01-22 13:20,HA254,Lihue,LIH,USA,Hawaiian Airlines,B712,114
+2020-01-22 13:25,9X527,Lahaina,JHM,USA,Sun Air Express,CN2,8
+2020-01-22 13:30,HA7,Las Vegas,LAS,USA,Hawaiian Airlines,A332,256
+2020-01-22 13:35,HA255,Kahului,OGG,USA,Hawaiian Airlines,B712,101
+2020-01-22 13:45,HA11,San Francisco,SFO,USA,Hawaiian Airlines,A332,268
+2020-01-22 13:50,AS895,San Diego,SAN,USA,Alaska Airlines,B738,142
+2020-01-22 13:52,SY693,Portland,PDX,USA,Sun Country Airlines,738,150
+2020-01-22 13:58,CPT7714,Lanai,LNY,USA,Corporate Air,C28,9
+2020-01-22 13:59,HA25,Portland,PDX,USA,Hawaiian Airlines,A21N,161
+2020-01-22 13:59,HA251,Hilo,ITO,USA,Hawaiian Airlines,717,117
+2020-01-22 13:59,HA264,Lihue,LIH,USA,Hawaiian Airlines,B712,101
+2020-01-22 13:59,HA649,Lahaina,JHM,USA,Hawaiian Airlines,AT3,34
+2020-01-22 13:59,9X705,Kaunakakai,MKK,USA,Sun Air Express,C28,6
+2020-01-22 13:59,MW405,Kaunakakai,MKK,USA,Mokulele Airlines,CN2,6
+2020-01-22 14:04,HA265,Kahului,OGG,USA,Hawaiian Airlines,B712,106
+2020-01-22 14:05,HA3,Los Angeles,LAX,USA,Hawaiian Airlines,332,234
+2020-01-22 14:05,HA267,Kailua-Kona,KOA,USA,Hawaiian Airlines,B712,101
+2020-01-22 14:09,AA123,Dallas,DFW,USA,American Airlines,B788,181
+2020-01-22 14:10,HA15,San Diego,SAN,USA,Hawaiian Airlines,A21N,132
+2020-01-22 14:10,9X509,Lahaina,JHM,USA,Sun Air Express,CNC,4
+2020-01-22 14:10,MW509,Lahaina,JHM,USA,Mokulele Airlines,CN2,5
+2020-01-22 14:20,UA363,New York,EWR,USA,United Airlines,B764,212
+2020-01-22 14:24,WS1862,Vancouver,YVR,Canada,WestJet,B738,133
+2020-01-22 14:29,UA328,Denver,DEN,USA,United Airlines,B772,261
+2020-01-22 14:35,HA277,Kailua-Kona,KOA,USA,Hawaiian Airlines,B712,126
+2020-01-22 14:35,HA275,Kahului,OGG,USA,Hawaiian Airlines,B712,104
+2020-01-22 14:40,HA284,Lihue,LIH,USA,Hawaiian Airlines,B712,113
+2020-01-22 14:40,UA253,Houston,IAH,USA,United Airlines,B772,255
+2020-01-22 14:40,WN198,Sacramento,SMF,USA,Southwest Airlines,B738,156
+2020-01-22 14:50,WN2224,San Jose,SJC,USA,Southwest Airlines,B738,145
+2020-01-22 15:01,DL1121,Los Angeles,LAX,USA,Delta Air Lines,B752,161
+2020-01-22 15:03,HA655,Lanai,LNY,USA,Hawaiian Airlines,AT3,34
+2020-01-22 15:10,DL601,Salt Lake City,SLC,USA,Delta Air Lines,A333,256
+2020-01-22 15:13,HA285,Kahului,OGG,USA,Hawaiian Airlines,B712,120
+2020-01-22 15:15,AS851,Seattle,SEA,USA,Alaska Airlines,B738,160
+2020-01-22 15:30,HA291,Hilo,ITO,USA,Hawaiian Airlines,717,105
+2020-01-22 15:30,9X516,Lahaina,JHM,USA,Sun Air Express,CNC,7
+2020-01-22 15:30,MW516,Lahaina,JHM,USA,Mokulele Airlines,CN2,9
+2020-01-22 15:35,WN745,Lihue,LIH,USA,Southwest Airlines,B738,150
+2020-01-22 15:38,HA297,Kailua-Kona,KOA,USA,Hawaiian Airlines,717,108
+2020-01-22 15:40,AA75,Chicago,ORD,USA,American Airlines,B788,181
+2020-01-22 15:40,WN757,Hilo,ITO,USA,Southwest Airlines,B738,155
+2020-01-22 15:55,AA5,Dallas,DFW,USA,American Airlines,B789,277
+2020-01-22 15:55,HA304,Lihue,LIH,USA,Hawaiian Airlines,B712,97
+2020-01-22 15:55,UA219,Chicago,ORD,USA,United Airlines,B772,246
+2020-01-22 16:05,HA315,Kahului,OGG,USA,Hawaiian Airlines,B712,118
+2020-01-22 16:07,HA653,Kaunakakai,MKK,USA,Hawaiian Airlines,AT3,39
+2020-01-22 16:09,AA692,Phoenix,PHX,USA,American Airlines,A333,222
+2020-01-22 16:15,HA51,New York,JFK,USA,Hawaiian Airlines,332,229
+2020-01-22 16:20,9X925,Kalaupapa,LUP,USA,Sun Air Express,C28,7
+2020-01-22 16:20,MW325,Kalaupapa,LUP,USA,Mokulele Airlines,CN2,7
+2020-01-22 16:22,DL837,Atlanta,ATL,USA,Delta Air Lines,A333,265
+2020-01-22 16:29,HA311,Hilo,ITO,USA,Hawaiian Airlines,717,104
+2020-01-22 16:33,DL577,Minneapolis,MSP,USA,Delta Air Lines,A333,280
+2020-01-22 16:33,9X619,Kaunakakai,MKK,USA,Sun Air Express,C28,8
+2020-01-22 16:33,MW219,Kaunakakai,MKK,USA,Mokulele Airlines,CN2,9
+2020-01-22 16:46,HA327,Kailua-Kona,KOA,USA,Hawaiian Airlines,717,119
+2020-01-22 16:50,HA335,Kahului,OGG,USA,Hawaiian Airlines,B712,112
+2020-01-22 16:50,WN750,Kailua-Kona,KOA,USA,Southwest Airlines,B738,157
+2020-01-22 16:50,9X521,Lahaina,JHM,USA,Sun Air Express,CNC,8
+2020-01-22 16:50,MW521,Lahaina,JHM,USA,Mokulele Airlines,CN2,5
+2020-01-22 16:53,UA1431,Los Angeles,LAX,USA,United Airlines,B753,208
+2020-01-22 16:55,WN669,Kahului,OGG,USA,Southwest Airlines,B738,143
+2020-01-22 17:09,HA337,Kailua-Kona,KOA,USA,Hawaiian Airlines,B712,121
+2020-01-22 17:11,HA345,Kahului,OGG,USA,Hawaiian Airlines,B712,106
+2020-01-22 17:11,HA665,Lanai,LNY,USA,Hawaiian Airlines,ATR,29
+2020-01-22 17:20,HA344,Lihue,LIH,USA,Hawaiian Airlines,B712,116
+2020-01-22 17:25,HA331,Hilo,ITO,USA,Hawaiian Airlines,717,99
+2020-01-22 17:34,HA347,Kailua-Kona,KOA,USA,Hawaiian Airlines,717,98
+2020-01-22 17:38,9X903,Kaunakakai,MKK,USA,Sun Air Express,CNC,8
+2020-01-22 17:38,MW303,Kaunakakai,MKK,USA,Mokulele Airlines,CNA,8
+2020-01-22 17:45,HA354,Lihue,LIH,USA,Hawaiian Airlines,B712,105
+2020-01-22 17:51,UA300,San Francisco,SFO,USA,United Airlines,B772,258
+2020-01-22 17:59,HA357,Kailua-Kona,KOA,USA,Hawaiian Airlines,B712,101
+2020-01-22 18:15,AA143,Los Angeles,LAX,USA,American Airlines,A321,157
+2020-01-22 18:15,HA365,Kahului,OGG,USA,Hawaiian Airlines,B712,100
+2020-01-22 18:15,HA679,Lahaina,JHM,USA,Hawaiian Airlines,ATR,47
+2020-01-22 18:18,HA374,Lihue,LIH,USA,Hawaiian Airlines,B712,115
+2020-01-22 18:40,HA375,Kahului,OGG,USA,Hawaiian Airlines,B712,119
+2020-01-22 18:45,UA200,Guam,GUM,USA,United Airlines,B772,261
+2020-01-22 18:50,HA384,Lihue,LIH,USA,Hawaiian Airlines,B712,106
+2020-01-22 18:50,9X503,Lahaina,JHM,USA,Sun Air Express,CNC,4
+2020-01-22 18:50,MW503,Lahaina,JHM,USA,Mokulele Airlines,CNA,7
+2020-01-22 18:59,HA387,Kailua-Kona,KOA,USA,Hawaiian Airlines,717,116
+2020-01-22 19:09,HA381,Hilo,ITO,USA,Hawaiian Airlines,717,112
+2020-01-22 19:10,WN759,Hilo,ITO,USA,Southwest Airlines,B738,156
+2020-01-22 19:12,HA673,Kaunakakai,MKK,USA,Hawaiian Airlines,ATR,37
+2020-01-22 19:25,HA505,Kahului,OGG,USA,Hawaiian Airlines,B712,95
+2020-01-22 19:40,WN4392,Oakland,OAK,USA,Southwest Airlines,B738,144
+2020-01-22 19:45,HA514,Lihue,LIH,USA,Hawaiian Airlines,B712,107
+2020-01-22 19:49,HA515,Kahului,OGG,USA,Hawaiian Airlines,B712,106
+2020-01-22 19:50,HA511,Hilo,ITO,USA,Hawaiian Airlines,717,107
+2020-01-22 19:50,WN2226,Lihue,LIH,USA,Southwest Airlines,B738,153
+2020-01-22 19:50,9X715,Kaunakakai,MKK,USA,Sun Air Express,CNC,5
+2020-01-22 19:50,MW715,Kaunakakai,MKK,USA,Mokulele Airlines,CNA,6
+2020-01-22 19:55,WN5389,Kahului,OGG,USA,Southwest Airlines,B738,135
+2020-01-22 20:13,HA537,Kailua-Kona,KOA,USA,Hawaiian Airlines,717,123
+2020-01-22 20:16,UA1509,San Francisco,SFO,USA,United Airlines,B772,240
+2020-01-22 20:20,DL1559,Los Angeles,LAX,USA,Delta Air Lines,B753,209
+2020-01-22 20:23,HA685,Lanai,LNY,USA,Hawaiian Airlines,ATR,36
+2020-01-22 20:28,HA531,Hilo,ITO,USA,Hawaiian Airlines,717,105
+2020-01-22 20:40,HA544,Lihue,LIH,USA,Hawaiian Airlines,B712,98
+2020-01-22 20:40,WN752,Kailua-Kona,KOA,USA,Southwest Airlines,B738,144
+2020-01-22 20:50,AS870,Anchorage,ANC,USA,Alaska Airlines,B738,141
+2020-01-22 21:04,9X928,Kaunakakai,MKK,USA,Sun Air Express,CNC,9
+2020-01-22 21:04,MW328,Kaunakakai,MKK,USA,Mokulele Airlines,CNA,9
+2020-01-22 21:05,HA9,Los Angeles,LAX,USA,Hawaiian Airlines,A332,256
+2020-01-22 21:15,HA541,Hilo,ITO,USA,Hawaiian Airlines,717,102
+2020-01-22 21:20,HA555,Kahului,OGG,USA,Hawaiian Airlines,B712,102
+2020-01-22 21:25,HA557,Kailua-Kona,KOA,USA,Hawaiian Airlines,717,99
+2020-01-22 21:40,WS1897,Vancouver,YVR,Canada,WestJet,B738,147
+2020-01-22 21:50,AC2411,Vancouver,YVR,Canada,Air Canada,762,205
+2020-01-22 21:51,DL1450,Seattle,SEA,USA,Delta Air Lines,B752,167
+2020-01-22 21:59,HA564,Lihue,LIH,USA,Hawaiian Airlines,B712,126
+2020-01-22 22:00,HA5,Las Vegas,LAS,USA,Hawaiian Airlines,A332,276
+2020-01-22 22:01,UA1170,Los Angeles,LAX,USA,United Airlines,B739,158
+2020-01-22 22:15,AS853,Seattle,SEA,USA,Alaska Airlines,B738,147
+2020-01-22 22:15,9X753,Kahului,OGG,USA,Sun Air Express,CNC,9
+2020-01-22 22:15,MW753,Kahului,OGG,USA,Mokulele Airlines,CNA,7
+2020-01-22 22:23,HA575,Kahului,OGG,USA,Hawaiian Airlines,B712,102
+2020-01-22 22:40,WS1864,Vancouver,YVR,Canada,WestJet,B738,150
+2020-01-22 23:43,HA595,Kahului,OGG,USA,Hawaiian Airlines,B712,123
+2020-01-22 23:44,HA594,Lihue,LIH,USA,Hawaiian Airlines,B712,103
