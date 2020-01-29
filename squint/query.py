@@ -925,7 +925,11 @@ class BaseQuery(abc.ABC):
             padding = last_row[:position]
             preview_lines.append('{0}...'.format(padding))
 
-        preview = '\n'.join(preview_lines)
+        if preview_lines:
+            preview = '\n'.join(preview_lines)
+        else:
+            preview = repr(result.fetch())  # Get empty container repr.
+
         return '---- preview ----\n{0}'.format(preview)
 
     def _repr_pretty_(self, p, cycle):

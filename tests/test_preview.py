@@ -42,6 +42,22 @@ class TestQueryBuildPreview(PreviewTestCase):
         )
         self.assertRegex(actual, expected)
 
+    def test_empty_result_object(self):
+        query = self.select('A', B='no match')
+        actual = query._build_preview()
+        expected= (
+            "---- preview ----\n"
+            "\\[\\]"
+        )
+        self.assertRegex(actual, expected)
+
+        query = self.select(set(['A']), B='no match')
+        actual = query._build_preview()
+        expected= (
+            "---- preview ----\n"
+            "set\\(\\)"
+        )
+        self.assertRegex(actual, expected)
     def test_nonresult_object(self):
         query = self.select('C').sum()
 
