@@ -7,12 +7,12 @@ Squint Changelog
 
 * Added a Query preview feature for interactive use:
 
-      >>> select({'fruit': 'kilograms'}).sum()
-      Query(<squint.Select object at 0x7f209c30>, {'fruit': ['kilograms']}).sum()
+      >>> select({'fruit': 'kilos'}).sum()
+      Query(<squint.Select object at 0x7f209c30>, {'fruit': ['kilos']}).sum()
       ---- preview ----
       {'apple': 50,
-       'pair': 20,
        'grape': 10,
+       'pair': 20,
        ...
 
   Previews provide immediate feedback when building queries interactively.
