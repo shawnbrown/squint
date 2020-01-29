@@ -10,8 +10,7 @@ from ._utils import IterItems
 
 class Result(Iterator):
     """A simple iterator that wraps the results of :class:`Query`
-    execution. This iterator is used to facilitate the lazy evaluation
-    of data objects (where possible) when asserting data validity.
+    execution to facilitate lazy evaluation of the resulting data.
 
     Although Result objects are usually constructed automatically,
     it's possible to create them directly::
