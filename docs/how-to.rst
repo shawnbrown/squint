@@ -9,7 +9,7 @@
 
 
 ############
-How-to Guide
+How-To Guide
 ############
 
 Many of the following sections use the example CSV from the
@@ -18,7 +18,7 @@ tutorials. You can download it here:
     :download:`example.csv </_static/example.csv>`
 
 
-How to Install Squint
+How To Install Squint
 =====================
 
 .. include:: ../README.rst
