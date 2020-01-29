@@ -2,6 +2,12 @@
 Squint Changelog
 ================
 
+COMING SOON (0.2.0)
+-------------------
+
+* Fixed preview of queries that return empty containers.
+
+
 2020-01-11 (0.1.0)
 ------------------
 
