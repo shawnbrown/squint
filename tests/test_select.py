@@ -16,7 +16,7 @@ from squint.select import Query
 from squint.result import Result
 
 
-class TestSelect(unittest.TestCase):
+class HelperTestCase(unittest.TestCase):
     def setUp(self):
         data = [['label1', 'label2', 'value'],
                 ['a', 'x', '17'],
@@ -28,6 +28,8 @@ class TestSelect(unittest.TestCase):
                 ['b', 'x', '25']]
         self.source = Select(data)
 
+
+class TestSelect(HelperTestCase):
     def test_empty_select(self):
         select = Select()
 
