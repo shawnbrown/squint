@@ -440,18 +440,22 @@ class TestSelect(HelperTestCase):
         }
         self.assertEqual(result.fetch(), expected)
 
-    def test_call(self):
+
+class TestCall(HelperTestCase):
+    def test_list_of_elements(self):
         query = self.select(['label1'])
         expected = ['a', 'a', 'a', 'a', 'b', 'b', 'b']
         self.assertIsInstance(query, Query)
         self.assertEqual(query.fetch(), expected)
 
+    def test_list_of_tuples(self):
         query = self.select([('label1', 'label2')])
         expected = [('a', 'x'), ('a', 'x'), ('a', 'y'), ('a', 'z'),
                     ('b', 'z'), ('b', 'y'), ('b', 'x')]
         self.assertIsInstance(query, Query)
         self.assertEqual(query.fetch(), expected)
 
+    def test_list_of_sets(self):
         query = self.select([set(['label1', 'label2'])])
         expected = [set(['a', 'x']),
                     set(['a', 'x']),
@@ -463,6 +467,7 @@ class TestSelect(HelperTestCase):
         self.assertIsInstance(query, Query)
         self.assertEqual(query.fetch(), expected)
 
+    def test_dict_of_lists(self):
         query = self.select({'label1': ['label2']})
         expected = {'a': ['x', 'x', 'y', 'z'], 'b': ['z', 'y', 'x']}
         self.assertIsInstance(query, Query)
