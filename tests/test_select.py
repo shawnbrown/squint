@@ -26,7 +26,7 @@ class HelperTestCase(unittest.TestCase):
                 ['b', 'z', '5' ],
                 ['b', 'y', '40'],
                 ['b', 'x', '25']]
-        self.source = Select(data)
+        self.select = Select(data)
 
 
 class TestSelect(HelperTestCase):
@@ -35,7 +35,7 @@ class TestSelect(HelperTestCase):
 
     def test_fieldnames(self):
         expected = ['label1', 'label2', 'value']
-        self.assertEqual(self.source.fieldnames, expected)
+        self.assertEqual(self.select.fieldnames, expected)
 
         select = Select()  # <- Empty select.
         self.assertEqual(select.fieldnames, [], msg='should be empty list')
@@ -213,42 +213,42 @@ class TestSelect(HelperTestCase):
         self.assertEqual(result, ['y'])
 
     def test_select_list_of_strings(self):
-        result = self.source._select(['label1'])
+        result = self.select._select(['label1'])
         expected = ['a', 'a', 'a', 'a', 'b', 'b', 'b']
         self.assertEqual(result.fetch(), expected)
 
     def test_select_tuple_of_strings(self):
-        result = self.source._select(('label1',))
+        result = self.select._select(('label1',))
         expected = ('a', 'a', 'a', 'a', 'b', 'b', 'b')
         self.assertEqual(result.fetch(), expected)
 
     def test_select_set_of_strings(self):
-        result = self.source._select(set(['label1']))
+        result = self.select._select(set(['label1']))
         expected = set(['a', 'b'])
         self.assertEqual(result.fetch(), expected)
 
     def test_select_field_not_found(self):
         with self.assertRaises(LookupError):
-            result = self.source._select(['bad_field_name'])
+            result = self.select._select(['bad_field_name'])
 
     def test_select_list_of_lists(self):
-        result = self.source._select([['label1']])
+        result = self.select._select([['label1']])
         expected = [['a'], ['a'], ['a'], ['a'], ['b'], ['b'], ['b']]
         self.assertEqual(result.fetch(), expected)
 
-        result = self.source._select([['label1', 'label2']])
+        result = self.select._select([['label1', 'label2']])
         expected = [['a', 'x'], ['a', 'x'], ['a', 'y'], ['a', 'z'],
                     ['b', 'z'], ['b', 'y'], ['b', 'x']]
         self.assertEqual(result.fetch(), expected)
 
     def test_select_list_of_tuples(self):
-        result = self.source._select([('label1',)])
+        result = self.select._select([('label1',)])
         expected = [('a',), ('a',), ('a',), ('a',), ('b',), ('b',), ('b',)]
         self.assertEqual(result.fetch(), expected)
 
     def test_select_list_of_namedtuples(self):
         namedtup = namedtuple('namedtup', ['label1', 'label2'])
-        result = self.source._select([namedtup('label1', 'label2')])
+        result = self.select._select([namedtup('label1', 'label2')])
         expected = [namedtup(label1='a', label2='x'),
                     namedtup(label1='a', label2='x'),
                     namedtup(label1='a', label2='y'),
@@ -259,7 +259,7 @@ class TestSelect(HelperTestCase):
         self.assertEqual(result.fetch(), expected)
 
     def test_select_set_of_frozensets(self):
-        result = self.source._select(set([frozenset(['label1'])]))
+        result = self.select._select(set([frozenset(['label1'])]))
         expected = set([frozenset(['a']), frozenset(['a']),
                         frozenset(['a']), frozenset(['a']),
                         frozenset(['b']), frozenset(['b']),
@@ -267,7 +267,7 @@ class TestSelect(HelperTestCase):
         self.assertEqual(result.fetch(), expected)
 
     def test_select_dict(self):
-        result = self.source._select({'label1': ['value']})
+        result = self.select._select({'label1': ['value']})
         expected = {
             'a': ['17', '13', '20', '15'],
             'b': ['5', '40', '25'],
@@ -275,7 +275,7 @@ class TestSelect(HelperTestCase):
         self.assertEqual(result.fetch(), expected)
 
     def test_select_dict2(self):
-        result = self.source._select({('label1', 'label2'): ['value']})
+        result = self.select._select({('label1', 'label2'): ['value']})
         expected = {
             ('a', 'x'): ['17', '13'],
             ('a', 'y'): ['20'],
@@ -287,7 +287,7 @@ class TestSelect(HelperTestCase):
         self.assertEqual(result.fetch(), expected)
 
     def test_select_dict3(self):
-        result = self.source._select({('label1', 'label2'): [['value']]})
+        result = self.select._select({('label1', 'label2'): [['value']]})
         expected = {
             ('a', 'x'): [['17'], ['13']],
             ('a', 'y'): [['20']],
@@ -300,7 +300,7 @@ class TestSelect(HelperTestCase):
 
     def test_select_dict_with_namedtuple_keys(self):
         namedtup = namedtuple('namedtup', ['x', 'y'])
-        result = self.source._select({namedtup('label1', 'label2'): ['value']})
+        result = self.select._select({namedtup('label1', 'label2'): ['value']})
         expected = {
             namedtup(x='a', y='x'): ['17', '13'],
             namedtup(x='a', y='y'): ['20'],
@@ -312,14 +312,14 @@ class TestSelect(HelperTestCase):
         self.assertEqual(result.fetch(), expected)
 
     def test_select_dict_with_values_container2(self):
-        result = self.source._select({'label1': [('label2', 'label2')]})
+        result = self.select._select({'label1': [('label2', 'label2')]})
         expected = {
             'a': [('x', 'x'), ('x', 'x'), ('y', 'y'), ('z', 'z')],
             'b': [('z', 'z'), ('y', 'y'), ('x', 'x')]
         }
         self.assertEqual(result.fetch(), expected)
 
-        result = self.source._select({'label1': [set(['label2', 'label2'])]})
+        result = self.select._select({'label1': [set(['label2', 'label2'])]})
         expected = {
             'a': [set(['x']), set(['x']), set(['y']), set(['z'])],
             'b': [set(['z']), set(['y']), set(['x'])],
@@ -330,7 +330,7 @@ class TestSelect(HelperTestCase):
         class CustomDict(dict):
             pass
 
-        result = self.source._select(CustomDict({'label1': ['value']}))
+        result = self.select._select(CustomDict({'label1': ['value']}))
         result = result.fetch()
         expected = {
             'a': ['17', '13', '20', '15'],
@@ -340,11 +340,11 @@ class TestSelect(HelperTestCase):
         self.assertEqual(result, expected)
 
     def test_select_distinct(self):
-        result = self.source._select_distinct(['label1'])
+        result = self.select._select_distinct(['label1'])
         expected = ['a', 'b']
         self.assertEqual(list(result), expected)
 
-        result = self.source._select_distinct({'label1': ['label2']})
+        result = self.select._select_distinct({'label1': ['label2']})
         result = result.fetch()
         expected = {'a': ['x', 'y', 'z'], 'b': ['z', 'y', 'x']}
 
@@ -381,19 +381,19 @@ class TestSelect(HelperTestCase):
 
     def test_select_aggregate(self):
         # Not grouped, single result.
-        result = self.source._select_aggregate('COUNT', ['label2'])
+        result = self.select._select_aggregate('COUNT', ['label2'])
         self.assertEqual(result, 7)
 
         # Not grouped, single result as set.
-        result = self.source._select_aggregate('COUNT', set(['label2']))
+        result = self.select._select_aggregate('COUNT', set(['label2']))
         self.assertEqual(result, 3)
 
         # Not grouped, multiple results.
-        result = self.source._select_aggregate('SUM', [['value', 'value']])
+        result = self.select._select_aggregate('SUM', [['value', 'value']])
         self.assertEqual(result, [135, 135])
 
         # Simple group by (grouped by keys).
-        result = self.source._select_aggregate('SUM', {'label1': ['value']})
+        result = self.select._select_aggregate('SUM', {'label1': ['value']})
         self.assertIsInstance(result, Result)
 
         expected = {
@@ -403,7 +403,7 @@ class TestSelect(HelperTestCase):
         self.assertEqual(result.fetch(), expected)
 
         # Composite value.
-        result = self.source._select_aggregate('SUM', {'label1': [('value', 'value')]})
+        result = self.select._select_aggregate('SUM', {'label1': [('value', 'value')]})
         expected = {
             'a': (65, 65),
             'b': (70, 70),
@@ -411,7 +411,7 @@ class TestSelect(HelperTestCase):
         self.assertEqual(dict(result), expected)
 
         # Composite key and composite value.
-        result = self.source._select_aggregate('SUM', {('label1', 'label1'): [['value', 'value']]})
+        result = self.select._select_aggregate('SUM', {('label1', 'label1'): [['value', 'value']]})
         expected = {
             ('a', 'a'): [65, 65],
             ('b', 'b'): [70, 70],
@@ -441,18 +441,18 @@ class TestSelect(HelperTestCase):
         self.assertEqual(result.fetch(), expected)
 
     def test_call(self):
-        query = self.source(['label1'])
+        query = self.select(['label1'])
         expected = ['a', 'a', 'a', 'a', 'b', 'b', 'b']
         self.assertIsInstance(query, Query)
         self.assertEqual(query.fetch(), expected)
 
-        query = self.source([('label1', 'label2')])
+        query = self.select([('label1', 'label2')])
         expected = [('a', 'x'), ('a', 'x'), ('a', 'y'), ('a', 'z'),
                     ('b', 'z'), ('b', 'y'), ('b', 'x')]
         self.assertIsInstance(query, Query)
         self.assertEqual(query.fetch(), expected)
 
-        query = self.source([set(['label1', 'label2'])])
+        query = self.select([set(['label1', 'label2'])])
         expected = [set(['a', 'x']),
                     set(['a', 'x']),
                     set(['a', 'y']),
@@ -463,7 +463,7 @@ class TestSelect(HelperTestCase):
         self.assertIsInstance(query, Query)
         self.assertEqual(query.fetch(), expected)
 
-        query = self.source({'label1': ['label2']})
+        query = self.select({'label1': ['label2']})
         expected = {'a': ['x', 'x', 'y', 'z'], 'b': ['z', 'y', 'x']}
         self.assertIsInstance(query, Query)
         self.assertEqual(query.fetch(), expected)
