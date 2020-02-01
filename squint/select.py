@@ -190,7 +190,7 @@ class Select(object):
         cursor.execute('PRAGMA table_info({0})'.format(self._table))
         return [x[1] for x in cursor]
 
-    def __call__(self, columns, **where):
+    def __call__(self, columns=None, **where):
         """After a Select has been created, it can be called like a
         function to select fields and return an associated :class:`Query`
         object.
@@ -218,6 +218,9 @@ class Select(object):
                                         #    keys from 'A' and
                                         #    values from 'B'
 
+        When *columns* is omitted, the object's :attr:`fieldnames
+        <Select.fieldnames>` are used instead.
+
         Optional *where* keywords can narrow the selected data to
         matching rows. A key must specify the field to check and a
         value must be a predicate object (see :ref:`predicate-docs`
@@ -231,6 +234,9 @@ class Select(object):
         See the :ref:`making-selections` tutorial for step-by-step
         examples.
         """
+        if columns == None:
+            columns = self.fieldnames
+
         try:
             return Query(self, columns, **where)
         except LookupError:

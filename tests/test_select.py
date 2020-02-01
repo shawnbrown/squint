@@ -473,6 +473,12 @@ class TestCall(HelperTestCase):
         self.assertIsInstance(query, Query)
         self.assertEqual(query.fetch(), expected)
 
+    def test_empty_call(self):
+        """When *columns* is omitted, should default to fieldnames."""
+        query = self.select()  # <- No columns given.
+        expected = self.select(self.select.fieldnames)
+        self.assertEqual(query.fetch(), expected.fetch())
+
 
 class TestQueryToCsv(unittest.TestCase):
     def setUp(self):

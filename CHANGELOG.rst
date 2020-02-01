@@ -5,6 +5,8 @@ Squint Changelog
 COMING SOON (0.2.0)
 -------------------
 
+* Changed calling behavior of Select to make *columns* argument optional.
+  Now defaults to ``fieldnames`` when columns are omitted.
 * Fixed preview of queries that return empty containers.
 
 
