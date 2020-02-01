@@ -26,6 +26,58 @@ How To Install Squint
     :end-before: end-inclusion-marker-install
 
 
+How To Convert an Element's Type
+================================
+
+To change the data type of individual elements, use the :meth:`map()
+<Query.map>` method to apply a type to each element.
+
+In the following example, we convert string elements into the float
+type, ``map(float)``:
+
+.. code-block:: python
+    :emphasize-lines: 5
+
+    >>> import squint
+    >>>
+    >>> select = squint.Select('example.csv')
+    >>>
+    >>> select('C').map(float)
+    Query(<squint.Select object at 0x7fcaac15>, ['C']).map(float)
+    ---- preview ----
+    [20.0, 30.0, 10.0, 20.0, 10.0, 10.0]
+
+In the preview above, we see that every element in column **C**
+has been converted into a :py:class:`float` value.
+
+
+How To Convert a Container's Type
+=================================
+
+While you can control a container's type *during* selection, there
+are times when you will want to convert a container's type *after*
+selection. To do this, use the :meth:`apply() <Query.apply>` method
+to apply a container type to the entire group of elements.
+
+In the following example, we convert a list of elements into a tuple
+of elements, ``apply(tuple)``:
+
+.. code-block:: python
+    :emphasize-lines: 5
+
+    >>> import squint
+    >>>
+    >>> select = squint.Select('example.csv')
+    >>>
+    >>> select('A').apply(tuple)
+    Query(<squint.Select object at 0x7f8ed8b6>, ['A']).apply(tuple)
+    ---- preview ----
+    ('x', 'x', 'y', 'y', 'z', 'z')
+
+In the preview above, we see that our query returns a :py:class:`tuple`
+instead of a list.
+
+
 How To Select Single-Item Inner-Containers
 ==========================================
 
