@@ -72,11 +72,11 @@ class Select(object):
 
     Load a single file::
 
-        select = datatest.Select('myfile.csv')
+        select = squint.Select('myfile.csv')
 
     Load a reader-like iterable::
 
-        select = datatest.Select([
+        select = squint.Select([
             ['A', 'B'],
             ['x', 100],
             ['y', 200],
@@ -85,11 +85,11 @@ class Select(object):
 
     Load multiple files::
 
-        select = datatest.Select(['myfile1.csv', 'myfile2.csv'])
+        select = squint.Select(['myfile1.csv', 'myfile2.csv'])
 
     Load multple files using a shell-style wildcard::
 
-        select = datatest.Select('*.csv')
+        select = squint.Select('*.csv')
     """
     def __init__(self, objs=None, *args, **kwds):
         """Initialize self."""
@@ -111,17 +111,17 @@ class Select(object):
 
         Load a single file into an empty Select::
 
-            select = datatest.Select()  # <- Empty Select.
+            select = squint.Select()  # <- Empty Select.
             select.load_data('myfile.csv')
 
         Add a single file to an already-populated Select::
 
-            select = datatest.Select('myfile1.csv')
+            select = squint.Select('myfile1.csv')
             select.load_data('myfile2.xlsx', worksheet='Sheet2')
 
         Add multiple files to an already-populated Select::
 
-            select = datatest.Select('myfile1.csv')
+            select = squint.Select('myfile1.csv')
             select.load_data(['myfile2.csv', 'myfile3.csv'])
         """
         if isinstance(objs, string_types):
@@ -200,7 +200,7 @@ class Select(object):
         in an outer container. When a container is unspecified, a
         :py:class:`list` is used as the default::
 
-            select = datatest.Select('example.csv')
+            select = squint.Select('example.csv')
             query = select('A')  # <- selects a list of values from 'A'
 
         When *columns* specifies an outer container, it must hold only
@@ -227,7 +227,7 @@ class Select(object):
         for details). Rows where the predicate is a match are
         selected and rows where it doesn't match are excluded::
 
-            select = datatest.Select('example.csv')
+            select = squint.Select('example.csv')
             query = select({'A'}, B='foo')  # <- selects only the rows
                                             #    where 'B' equals 'foo'
 
