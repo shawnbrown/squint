@@ -245,19 +245,18 @@ class Select(object):
 
     def _execute_query(self, select_clause, trailing_clause=None, **kwds_filter):
         """Execute query and return cursor object."""
-        try:
-            # Build select-query.
-            stmnt = 'SELECT {0} FROM {1}'.format(select_clause, self._table)
-            where_clause, params = self._build_where_clause(kwds_filter)
-            if where_clause:
-                stmnt = '{0} WHERE {1}'.format(stmnt, where_clause)
-            if trailing_clause:
-                stmnt = '{0}\n{1}'.format(stmnt, trailing_clause)
+        # Build SELECT query.
+        stmnt = 'SELECT {0} FROM {1}'.format(select_clause, self._table)
+        where_clause, params = self._build_where_clause(kwds_filter)
+        if where_clause:
+            stmnt = '{0} WHERE {1}'.format(stmnt, where_clause)
+        if trailing_clause:
+            stmnt = '{0}\n{1}'.format(stmnt, trailing_clause)
 
-            # Execute query.
+        # Execute query.
+        try:
             cursor = self._connection.cursor()
             cursor.execute(stmnt, params)
-
         except Exception as e:
             exc_cls = e.__class__
             msg = '{0}\n  query: {1}\n  params: {2}'.format(e, stmnt, params)
