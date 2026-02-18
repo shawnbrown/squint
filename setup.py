@@ -30,7 +30,8 @@ if __name__ == '__main__':
             # Required fields:
             name='squint',
             version=get_version('squint/__init__.py'),
-            description='A simple query interface for tabular data.',
+            description=("A simple query interface for tabular data "
+                         "that's light-weight and easy to learn."),
             packages=setuptools.find_packages(exclude=['docs', 'tests']),
 
             # Recommended fields:
@@ -60,6 +61,11 @@ if __name__ == '__main__':
                 'Programming Language :: Python :: 3.7',
                 'Programming Language :: Python :: 3.8',
                 'Programming Language :: Python :: 3.9',
+                'Programming Language :: Python :: 3.10',
+                'Programming Language :: Python :: 3.11',
+                'Programming Language :: Python :: 3.12',
+                'Programming Language :: Python :: 3.13',
+                'Programming Language :: Python :: 3.14',
                 'Programming Language :: Python :: Implementation :: CPython',
                 'Programming Language :: Python :: Implementation :: PyPy',
                 'Topic :: Scientific/Engineering :: Information Analysis',
