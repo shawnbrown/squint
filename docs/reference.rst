@@ -50,7 +50,7 @@ Query
     supported by :meth:`Select.__call__`.
 
     Although Query objects are usually created by :meth:`calling
-    <datatest.Select.__call__>` an existing Select, it's
+    <squint.Select.__call__>` an existing Select, it's
     possible to create them independent of any single data source::
 
         query = Query('A')
