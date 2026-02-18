@@ -273,6 +273,13 @@ class Select(object):
         items = where_dict.items()
         items = sorted(items, key=lambda x: x[0])  # Ordered by key.
         for key, val in items:
+            if isinstance(val, dict):
+                msg = ('cannot narrow a selection using a dictionary, '
+                       'got: {0}={1!r}').format(key, val)
+                if len(val) == 0:
+                    msg = '{0}\n  Did you mean {1}=set()?'.format(msg, key)
+                raise ValueError(msg)
+
             if isinstance(val, Set):
                 clause.append('{key} IN ({qmarks})'.format(
                     key=key,

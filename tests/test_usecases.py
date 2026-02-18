@@ -62,3 +62,14 @@ class TestUsecases(unittest.TestCase):
         ]
         self.assertEqual(list(query), expected)
 
+    def test_narrow_with_dictionary(self):
+        regex = r"cannot narrow a selection using a dictionary, got: B={'x': 'y'}"
+        with self.assertRaisesRegex(ValueError, regex, msg='cannot use dict as criteria'):
+            query = self.select('A', B={'x': 'y'})  # <- Dict criteria is invalid.
+            list(query)  # Eagerly evaluate.
+
+        regex = r"Did you mean B=set()?"
+        with self.assertRaisesRegex(ValueError, regex, msg='should give set() hint'):
+            query = self.select('A', B={})  # <- Empty dict is invalid.
+            list(query)  # Eagerly evaluate.
+
