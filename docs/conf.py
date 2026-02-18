@@ -77,7 +77,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'squint'
-copyright = '2015 - 2020, National Committee for an Effective Congress, et al.'
+copyright = '2015 - 2026, National Committee for an Effective Congress, et al.'
 author = 'Shawn Brown'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -86,7 +86,7 @@ author = 'Shawn Brown'
 #
 # The short X.Y version.
 #from squint import __version__
-__version__ = '0.2.0.dev0'
+__version__ = '0.2.0'
 version = __version__
 
 # The full version, including alpha/beta/rc tags.

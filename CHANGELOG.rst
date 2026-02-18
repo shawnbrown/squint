@@ -2,12 +2,15 @@
 Squint Changelog
 ================
 
-COMING SOON (0.2.0)
--------------------
+
+2026-02-18 (0.2.0)
+------------------
 
 * Changed calling behavior of Select to make *columns* argument optional.
   Now defaults to ``fieldnames`` when columns are omitted.
 * Fixed preview of queries that return empty containers.
+* Fixed documentation examples and added additional how-to entries.
+* Improved error message when users narrow selections using invalid criteria.
 
 
 2020-01-11 (0.1.0)
