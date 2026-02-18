@@ -527,7 +527,7 @@ class Select(object):
     # NOTE: Do NOT add to_csv() method to Select. It's simple
     # enough to use Query.to_csv() as below:
     #
-    #     select(select.fieldnames).to_csv(...)
+    #     select().to_csv(...)
     #
 
 
