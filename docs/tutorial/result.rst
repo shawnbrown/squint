@@ -66,11 +66,11 @@ Eager Evaluation
 
 When a Result is *eagerly evaluated*, all of its contents
 are loaded into memory at the same time. Doing this returns
-an container of elements whose type is determined by the
+a container of elements whose type is determined by the
 Result's :attr:`evaltype <Result.evaltype>`.
 
 Use the :meth:`fetch() <Result.fetch>` method to eagerly
-evaluate the result and get its contents::
+evaluate a result and get its contents::
 
     >>> result = select('A').execute()
     >>> result.fetch()
@@ -91,7 +91,7 @@ computed one-at-a-time as they are needed. In fact, the primary
 purpose of a Result object is to facilitate lazy evaluation when
 possible.
 
-Use a ``for`` loop to lazily evaluate the result and get its
+Use a ``for`` loop to lazily evaluate a result and get its
 contents::
 
     >>> result = select('A').execute()
@@ -107,8 +107,8 @@ contents::
     z
 
 For each iteration of the loop in the above example, the next
-element is evaluated and the previous element is discarded. At
-no point in time do all of the elements occupy memory together.
+element is evaluated and the previous element is discarded. **At
+no point in time do all of the elements occupy memory together.**
 
 .. note::
 
