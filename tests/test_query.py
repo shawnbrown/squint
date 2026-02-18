@@ -1279,6 +1279,18 @@ class TestQuery(unittest.TestCase):
         self.assertRegex(repr(query), regex)
 
 
+class TestCount(unittest.TestCase):
+    def test_count_with_optimization(self):
+        select = Select([('A', 'B'), (1, 2), (1, 2)])
+        query = select('B').count().execute(optimize=True)
+        self.assertEqual(query, 2)
+
+    def test_count_without_optimization(self):
+        select = Select([('A', 'B'), (1, 2), (1, 2)])
+        query = select(('A', 'B')).count().execute(optimize=False)
+        self.assertEqual(query, 2)
+
+
 class TestIterable(unittest.TestCase):
     def test_iterate_source(self):
         select = Select([('A', 'B'), (1, 2), (1, 2)])
